@@ -1,6 +1,6 @@
 module.exports = {
     Fonts: {
-        LatoBlack: "LatoBlack",
+        LatoBlack: "Lato-Black",
         LatoBold: "Lato-Bold",        
     }
 }
