@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1,backgroundColor: "#E9ECF2" },
@@ -15,15 +15,15 @@ const styles = StyleSheet.create({
     IMG4: { height: hp(2.3), width: hp(2.3) },
     IMG44: { height: hp(3), width: hp(3), top: hp(0.3) },
     IMG5: { height: hp(4), width: hp(4) },
-    TXT4: { fontSize: hp(2.3), fontFamily: "LatoBlack", color: "white", left: hp(1) },
-    TXT5: { fontSize: hp(3.5), fontFamily: "LatoBlack", color: "#E9ECF2" },
+    TXT4: { fontSize: hp(2.3), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
+    TXT5: { fontSize: hp(3.5), fontFamily: Fonts.LatoBlack, color: "#E9ECF2" },
     INGBTN: { justifyContent: "center" },
     Title: { justifyContent: "center", left: wp(6) },
     VIW12: { elevation: 10, height: hp(22), borderRadius: hp(2), backgroundColor: "white", marginHorizontal: hp(2), marginBottom: hp(2) },
     FlatList: { flex: 1 },
     VIW13: { height: "45%", justifyContent: "flex-start", padding: hp(2), flexDirection: "row" },
     VIW14: { height: "55%", justifyContent: "center", alignItems: "center" },
-    TXT6: { fontFamily: "LatoBlack", fontSize: hp(2.5) },
+    TXT6: { fontFamily: Fonts.LatoBlack, fontSize: hp(2.5) },
     VIW16: { height: hp(7), backgroundColor: "#FE2C55", borderRadius: hp(100), flexDirection: "row", padding: hp(1), elevation: 10, paddingRight: hp(2) },
     VIW17: { borderRadius: hp(100), height: hp(5), width: hp(5), justifyContent: "center", alignItems: "center", borderWidth: hp(0.3), borderColor: "white" },
     VIW18: { justifyContent: "center", height: "100%", paddingHorizontal: hp(1) },

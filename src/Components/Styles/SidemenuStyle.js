@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
     MAINVIW: { flex: 1, backgroundColor: "#E8EBF2" },
     InnerView1: { height: hp(28), backgroundColor: "#FE2C55", borderBottomLeftRadius: hp(100), borderBottomRightRadius: hp(100), justifyContent: "center", alignItems: "center" },
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     VIW1: { width: "30%", justifyContent: "center", alignItems: "center" },
     VIW2: { width: "70%", justifyContent: "center" },
     CMNIMG: { height: hp(3.2), width: hp(3.2) },
-    CMNTXT: { fontSize: hp(2.5), fontFamily: "LatoBlack" }
+    CMNTXT: { fontSize: hp(2.5), fontFamily: Fonts.LatoBlack }
 })
 
 export default styles

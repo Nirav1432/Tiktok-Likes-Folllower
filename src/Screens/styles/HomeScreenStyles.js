@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
 
@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     IMG4: { alignSelf: "center", height: hp(11), width: hp(11) },
 
 
-    TXT1: { alignSelf: "center", fontSize: hp(2.5), fontFamily: "LatoBlack", color: "#FE2C55", marginTop: hp(3) },
-    TXT2: { fontSize: hp(3), fontFamily: "LatoBlack", alignSelf: "center" },
-    TXT3: { color: "#7C7A7A", fontFamily: "LatoBold", marginTop: hp(1), fontSize: hp(2) },
-    TXT4: { fontSize: hp(3), fontFamily: "LatoBlack", color: "white", left: hp(1) },
-    TXT5: { color: "black",textAlign:"center", fontFamily: "LatoBold", marginTop: hp(1), fontSize: hp(2), alignSelf: "center" },
+    TXT1: { alignSelf: "center", fontSize: hp(2.5), fontFamily: Fonts.LatoBlack, color: "#FE2C55", marginTop: hp(3) },
+    TXT2: { fontSize: hp(3), fontFamily: Fonts.LatoBlack, alignSelf: "center" },
+    TXT3: { color: "#7C7A7A", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2) },
+    TXT4: { fontSize: hp(3), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
+    TXT5: { color: "black",textAlign:"center", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2), alignSelf: "center" },
 
     CMNVIW: { justifyContent: "center", flex: 1, alignItems: "center" }
 

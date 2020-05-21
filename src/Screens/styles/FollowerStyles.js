@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
@@ -12,14 +12,14 @@ const styles = StyleSheet.create({
     VIW11: { justifyContent: "center", height: "100%", width: "100%" },
     IMG2: { height: hp(4), width: hp(4), },
     IMG3: { height: hp(3), width: hp(3) },
-    TXT4: { fontSize: hp(3), fontFamily: "LatoBlack", color: "white", left: hp(1) },
-    TXT5: { fontSize: hp(3.5), fontFamily: "LatoBlack", color: "#E9ECF2" },
+    TXT4: { fontSize: hp(3), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
+    TXT5: { fontSize: hp(3.5), fontFamily: Fonts.LatoBlack, color: "#E9ECF2" },
     INGBTN: { justifyContent: "center" },
     Title: { justifyContent: "center", left: wp(6) },
     VIW2: { height: hp(28), backgroundColor: "white", borderRadius: hp(2), margin: hp(2.5) , elevation: 10,flexDirection:"row" },
     IMG4: { alignSelf: "center", height: hp(11), width: hp(11) },
     VIW12: { justifyContent: "center", alignItems: "center", flex: 1 },
-    TXT55: { color: "black", fontFamily: "LatoBold", marginTop: hp(1), fontSize: hp(2),alignSelf:"center" },
+    TXT55: { color: "black", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2),alignSelf:"center" },
 })
 
 export default styles

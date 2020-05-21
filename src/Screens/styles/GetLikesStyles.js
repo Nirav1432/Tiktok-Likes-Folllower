@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     VIW1: { alignItems: "center", height: hp(20), justifyContent: "center" },
     VIW2: { alignItems: "center" },
     VIW5: { justifyContent: "center", alignItems: "center", marginHorizontal: hp(3), flexDirection: "row", marginTop: hp(6), padding: hp(1), backgroundColor: "white", borderRadius: hp(100) },
-    TXTINPUT: { paddingVertical: 0, height: hp(7.5), width: "100%", backgroundColor: "white", borderRadius: hp(100), paddingHorizontal: hp(4), fontFamily: "LatoBold", fontSize: hp(2.5), color: "#7C7A7A", },
+    TXTINPUT: { paddingVertical: 0, height: hp(7.5), width: "100%", backgroundColor: "white", borderRadius: hp(100), paddingHorizontal: hp(4), fontFamily: Fonts.LatoBold, fontSize: hp(2.5), color: "#7C7A7A", },
     VIW6: { width: "80%" },
     VIW8: { flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: hp(6), marginHorizontal: hp(3) },
     VIW7: { width: "20%", alignItems: "center" },
