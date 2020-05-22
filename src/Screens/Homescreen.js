@@ -22,6 +22,7 @@ class Homescreen extends Component {
 
   async UNSAFE_componentWillMount() {
     SplashScreen.hide()
+    console.log(this.props)
     AllData = this.props.Data.CommonData
     Services.setting({ user_id: AllData.userId }).then((res) => {
       OtherData = res.setting
