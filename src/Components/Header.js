@@ -6,19 +6,17 @@ import { SafeAreaView, SafeAreaConsumer } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            coin: 0
+
         };
     }
 
-    UNSAFE_componentWillMount() {
-        // console.log(this.props)
-        this.setState({ coin: this.props.Data.CommonData.Coins.coin })
-    }
 
     render() {
+ 
         return (
             <>
                 <StatusBar hidden={Platform.OS == "ios" ? true : false} />
@@ -38,16 +36,16 @@ class Header extends Component {
                             <Text style={styles.TXT5}>{this.props.title}</Text>
                         </View>
                     </View>
-                    {/* <View style={styles.VIW8}> */}
-                        <View style={styles.VIW9}>
-                            <View style={styles.VIW10}>
-                                <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
-                            </View>
-                            <View style={styles.VIW11}>
-                                <Text style={styles.TXT4}>{this.state.coin}</Text>
-                            </View>
+
+                    <View style={styles.VIW9}>
+                        <View style={styles.VIW10}>
+                            <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
                         </View>
-                    {/* </View> */}
+                        <View style={styles.VIW11}>
+                            <Text style={styles.TXT4}>{this.props.Data.coins}</Text>
+                        </View>
+                    </View>
+
                 </View>
 
             </>

@@ -8,7 +8,7 @@ import { Services } from '../Configurations/Api/Connections';
 import { custom_number_format } from '../Utils/functions'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
-
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 
 let AllData = null
 let OtherData = null
@@ -17,22 +17,28 @@ class Homescreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      DMD: 0
     };
   }
 
   async UNSAFE_componentWillMount() {
     SplashScreen.hide()
-    this.setState({ DMD: this.props.Data.DMD })
+    this.setAllData()
+  }
+
+
+
+  setAllData = () => {
     AllData = this.props.Data.CommonData
     Services.setting({ user_id: AllData.userId }).then((res) => {
       OtherData = res.setting
       this.setState({})
+      this.props.setCoins()
     })
   }
 
-  render() {
 
+  render() {
+    console.log(this.props)
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />
@@ -59,7 +65,7 @@ class Homescreen extends Component {
                       <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
                     </View>
                     <View style={styles.VIW11}>
-                      <Text style={styles.TXT4}>{OtherData.coin}</Text>
+                      <Text style={styles.TXT4}>{this.props.Data.coins}</Text>
                     </View>
                   </View>
                 </View>
@@ -148,7 +154,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setGlobalData: () => dispatch(putLogin(FinalData))
+    setCoins: () => dispatch(setDiamonds(OtherData.coin))
   };
 };
 

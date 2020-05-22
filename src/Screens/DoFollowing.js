@@ -3,7 +3,11 @@ import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import styles from './styles/DoFollowingStyles';
 import { Icons } from "../Utils/IconManager";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { custom_number_format } from '../Utils/functions'
 import Header from '../Components/Header';
+import { Services } from '../Configurations/Api/Connections';
+import { connect } from 'react-redux';
+
 const data = [
   {
     "id": 7,
@@ -83,24 +87,36 @@ const data = [
     "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/mrmoiree/128.jpg"
   }
 ]
-export default class DoFollowing extends Component {
+
+class DoFollowing extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      data: { follower_coin: 0 }
+    this.state = {      
     };
+  }
+
+  UNSAFE_componentWillMount() {
+    let id = this.props.Data.CommonData.userId
+    this.getNewFollower(id)
+  }
+
+  getNewFollower = (id) => {
+    Services.Following(id).then((res) => {
+      console.log(res)
+    })
   }
 
   render() {
     return (
       <View style={styles.MAINVIW}>
-        <Header title={"Do Following"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
+        <Header title={"Do Following"} backPress={() => this.props.navigation.goBack()} />
         <View style={{ flex: 1 }}>
           <FlatList
             data={data}
             renderItem={({ item, index }) => (
 
-              <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]}>
+              <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
 
                 <View style={styles.profileView}>
 
@@ -160,3 +176,9 @@ export default class DoFollowing extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+      Data: state.LoginData
+  };
+};
+export default connect(mapStateToProps)(DoFollowing)

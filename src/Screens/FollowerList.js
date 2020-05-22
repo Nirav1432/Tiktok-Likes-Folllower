@@ -54,12 +54,12 @@ export default class FollowerList extends Component {
         };
     }
     componentDidMount() {
-        fetch('http://134.209.103.120/TiktokFollower/api/following/'+id,{
-            method:"get"
-        })
-        .then(res=>{
-            console.log(res.json())
-        })     
+        // fetch('http://134.209.103.120/TiktokFollower/api/following/'+id,{
+        //     method:"get"
+        // })
+        // .then(res=>{
+        //     console.log(res.json())
+        // })     
     }
     render() {
         return (

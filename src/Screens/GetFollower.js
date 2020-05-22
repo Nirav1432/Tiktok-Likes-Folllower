@@ -10,6 +10,7 @@ import Preloader from '../Components/Preloader';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
 import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 
 class GetFollower extends Component {
     constructor(props) {
@@ -48,23 +49,25 @@ class GetFollower extends Component {
         })
     }
 
-    PopupMangement = () => {
+    PopupMangement = () => {        
 
         this.setState({ Visi: false })
-        let data = { userId: this.state.userId, request_follower: this.state.RequestFollowers, follower_coin: this.state.ClickedDiamond }
+        let data = { user_id: this.state.userId, request_follower: this.state.RequestFollowers, follower_coin: this.state.ClickedDiamond }
+        // let data = { user_id: this.state.userId, request_follower: 1, follower_coin: 1 }
 
         if (data.follower_coin > this.state.TotalDiamond) {
             this.setState({ NotEnough: true })
         }
         else {
             this.setState({ visible: true })
-            Services.RequestFollower(data).then(res => {
-                if(res.tiktok_follower.success=="false"){
-                    this.setState({visible:false})
+            Services.RequestFollower(data).then(async(res) => {
+                if (res.tiktok_follower.success == "true") {
+                    this.setState({ visible: false })
+                    await this.props.setCoins(res.tiktok_follower.coin)
+                    this.setState({ Visi1: true })
                 }
-            })        
+            })
         }
-       // setTimeout(() => this.setState({ Visi1: true }), 1000)
     }
 
     render() {
@@ -131,9 +134,17 @@ class GetFollower extends Component {
         );
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         Data: state.LoginData
     };
 };
-export default connect(mapStateToProps)(GetFollower);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetFollower);
