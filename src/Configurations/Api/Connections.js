@@ -37,7 +37,7 @@ export const Services = {
   DoFollower: data => api.post('/userFollower', data).then(onSuccess, onError),
   DoLike: data => api.post('/userLike', data).then(onSuccess, onError),
   Videos: data => api.post('/userVideo', data).then(onSuccess, onError),
-  getListofCoins: data => api.post('/selection', data).then(onSuccess, onError),
+  getListofCoins: data => api.get('/selection').then(onSuccess, onError),
   FollowerList:data=>api.get('/following/',data).then(onSuccess,onError)
 }
 

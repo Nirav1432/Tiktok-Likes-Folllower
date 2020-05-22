@@ -43,7 +43,7 @@ class Homescreen extends Component {
 
             <View style={styles.VIW1}>
 
-              <View style={[styles.VIW13, { top: Platform.OS === "ios" ? hp(3) : 0 }]}>
+              <View style={[styles.VIW13, { top: Platform.OS === "ios" ? hp(3.5) : 0 }]}>
 
                 <View style={styles.VIW7}>
                   <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} style={styles.BTN}>

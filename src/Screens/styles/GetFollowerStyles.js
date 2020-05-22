@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     FlatList: { flex: 1 },
     VIW13: { height: "45%", justifyContent: "flex-start", padding: hp(2), flexDirection: "row" },
     VIW14: { height: "55%", justifyContent: "center", alignItems: "center" },
-    TXT6: { fontFamily: Fonts.LatoBlack, fontSize: hp(2.5) },
+    TXT6: { fontFamily: Fonts.LatoBlack, fontSize: hp(2.5)},
     VIW16: { height: hp(7), backgroundColor: "#FE2C55", borderRadius: hp(100), flexDirection: "row", padding: hp(1), elevation: 10 },
     VIW17: { borderRadius: hp(100), height: hp(5), width: hp(5), justifyContent: "center", alignItems: "center" },
     VIW18: { justifyContent: "center", height: "100%", paddingLeft: hp(1) },
