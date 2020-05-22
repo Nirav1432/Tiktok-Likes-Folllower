@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     IMG2: { height: hp(4), width: hp(4), },
     IMG3: { height: hp(3), width: hp(3) },
     BTN: { height: hp(6), width: hp(6), justifyContent: "center" },
-    IMG4: { alignSelf: "center", height: hp(11), width: hp(11) },
+    IMG4: { alignSelf: "center", height: hp(10), width: hp(10) },
 
 
     TXT1: { alignSelf: "center", fontSize: hp(3) , position: "absolute", fontFamily: Fonts.LatoBlack, color: "#FE2C55" },
