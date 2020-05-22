@@ -5858,6 +5858,11 @@ react-native-safe-area-view@^0.14.9:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-native-scratchcards@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-scratchcards/-/react-native-scratchcards-1.0.6.tgz#0ed1bc7f24d26391156ef072c68fd55b8dc2fcd0"
+  integrity sha512-2gI9i830BoNF2PvmtlEYdaRikOugTRXtjZ+OwAQ8u8Wee6k3tJd6jqPMjUUiOZHwhzMKS21aEjpLyxfTDxz6Ew==
+
 react-native-screens@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.5.0.tgz#2c5b5a56d3b8be64d459d53da154bde926021a50"

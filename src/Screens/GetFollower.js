@@ -9,7 +9,7 @@ import Header from '../Components/Header';
 import Preloader from '../Components/Preloader';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
-
+import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
 
 class GetFollower extends Component {
     constructor(props) {
@@ -22,7 +22,8 @@ class GetFollower extends Component {
             TotalDiamond: 0,
             ClickedDiamond: 0,
             RequestFollowers: 0,
-            userId: ""
+            userId: "",
+            NotEnough: false
         };
     }
     componentDidMount() {
@@ -48,20 +49,32 @@ class GetFollower extends Component {
     }
 
     PopupMangement = () => {
+
         this.setState({ Visi: false })
-        //   this.setState({ visible: true })
         let data = { userId: this.state.userId, request_follower: this.state.RequestFollowers, follower_coin: this.state.ClickedDiamond }
-        console.log(data)
-        // Services.RequestFollower().then(res => {
-        //     console.log(res)
-        // })
-        // setTimeout(() => this.setState({ Visi1: true }), 1000)
+
+        if (data.follower_coin > this.state.TotalDiamond) {
+            this.setState({ NotEnough: true })
+        }
+        else {
+            this.setState({ visible: true })
+            Services.RequestFollower(data).then(res => {
+                if(res.tiktok_follower.success=="false"){
+                    this.setState({visible:false})
+                }
+            })        
+        }
+       // setTimeout(() => this.setState({ Visi1: true }), 1000)
     }
 
     render() {
         return (
             <View style={styles.MAINVIW}>
                 <Preloader isLoader={this.state.visible} />
+                <NotEnoughDiamondPop
+                    visible={this.state.NotEnough}
+                    ClosePop={() => this.setState({ NotEnough: false })}
+                />
                 <GetFollowerPop
                     visible={this.state.Visi}
                     ClosePop={() => this.setState({ Visi: false })}
