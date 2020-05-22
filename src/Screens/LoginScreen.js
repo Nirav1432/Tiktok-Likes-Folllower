@@ -42,7 +42,6 @@ class LoginScreen extends Component {
   componentDidMount() {
     console.log(this.props)
     SplashScreen.hide()
-    // Keyboard.addListener("keyboardDidHide",()=>alert('Hidden'))
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
   }
@@ -182,10 +181,11 @@ class LoginScreen extends Component {
     Services.login(param).then(async (res) => {
       if (res.user.success == "true") {
         FinalData["Coins"] = res.user
-        let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
-        let secondPair = ["DMD", JSON.stringify(res.user.coin)]
+        // let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
+        // let secondPair = ["DMD", JSON.stringify(res.user.coin)]
+        // await AsyncStorage.multiSet([FirstPair,secondPair])    
+        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
         await this.props.setGlobalData()
-        await AsyncStorage.multiSet([FirstPair,secondPair])
         this.props.navigation.navigate("Sidemenu")
       }
       else {

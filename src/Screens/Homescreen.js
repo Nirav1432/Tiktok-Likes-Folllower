@@ -59,7 +59,7 @@ class Homescreen extends Component {
                       <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
                     </View>
                     <View style={styles.VIW11}>
-                      <Text style={styles.TXT4}>{this.state.DMD}</Text>
+                      <Text style={styles.TXT4}>{OtherData.coin}</Text>
                     </View>
                   </View>
                 </View>
