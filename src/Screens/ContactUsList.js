@@ -4,6 +4,7 @@ import styles from './styles/ContactUsListStyles';
 import Header from '../Components/Header';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
+import Preloader from '../Components/Preloader';
 
 var tempData = [
   {
@@ -60,6 +61,8 @@ class ContactUsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
+      list: []
     };
   }
 
@@ -70,36 +73,43 @@ class ContactUsList extends Component {
 
   getMessageList(id) {
     let data = { user_id: id }
-    Services.Coversations(data).then((res)=>{
-      console.log(res)
+    Services.Coversations(data).then((res) => {
+      this.setState({list:res.data.reverse()})
     })
   }
 
   render() {
     return (
       <View style={styles.MAINVIW}>
+        <Preloader isLoader={this.state.visible} />
         <Header title={"Contact Us"} backPress={() => this.props.navigation.goBack()} coin={0} />
         <View style={styles.VIW1}>
-          <FlatList
-            data={tempData}
-            renderItem={(data, index) =>
-              data.item.from == "user" ?
-                <View style={styles.userView}>
-                  <View style={styles.messageView}>
-                    <Text style={styles.TXTUSER}>{data.item.from == "user" ? "You" : ""}</Text>
-                    <Text style={styles.messageTXT}>{data.item.message}</Text>
-                  </View>
-                </View>
-                :
-                <View style={styles.adminView}>
-                  <View style={styles.messageViewAdmin}>
-                    <Text style={styles.TXTAdmin}>{data.item.from == "user" ? "You" : "Admin"}</Text>
-                    <Text style={styles.messageTXT}>{data.item.message}</Text>
-                  </View>
-                </View>
-            }
-            showsVerticalScrollIndicator={false}
-          />
+          {
+            this.state.list.length > 0 ?
+              <FlatList
+                data={this.state.list}
+                renderItem={(data, index) =>
+                  data.item.is_replied == 0 ?
+                    <View style={styles.userView}>
+                      <View style={styles.messageView}>
+                        <Text style={styles.TXTUSER}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                        <Text style={styles.messageTXT}>{data.item.message}</Text>
+                      </View>
+                    </View>
+                    :
+                    <View style={styles.adminView}>
+                      <View style={styles.messageViewAdmin}>
+                        <Text style={styles.TXTAdmin}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                        <Text style={styles.messageTXT}>{data.item.message}</Text>
+                      </View>
+                    </View>
+                }
+                showsVerticalScrollIndicator={false}
+              />
+              :
+              <></>
+          }
+
         </View>
         <View style={styles.VIW2}>
           <Text style={styles.TXT2}>if you have any more questions or concerns,{"\n"}please contact to us</Text>

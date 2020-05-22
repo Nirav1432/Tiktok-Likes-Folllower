@@ -15,8 +15,7 @@ class ContactUs extends Component {
         };
     }
     UNSAFE_componentWillMount() {
-        userid = this.props.Data.CommonData.userId
-        console.log(userid)
+        userid = this.props.Data.CommonData.userId        
     }
     render() {
         return (
