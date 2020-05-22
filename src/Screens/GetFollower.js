@@ -6,11 +6,15 @@ import GetFollowerPop from '../Components/Popups/GetFollowerPop'
 import RequestSuccess from '../Components/Popups/RequestSuccess'
 import { Icons } from '../Utils/IconManager'
 import Header from '../Components/Header';
+import Preloader from '../Components/Preloader';
+import { connect } from 'react-redux'
+import { Services } from '../Configurations/Api/Connections';
 
-export default class GetFollower extends Component {
+class GetFollower extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
             offers: [
                 {
                     title: " Get 20 real followers in 60\n diamonds.",
@@ -49,12 +53,26 @@ export default class GetFollower extends Component {
             Visi1: false
         };
     }
-    componentDidMount() {
-   
+    componentDidMount() {      
+        this.getData(this.props.Data.CommonData.userId)
+    }
+
+    getData(id) {
+
+        fetch('http://134.209.103.120/TiktokFollower/api/following/'+id,{
+            method:"get"
+        })
+        .then(res=>{
+            console.log(res.json())
+        })
+        Services.FollowerList(id).then((res)=>{
+            console.log(res)
+        })
     }
     render() {
         return (
             <View style={styles.MAINVIW}>
+                <Preloader isLoader={this.state.visible} />
                 <GetFollowerPop
                     visible={this.state.Visi}
                     ClosePop={() => this.setState({ Visi: false })}
@@ -104,3 +122,9 @@ export default class GetFollower extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+export default connect(mapStateToProps)(GetFollower);

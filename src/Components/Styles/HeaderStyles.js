@@ -4,10 +4,10 @@ import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1, backgroundColor: "#E8EBF2" },
-    VIW1: { height: hp(12), backgroundColor: "#FE2C55", elevation: 10, flexDirection: "row" },
-    VIW7: { width: "50%", flexDirection: "row", paddingLeft: hp(1) },
-    VIW8: { width: "50%", justifyContent: "center", alignItems: "flex-end" },
-    VIW9: { height: hp(7), backgroundColor: "#FE7E97", borderTopLeftRadius: hp(100), borderBottomLeftRadius: hp(100), width: wp(28), flexDirection: "row", padding: hp(1) },
+    VIW1: { height: hp(12), backgroundColor: "#FE2C55", elevation: 10, justifyContent: "center" },
+    VIW7: { width: "100%", flexDirection: "row", paddingLeft: hp(1) },
+    VIW8: { justifyContent: "center", alignItems: "flex-end", position: "absolute" },
+    VIW9: { height: hp(7), backgroundColor: "#FE7E97", width: "30%", position: "absolute", alignSelf: "flex-end", borderTopLeftRadius: hp(100), borderBottomLeftRadius: hp(100), flexDirection: "row", padding: hp(1) },
     VIW10: { borderRadius: hp(100), backgroundColor: "#FE2C55", height: hp(5), width: hp(5), justifyContent: "center", alignItems: "center" },
     VIW11: { justifyContent: "center", height: "100%", width: "100%" },
     IMG2: { height: hp(4), width: hp(4), },

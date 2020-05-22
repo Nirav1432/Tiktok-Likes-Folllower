@@ -8,6 +8,8 @@ import { WebView } from 'react-native-webview';
 import { Services } from '../Configurations/Api/Connections';
 import AsyncStorage from '@react-native-community/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { connect } from 'react-redux';
+import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
 
 // const WWW_INJECTED_JAVASCRIPT =
 //   `setTimeout(() =>{window.ReactNativeWebView.postMessage(
@@ -23,7 +25,9 @@ const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
-export default class LoginScreen extends Component {
+var FinalData = null
+
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,18 +40,19 @@ export default class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     SplashScreen.hide()
     // Keyboard.addListener("keyboardDidHide",()=>alert('Hidden'))
-    Keyboard.addListener("keyboardDidHide",()=>this.KeyboardDissmissed())
-    Keyboard.addListener("keyboardDidShow",()=>this.KeyboardShown())
+    Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
+    Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
   }
 
-  KeyboardDissmissed=()=>{
-    this.setState({top:hp(20)})
+  KeyboardDissmissed = () => {
+    this.setState({ top: hp(20) })
   }
 
-  KeyboardShown=()=>{
-    this.setState({top:hp(5)})
+  KeyboardShown = () => {
+    this.setState({ top: hp(5) })
   }
 
   render() {
@@ -93,7 +98,7 @@ export default class LoginScreen extends Component {
               <Text style={styles.TXT1}>Like & Followers</Text>
             </View>
             <View style={styles.VIW5}>
-              <TextInput  ref={tl => this.tiktok = tl} onChangeText={(URL) => this.fillBox(URL)} style={[styles.TXTINPUT, { borderWidth: this.state.borderWidth, borderColor: "red" }]} placeholder="Enter Tiktok Profile User Link" />
+              <TextInput ref={tl => this.tiktok = tl} onChangeText={(URL) => this.fillBox(URL)} style={[styles.TXTINPUT, { borderWidth: this.state.borderWidth, borderColor: "red" }]} placeholder="Enter Tiktok Profile User Link" />
             </View>
             <View style={styles.VIW6}>
               <TouchableOpacity style={styles.SRCH} onPress={() => this.GetOfficialDetails()}>
@@ -162,7 +167,7 @@ export default class LoginScreen extends Component {
 
   CheckLogin(data) {
 
-    let FinalData = data
+    FinalData = data
 
     let param = {
       user_id: FinalData.userId,
@@ -177,6 +182,7 @@ export default class LoginScreen extends Component {
     Services.login(param).then(async (res) => {
       if (res.user.success == "true") {
         FinalData["Coins"] = res.user
+        await this.props.setGlobalData()
         await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
         this.props.navigation.navigate("Sidemenu")
       }
@@ -189,6 +195,20 @@ export default class LoginScreen extends Component {
 
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    counter: state
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setGlobalData: () => { dispatch(putLogin(JSON.stringify(FinalData))) }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 
 

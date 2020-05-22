@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
-import { Text, View, ActivityIndicator, StyleSheet } from 'react-native'
+import { Text, View, ActivityIndicator, StyleSheet, Image } from 'react-native'
 import Modal from "react-native-modal";
+import {
+    BallIndicator,
+    BarIndicator,
+    DotIndicator,
+    MaterialIndicator,
+    PacmanIndicator,
+    PulseIndicator,
+    SkypeIndicator,
+    UIActivityIndicator,
+    WaveIndicator,
+} from 'react-native-indicators';
 
 
 export default class Preloader extends Component {
@@ -14,7 +25,7 @@ export default class Preloader extends Component {
         return (
             <Modal isVisible={this.props.isLoader} animationIn={"pulse"} animationOut={"pulse"}>
                 <View style={styles.VIW2}>
-                    <ActivityIndicator size="large" color="white" />
+                    <WaveIndicator color='#FE2C55' size={100}/>
                 </View>
             </Modal>
         )

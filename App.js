@@ -31,8 +31,8 @@ import DoShare from './src/Screens/DoShare';
 import DoComments from './src/Screens/DoComments';
 import CommentList from './src/Screens/CommentList';
 import ShareList from './src/Screens/ShareList';
-
-
+import { Provider } from 'react-redux';
+import { store } from './src/ReduxConfig/Store/Store'
 
 const AllInDrawer = createStackNavigator(
   {
@@ -93,7 +93,9 @@ export default class App extends Component {
   }
   render() {
     return (
-      <All />
+      <Provider store={store}>
+        <All />
+      </Provider>
     );
   }
 }

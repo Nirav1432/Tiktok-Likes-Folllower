@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import styles from './styles/ContactUsListStyles';
 import Header from '../Components/Header';
-
+import { connect } from 'react-redux'
+import { Services } from '../Configurations/Api/Connections';
 
 var tempData = [
   {
@@ -55,11 +56,23 @@ var tempData = [
   }
 ]
 
-export default class ContactUsList extends Component {
+class ContactUsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+
+  UNSAFE_componentWillMount() {
+    userid = this.props.Data.CommonData.userId
+    this.getMessageList(userid)
+  }
+
+  getMessageList(id) {
+    let data = { user_id: id }
+    Services.Coversations(data).then((res)=>{
+      console.log(res)
+    })
   }
 
   render() {
@@ -90,7 +103,7 @@ export default class ContactUsList extends Component {
         </View>
         <View style={styles.VIW2}>
           <Text style={styles.TXT2}>if you have any more questions or concerns,{"\n"}please contact to us</Text>
-          <TouchableOpacity style={styles.Button} onPress={()=>this.props.navigation.navigate('ContactUs')}>
+          <TouchableOpacity style={styles.Button} onPress={() => this.props.navigation.navigate('ContactUs')}>
             <Text style={styles.TXT3}>Contact Us</Text>
           </TouchableOpacity>
         </View>
@@ -98,3 +111,9 @@ export default class ContactUsList extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    Data: state.LoginData
+  };
+};
+export default connect(mapStateToProps)(ContactUsList);
