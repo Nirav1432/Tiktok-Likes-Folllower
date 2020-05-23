@@ -94,7 +94,7 @@ class CommonScreen extends Component {
                     </View>
                 </View>
                 <View style={styles.VIW2}>
-                    <Text>
+                    <Text style={{textAlign:"center"}}>
                         <Text style={styles.TXT2}>Get</Text>
                         <Text style={[styles.TXT2, { color: "#FE2C55" }]}> {IncData.Request}</Text>
                         <Text style={styles.TXT2}> Real likes in </Text>
@@ -143,7 +143,7 @@ class CommonScreen extends Component {
                 if (res.tiktok_like.success == "true") {
                     this.props.setCoins(res.tiktok_like.coin)
                     this.setState({ visible: false })
-                    this.setState({ success: true })
+                   setTimeout(()=> this.setState({ success: true }),1000)
                 }
                 else {
                     this.setState({ visible: false })

@@ -5,10 +5,10 @@ import { Fonts } from '../../Utils/fonts'
 const styles = StyleSheet.create({
 
     MAINVIW: { backgroundColor: "#E9ECF2", flex: 1 },
-    TXT1: { fontFamily: Fonts.LatoBlack, alignSelf: "center", fontSize: hp(5) },
+    TXT1: { fontFamily: Fonts.LatoBlack, alignSelf: "center", fontSize: hp(4) },
     TXT2: { fontFamily: Fonts.LatoBlack, alignSelf: "center", fontSize: hp(3) },
     VIW1: { alignItems: "center", height: hp(20), justifyContent: "center" },
-    VIW2: { alignItems: "center" },
+    VIW2: { alignItems: "center",marginHorizontal:wp(2) },
     VIW5: { justifyContent: "center", alignItems: "center", marginHorizontal: hp(4), flexDirection: "row", marginTop: hp(6), padding: hp(1), backgroundColor: "white", borderRadius: hp(100) },
     TXTINPUT: { paddingVertical: 0, height: hp(6.7), width: "100%", backgroundColor: "white", borderRadius: hp(100), paddingHorizontal: hp(4), fontFamily: Fonts.LatoBold, fontSize: hp(2.5), color: "#7C7A7A", },
     VIW6: { width: "80%" },

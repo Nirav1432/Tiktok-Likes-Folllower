@@ -32,7 +32,7 @@ class DoLikes extends Component {
                 this.setState({ visible: false })
             }
             else {
-                alert('Something Went Wrong !!')
+                alert('No Data Found !!')
                 this.setState({ visible: false })
             }
         }).catch((err) => {
@@ -53,7 +53,7 @@ class DoLikes extends Component {
                 <Header title={"Do Likes"} backPress={() => this.props.navigation.goBack()} />
 
                 <NavigationEvents
-                  onDidFocus={()=>alert('Yes')}
+                //  onDidFocus={()=>alert('Yes')}
                 />
               
                 <View style={{ flex: 1 }}>
