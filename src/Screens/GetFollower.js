@@ -66,7 +66,7 @@ class GetFollower extends Component {
                 if (res.tiktok_follower.success == "true") {
                     this.setState({ visible: false })
                     await this.props.setCoins(res.tiktok_follower.coin)
-                    this.setState({ Visi1: true })
+                  setTimeout(() =>this.setState({ Visi1: true }), 1000)
                 }
             })
         }
