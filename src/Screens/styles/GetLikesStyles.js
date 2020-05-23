@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     IMG: { height: hp(6), width: hp(6), },
     IMG1: { height: hp(3), width: hp(3), marginHorizontal: hp(1) },
     BTNSTYLE: { height: hp(7), width: wp(40), borderRadius: hp(100), backgroundColor: "#006CFF", justifyContent: "center", alignItems: "center" },
-    TXT3: { fontFamily: Fonts.LatoBlack, color: "white", fontSize: hp(2.5) },
+    TXT3: { fontFamily: Fonts.LatoBlack, color: "white", fontSize: hp(2.2) },
     BTNSTYLE1: { height: hp(7), flexDirection: "row", width: wp(40), borderRadius: hp(100), backgroundColor: "#FE2C55", justifyContent: "center", alignItems: "center" },
     TXT4: { textAlign: "center", fontFamily: Fonts.LatoBold, color: "#7C7A7A", fontSize: hp(2),lineHeight:hp(4) }
 
