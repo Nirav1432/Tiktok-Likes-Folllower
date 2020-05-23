@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     VIW10: { borderRadius: hp(100), backgroundColor: "#FE2C55", height: hp(5), width: hp(5), justifyContent: "center", alignItems: "center" },
     VIW11: { justifyContent: "center", height: "100%", width: "100%" },
     IMG2: { height: hp(4), width: hp(4), },
-    IMG3: { height: hp(2.8), width: hp(2.8) },
+    IMG3: { height: hp(2.5), width: hp(2.5) },
     IMG4: { height: hp(2.3), width: hp(2.3) },
     IMG44: { height: hp(3), width: hp(3), top: hp(0.3) },
     IMG5: { height: hp(4), width: hp(4) },

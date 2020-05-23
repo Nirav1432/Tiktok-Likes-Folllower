@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
 import styles from './styles/GetFollowerStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import GetFollowerPop from '../Components/Popups/GetFollowerPop'
@@ -17,7 +17,7 @@ class GetFollower extends Component {
         super(props);
         this.state = {
             visible: false,
-            DataFromServer: null,
+            DataFromServer: [],
             Visi: false,
             Visi1: false,
             TotalDiamond: 0,
@@ -28,7 +28,7 @@ class GetFollower extends Component {
         };
     }
     componentDidMount() {
-        this.setState({ TotalDiamond: this.props.Data.CommonData.Coins.coin })
+        this.setState({ TotalDiamond: this.props.Data.coins })
         this.setState({ userId: this.props.Data.CommonData.userId })
         this.setState({ visible: true })
         this.getData()
@@ -39,28 +39,30 @@ class GetFollower extends Component {
         Services.getListofCoins().then((res) => {
             if (res.selection.length > 0) {
                 this.setState({ visible: false })
-                this.setState({ DataFromServer: res.selection })
-            }
-            else {
-
-            }
+                for (let obj of res.selection) {
+                    if (obj.type == 2) {
+                        this.state.DataFromServer.push(obj)
+                    }
+                }                
+            }            
         }).catch((res) => {
             this.setState({ visible: false })
         })
     }
 
-    PopupMangement = () => {        
+    PopupMangement = () => {    
 
         this.setState({ Visi: false })
         let data = { user_id: this.state.userId, request_follower: this.state.RequestFollowers, follower_coin: this.state.ClickedDiamond }
         // let data = { user_id: this.state.userId, request_follower: 1, follower_coin: 1 }
 
-        if (data.follower_coin > this.state.TotalDiamond) {
+        if (parseInt(data.follower_coin) > parseInt(this.state.TotalDiamond)) {
             this.setState({ NotEnough: true })
         }
         else {
+            
             this.setState({ visible: true })
-            Services.RequestFollower(data).then(async(res) => {
+            Services.RequestFollower(data).then(async (res) => {
                 if (res.tiktok_follower.success == "true") {
                     this.setState({ visible: false })
                     await this.props.setCoins(res.tiktok_follower.coin)
@@ -82,6 +84,7 @@ class GetFollower extends Component {
                     visible={this.state.Visi}
                     ClosePop={() => this.setState({ Visi: false })}
                     YesPress={() => this.PopupMangement()}
+                    Counter={this.state.RequestFollowers}
                 />
                 <RequestSuccess
                     visible={this.state.Visi1}
@@ -89,47 +92,40 @@ class GetFollower extends Component {
                 />
 
                 <Header title={"Get Followers"} backPress={() => this.props.navigation.goBack()} />
-                {
-                    this.state.DataFromServer != null ?
 
-                        <FlatList
-                            data={this.state.DataFromServer}
-                            renderItem={({ item, index, ss }) =>
-                                <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0 }]}>
-                                    <View style={styles.VIW13}>
-                                        <View>
-                                            <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={styles.TXT6}>{"Get " + item.request + " real followers in " + item.coin}</Text>
-                                            <Text style={styles.TXT6}>{"Diamonds."}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.VIW14}>
-                                        <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })}>
-                                            <View style={styles.VIW17}>
-                                                <Image source={Icons.Group} style={styles.IMG4} resizeMode="contain" />
-                                            </View>
-                                            <View style={styles.VIW18}>
-                                                <Image source={Icons.premium_quality} style={styles.IMG5} resizeMode="contain" />
-                                            </View>
-                                            <View style={styles.VIW19}>
-                                                <Text style={styles.TXT4}>{item.coin}</Text>
-                                            </View>
 
-                                        </TouchableOpacity>
-                                    </View>
+                <FlatList
+                    data={this.state.DataFromServer}
+                    renderItem={({ item, index, ss }) =>
+                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0 }]}>
+                            <View style={styles.VIW13}>
+                                <View>
+                                    <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                                 </View>
-                            }
-                            style={styles.FlatList}
-                            showsVerticalScrollIndicator={false}
-                        />
-                        :
-                        <></>
-                }
+                                <View>
+                                    <Text style={styles.TXT6}>{"Get " + item.request + " real followers in " + item.coin}</Text>
+                                    <Text style={styles.TXT6}>{"Diamonds."}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.VIW14}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })}>
+                                    <View style={styles.VIW17}>
+                                        <Image source={Icons.Group} style={styles.IMG4} resizeMode="contain" />
+                                    </View>
+                                    <View style={styles.VIW18}>
+                                        <Image source={Icons.premium_quality} style={styles.IMG5} resizeMode="contain" />
+                                    </View>
+                                    <View style={styles.VIW19}>
+                                        <Text style={styles.TXT4}>{item.coin}</Text>
+                                    </View>
 
-
-
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
+                    style={styles.FlatList}
+                    showsVerticalScrollIndicator={false}
+                />
             </View>
         );
     }

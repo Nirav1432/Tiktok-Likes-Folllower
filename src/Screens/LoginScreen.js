@@ -40,7 +40,6 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     SplashScreen.hide()
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
@@ -132,7 +131,7 @@ class LoginScreen extends Component {
       if (url.match(/www.tiktok.com/g)) {
         this.setState({ type: "www", fetchInfo: true, visible: true })
       }
-      else if (url.match(/vm.tiktok.com/g)) {
+      else if (url.match(/vm.tiktok.com/g) || url.match(/vt.tiktok.com/g)) {
         this.setState({ type: "vm", fetchInfo: true, visible: true })
       }
       else {
@@ -179,12 +178,10 @@ class LoginScreen extends Component {
     }
 
     Services.login(param).then(async (res) => {
-      if (res.user.success == "true") {
-        FinalData["Coins"] = res.user
-        // let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
-        // let secondPair = ["DMD", JSON.stringify(res.user.coin)]
-        // await AsyncStorage.multiSet([FirstPair,secondPair])    
-        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
+      if (res.user.success == "true") {      
+        let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
+        let secondPair = ["DMD", JSON.stringify(res.user.coin)]
+        await AsyncStorage.multiSet([FirstPair,secondPair])            
         await this.props.setGlobalData()
         this.props.navigation.navigate("Sidemenu")
       }

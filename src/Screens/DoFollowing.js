@@ -7,6 +7,7 @@ import { custom_number_format } from '../Utils/functions'
 import Header from '../Components/Header';
 import { Services } from '../Configurations/Api/Connections';
 import { connect } from 'react-redux';
+import Preloader from '../Components/Preloader';
 
 const data = [
   {
@@ -92,7 +93,9 @@ class DoFollowing extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {      
+    this.state = {
+      datafromserver: [],
+      visible: true
     };
   }
 
@@ -103,17 +106,19 @@ class DoFollowing extends Component {
 
   getNewFollower = (id) => {
     Services.Following(id).then((res) => {
-      console.log(res)
+      this.setState({datafromserver:res.followers})
+      this.setState({ visible: false })
     })
   }
 
   render() {
     return (
       <View style={styles.MAINVIW}>
+        <Preloader isLoader={this.state.visible} />
         <Header title={"Do Following"} backPress={() => this.props.navigation.goBack()} />
         <View style={{ flex: 1 }}>
           <FlatList
-            data={data}
+            data={this.state.datafromserver}
             renderItem={({ item, index }) => (
 
               <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
@@ -122,11 +127,11 @@ class DoFollowing extends Component {
 
                   <View style={styles.ImageView}>
                     <View style={styles.VIW2}>
-                      <Image source={{ uri: item.avatar }} style={styles.profileImage} />
+                      <Image source={{ uri: item.profile }} style={styles.profileImage} />
                     </View>
-                    <View style={[styles.VIW2, { left: wp(3) }]}>
-                      <Text style={styles.TXT1}>{item.first_name}</Text>
-                      <Text style={styles.TXT2}>{item.first_name}</Text>
+                    <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
+                      <Text style={styles.TXT1}>{item.username}</Text>
+                      <Text style={styles.TXT2}>{item.fullname}</Text>
                     </View>
                   </View>
 
@@ -148,7 +153,7 @@ class DoFollowing extends Component {
                   </View>
 
                 </View>
-                <View style={styles.DetailView}>
+                {/* <View style={styles.DetailView}>
                   <View style={styles.Commonview}>
                     <Text style={styles.TXT4}>10</Text>
                     <Text style={styles.TXT5}>Following</Text>
@@ -165,7 +170,7 @@ class DoFollowing extends Component {
                     <Text style={styles.TXT4}>10</Text>
                     <Text style={styles.TXT5}>Videos</Text>
                   </View>
-                </View>
+                </View> */}
               </View>
             )}
             showsVerticalScrollIndicator={false}
@@ -178,7 +183,7 @@ class DoFollowing extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-      Data: state.LoginData
+    Data: state.LoginData
   };
 };
 export default connect(mapStateToProps)(DoFollowing)

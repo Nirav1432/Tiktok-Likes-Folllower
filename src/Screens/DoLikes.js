@@ -1,156 +1,68 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Linking } from 'react-native';
 import styles from './styles/DoLikesStyles';
 import { Icons } from "../Utils/IconManager";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Header from '../Components/Header';
-const data = [
-    {
-        "id": 7,
-        "email": "michael.lawson@reqres.in",
-        "first_name": "Michael",
-        "last_name": "Lawson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/follettkyle/128.jpg"
-    },
-    {
-        "id": 8,
-        "email": "lindsay.ferguson@reqres.in",
-        "first_name": "Lindsay",
-        "last_name": "Ferguson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/araa3185/128.jpg"
-    },
-    {
-        "id": 9,
-        "email": "tobias.funke@reqres.in",
-        "first_name": "Tobias",
-        "last_name": "Funke",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/vivekprvr/128.jpg"
-    },
-    {
-        "id": 10,
-        "email": "byron.fields@reqres.in",
-        "first_name": "Byron",
-        "last_name": "Fields",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/russoedu/128.jpg"
-    },
-    {
-        "id": 11,
-        "email": "george.edwards@reqres.in",
-        "first_name": "George",
-        "last_name": "Edwards",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/mrmoiree/128.jpg"
-    },
-    {
-        "id": 12,
-        "email": "rachel.howell@reqres.in",
-        "first_name": "Rachel",
-        "last_name": "Howell",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
-    },
-    {
-        "id": 7,
-        "email": "michael.lawson@reqres.in",
-        "first_name": "Michael",
-        "last_name": "Lawson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/follettkyle/128.jpg"
-    },
-    {
-        "id": 8,
-        "email": "lindsay.ferguson@reqres.in",
-        "first_name": "Lindsay",
-        "last_name": "Ferguson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/araa3185/128.jpg"
-    },
-    {
-        "id": 9,
-        "email": "tobias.funke@reqres.in",
-        "first_name": "Tobias",
-        "last_name": "Funke",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/vivekprvr/128.jpg"
-    },
-    {
-        "id": 10,
-        "email": "byron.fields@reqres.in",
-        "first_name": "Byron",
-        "last_name": "Fields",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/russoedu/128.jpg"
-    },
-    {
-        "id": 11,
-        "email": "george.edwards@reqres.in",
-        "first_name": "George",
-        "last_name": "Edwards",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/mrmoiree/128.jpg"
-    },
-    {
-        "id": 12,
-        "email": "rachel.howell@reqres.in",
-        "first_name": "Rachel",
-        "last_name": "Howell",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
-    },
-    {
-        "id": 7,
-        "email": "michael.lawson@reqres.in",
-        "first_name": "Michael",
-        "last_name": "Lawson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/follettkyle/128.jpg"
-    },
-    {
-        "id": 8,
-        "email": "lindsay.ferguson@reqres.in",
-        "first_name": "Lindsay",
-        "last_name": "Ferguson",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/araa3185/128.jpg"
-    },
-    {
-        "id": 9,
-        "email": "tobias.funke@reqres.in",
-        "first_name": "Tobias",
-        "last_name": "Funke",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/vivekprvr/128.jpg"
-    },
-    {
-        "id": 10,
-        "email": "byron.fields@reqres.in",
-        "first_name": "Byron",
-        "last_name": "Fields",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/russoedu/128.jpg"
-    },
-    {
-        "id": 11,
-        "email": "george.edwards@reqres.in",
-        "first_name": "George",
-        "last_name": "Edwards",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/mrmoiree/128.jpg"
-    },
-    {
-        "id": 12,
-        "email": "rachel.howell@reqres.in",
-        "first_name": "Rachel",
-        "last_name": "Howell",
-        "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
-    }
-]
-export default class DoLikes extends Component {
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
+import { connect } from 'react-redux'
+import { Services } from '../Configurations/Api/Connections'
+import Preloader from '../Components/Preloader';
+import { NavigationEvents } from 'react-navigation';
+
+class DoLikes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: { follower_coin: 0 }
+            DatafromServer: [],
+            visible: true,
+            isPressed: false
         };
+    }
+
+    componentDidMount() {      
+        let id = this.props.Data.CommonData.userId
+        this.getData(id)
+    }   
+
+    getData(id) {
+        Services.LikeList(id).then(res => {
+            if (res.success == "true") {
+                this.setState({ DatafromServer: res.like_image })
+                this.setState({ visible: false })
+            }
+            else {
+                alert('Something Went Wrong !!')
+                this.setState({ visible: false })
+            }
+        }).catch((err) => {
+            this.setState({ visible: false })
+        })
+
+    }
+
+    GotoTikTok = () => {
+
     }
 
     render() {
         return (
             <View style={styles.MAINVIW}>
-                <Header title={"Do Likes"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
+                
+                <Preloader isLodaer={this.state.visible} />
+                <Header title={"Do Likes"} backPress={() => this.props.navigation.goBack()} />
+
+                <NavigationEvents
+                  onDidFocus={()=>alert('Yes')}
+                />
+              
                 <View style={{ flex: 1 }}>
                     <FlatList
-                        data={data}
+                        data={this.state.DatafromServer}
                         renderItem={({ item, index }) => (
                             <View style={styles.VIW1}>
-                                <Image source={{ uri: item.avatar }} style={styles.IMG} resizeMode="cover" />
-                                <TouchableOpacity style={styles.BTN}>
+                                <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
+                                <TouchableOpacity style={styles.BTN} onPress={() => Linking.openURL(item.video_link)}>
                                     <View style={styles.VIW2}>
                                         <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
                                             <Text style={styles.TXT}>+</Text>
@@ -169,7 +81,10 @@ export default class DoLikes extends Component {
                             </View>
                         )}
                         numColumns={3}
-                        style={{ flexWrap: "wrap", alignSelf: "center" }}
+                        style={{
+                            flexWrap: "wrap",
+                            alignSelf: this.state.DatafromServer.length < 3 ? "auto" : "center"
+                        }}
                         showsVerticalScrollIndicator={false}
                     />
                 </View>
@@ -183,3 +98,16 @@ export default class DoLikes extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DoLikes);

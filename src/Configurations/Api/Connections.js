@@ -17,7 +17,6 @@ function onSuccess(response) {
 
 
 export const Services = {
-
   login: data => api.post(`/user`, data).then(onSuccess, onError),
   setting: data => api.post(`/setting`, data).then(onSuccess, onError),
   AddContactUS: data => api.post('/add/contact-us', data).then(onSuccess, onError),
@@ -32,12 +31,13 @@ export const Services = {
   RequestFollower: data => api.post('/requestFollower', data).then(onSuccess, onError),
   RequestLikes: data => api.post('/requestLike', data).then(onSuccess, onError),
   DoFollower: data => api.post('/userFollower', data).then(onSuccess, onError),
-  DoLike: data => api.post('/userLike', data).then(onSuccess, onError),  
+  DoLike: data => api.post('/userLike', data).then(onSuccess, onError),
   Videos: data => api.post('/userVideo', data).then(onSuccess, onError),
   getListofCoins: data => api.get('/selection').then(onSuccess, onError),
   FollowerList: data => api.get('/following/', data).then(onSuccess, onError),
-  Following: data => api.post('/follower', data).then(onSuccess, onError),
+  Following: data => api.get('/follower/' + data).then(onSuccess, onError),
   PaymentCoins: data => api.get('/payment-coin').then(onSuccess, onError),
+  LikeList: data => api.get('/like/' + data).then(onSuccess, onError)
 }
 
 

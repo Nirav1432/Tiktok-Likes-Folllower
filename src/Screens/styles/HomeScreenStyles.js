@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     VIW5: { justifyContent: "center", backgroundColor: "red" },
     VIW6: { flexDirection: "row", justifyContent: "flex-end", flex: 1, paddingBottom: hp(3) },
     VIW7: { justifyContent: "center", alignItems: "flex-start", flex: 1, paddingLeft: hp(2) },
-    VIW8: { justifyContent: "center", alignItems: "flex-end",position: "absolute", width: "25%", alignSelf: "flex-end" },
+    VIW8: { justifyContent: "center", alignItems: "flex-end",position: "absolute", width: "20%", alignSelf: "flex-end" },
     VIW9: { height: hp(7), backgroundColor: "#FE7E97", borderTopLeftRadius: hp(100), borderBottomLeftRadius: hp(100), flexDirection: "row", padding: hp(1) },
     VIW10: { borderRadius: hp(100), backgroundColor: "#FE2C55", height: hp(5), width: hp(5), justifyContent: "center", alignItems: "center" },
     VIW11: { justifyContent: "center", height: "100%", width: "100%" },

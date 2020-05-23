@@ -59,7 +59,7 @@ export default class LikesList extends Component {
     render() {
         return (
             <View styles={styles.MAINVIW}>
-                <Header title={"Followers List"} backPress={() => this.props.navigation.goBack()} />
+                <Header title={"Likes List"} backPress={() => this.props.navigation.goBack()} />
                 <View style={styles.VIW1}>
                     <FlatList
                         data={data}

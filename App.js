@@ -33,6 +33,7 @@ import CommentList from './src/Screens/CommentList';
 import ShareList from './src/Screens/ShareList';
 import { Provider } from 'react-redux';
 import { store } from './src/ReduxConfig/Store/Store'
+import CommonScreen from './src/Screens/CommonScreen';
 
 const AllInDrawer = createStackNavigator(
   {
@@ -60,7 +61,8 @@ const AllInDrawer = createStackNavigator(
     DoShare: { screen: DoShare, navigationOptions: { headerShown: false } },
     DoComments: { screen: DoComments, navigationOptions: { headerShown: false } },
     CommentList: { screen: CommentList, navigationOptions: { headerShown: false } },
-    ShareList: { screen: ShareList, navigationOptions: { headerShown: false } }
+    ShareList: { screen: ShareList, navigationOptions: { headerShown: false } },
+    CommonScreen: { screen: CommonScreen, navigationOptions: { headerShown: false } }
   }
 )
 

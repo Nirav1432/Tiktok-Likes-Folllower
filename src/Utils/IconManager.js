@@ -35,7 +35,8 @@ module.exports = {
         watch:require('../Icons/watch.png'),
         whiteVideo:require('../Icons/whiteVideo.jpg'),
         mobile:require('../Icons/mobile.jpg'),
-        PinkDM:require('../Icons/PinkDM.png')
+        PinkDM:require('../Icons/PinkDM.png'),
+        heartWhite:require('../Icons/heartWhite.png')
     }
 
 

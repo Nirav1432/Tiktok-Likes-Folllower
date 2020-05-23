@@ -22,7 +22,7 @@ class Homescreen extends Component {
 
   async UNSAFE_componentWillMount() {
     SplashScreen.hide()
-    this.setAllData()
+    this.setAllData() 
   }
 
 
@@ -38,7 +38,7 @@ class Homescreen extends Component {
 
 
   render() {
-    console.log(this.props)
+
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />
@@ -65,7 +65,7 @@ class Homescreen extends Component {
                       <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
                     </View>
                     <View style={styles.VIW11}>
-                      <Text style={styles.TXT4}>{this.props.Data.coins}</Text>
+                      <Text style={styles.TXT4}>{custom_number_format(this.props.Data.coins)}</Text>
                     </View>
                   </View>
                 </View>

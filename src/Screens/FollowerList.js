@@ -3,6 +3,7 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Header from '../Components/Header';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from "./styles/FollowersListStyles";
+import {connect} from 'react-redux'
 const data = [
     {
         "id": 7,
@@ -47,19 +48,20 @@ const data = [
         "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
     }
 ]
-export default class FollowerList extends Component {
+class FollowerList extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
     }
     componentDidMount() {
-        // fetch('http://134.209.103.120/TiktokFollower/api/following/'+id,{
-        //     method:"get"
-        // })
-        // .then(res=>{
-        //     console.log(res.json())
-        // })     
+        let id=this.props.Data.CommonData.userId
+        fetch('http://134.209.103.120/TiktokFollower/api/following/'+id,{
+            method:"get"
+        })
+        .then(res=>{
+            console.log(res.json())
+        })     
     }
     render() {
         return (
@@ -95,3 +97,16 @@ export default class FollowerList extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FollowerList);

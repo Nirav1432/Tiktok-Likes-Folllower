@@ -4,6 +4,7 @@ import styles from './Styles/HeaderStyles';
 import { Icons } from '../Utils/IconManager';
 import { SafeAreaView, SafeAreaConsumer } from 'react-native-safe-area-context';
 import { connect } from 'react-redux';
+import { custom_number_format } from '../Utils/functions';
 
 class Header extends Component {
 
@@ -42,7 +43,7 @@ class Header extends Component {
                             <Image source={Icons.premium_quality} style={styles.IMG3} resizeMode="contain" />
                         </View>
                         <View style={styles.VIW11}>
-                            <Text style={styles.TXT4}>{this.props.Data.coins}</Text>
+                            <Text style={styles.TXT4}>{custom_number_format(this.props.Data.coins)}</Text>
                         </View>
                     </View>
 

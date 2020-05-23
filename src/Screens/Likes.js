@@ -11,10 +11,7 @@ export default class Likes extends Component {
             data: { follower_coin: 0 }
         };
     }
-    UNSAFE_componentWillMount() {
-        console.log(this.props)
-      //  this.setState({ data: this.props.navigation.getParam('data') })
-    }
+ 
     render() {
         return (
             <View style={styles.MAINVIW}>
