@@ -27,7 +27,7 @@ export default class Congratulations extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW4}>
-                                <Text style={styles.TXT2}>Congratulation! You Have Earned New{"\n"}Diamonds</Text>
+                                <Text style={styles.TXT2}>Congratulation! You Have Earned{"\n"}New Diamonds</Text>
                             </View>
                             <View style={styles.VIW5}>
                                 <TouchableOpacity style={styles.BTNS1} onPress={() => this.props.ClosePop()}>
