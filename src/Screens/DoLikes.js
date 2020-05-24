@@ -14,6 +14,8 @@ import AppStateListener from "react-native-appstate-listener";
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
+var oldlikes=0
+var newlikes=0
 class DoLikes extends Component {
     constructor(props) {
         super(props);
@@ -50,7 +52,6 @@ class DoLikes extends Component {
 
     GotoTikTok = async (item) => {
         await this.setState({ goForDoLike: true, VideoUrl: item.video_link, visible: true })
-        //Linking.openURL(item.video_link)
     }
 
     handleActive() {
@@ -59,23 +60,24 @@ class DoLikes extends Component {
         }
     }
 
-    getThumbnail = (event) => {
-        let dt = JSON.parse(event)
-        let thumbinfo = dt["/v/:id"]
-        console.log(thumbinfo.videoData.itemInfos)
-        this.setState({ Likes: thumbinfo.videoData.itemInfos.diggCount })
+    getThumbnail = async(event) => {
+        let dt =await JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]        
+        oldlikes=await thumbinfo.videoData.itemInfos.diggCount  
+        await this.setState({})     
         Linking.openURL(this.state.VideoUrl)
     }
 
-    getNewLikes = (event) => {
-        let dt = JSON.parse(event)
-        let thumbinfo = dt["/v/:id"]
-        console.log(thumbinfo.videoData.itemInfos)
-        this.setState({ NewLikes: thumbinfo.videoData.itemInfos.diggCount, visible: false, checkNewLikes: false })
-        console.log('Old Likes -->', this.state.Likes)
-        console.log('New Likes -->', this.state.NewLikes)
-        if (this.state.NewLikes > this.state.Likes){
-            alert('Congrats')
+    getNewLikes = async(event) => {
+        let dt =await JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]        
+        newlikes=await thumbinfo.videoData.itemInfos.diggCount  
+       await this.setState({ visible: false, })
+      await  this.setState({checkNewLikes: false })
+        console.log('Old Likes -->',oldlikes)
+        console.log('New Likes -->', newlikes)
+        if (newlikes > oldlikes){
+           setTimeout(()=>alert('Congrats'),1000) 
         }
     }
 
