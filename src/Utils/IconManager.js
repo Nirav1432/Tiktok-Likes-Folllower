@@ -37,7 +37,8 @@ module.exports = {
         mobile:require('../Icons/mobile.jpg'),
         PinkDM:require('../Icons/PinkDM.png'),
         heartWhite:require('../Icons/heartWhite.png'),
-        polo:require('../Icons/polo.png')
+        polo:require('../Icons/polo.png'),
+        sad:require('../Icons/sad.png')
     }
 
 

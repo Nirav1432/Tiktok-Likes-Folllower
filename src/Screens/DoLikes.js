@@ -12,6 +12,7 @@ import { WebView } from 'react-native-webview';
 import { NavigationEvents } from 'react-navigation';
 import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
+import SorryPop from '../Components/Popups/SorryPop';
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
 var oldlikes = 0
@@ -27,7 +28,8 @@ class DoLikes extends Component {
             VideoUrl: "",
             Likes: 0,
             NewLikes: 0,
-            congo: false
+            congo: false,
+            sorry: false
         };
     }
 
@@ -78,7 +80,10 @@ class DoLikes extends Component {
         console.log('Old Likes -->', oldlikes)
         console.log('New Likes -->', newlikes)
         if (newlikes > oldlikes) {
-            setTimeout(() => this.setState({ congo: true }), 1000)
+            setTimeout(() => this.setState({ congo: true }), 500)
+        }
+        else{
+            setTimeout(() => this.setState({ sorry: true }), 500)
         }
     }
 
@@ -98,6 +103,10 @@ class DoLikes extends Component {
                 <Congratulations
                     visible={this.state.congo}
                     ClosePop={() => this.setState({ congo: false })}
+                />
+                <SorryPop
+                    visible={this.state.sorry}
+                    ClosePop={() => this.setState({ sorry: false })}
                 />
                 {
                     this.state.goForDoLike ?
