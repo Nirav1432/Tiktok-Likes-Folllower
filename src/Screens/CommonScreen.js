@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, Clipboard, Linking } from 'react-native';
 import Preloader from '../Components/Preloader'
 import styles from './styles/GetLikesStyles';
 import { Icons } from "../Utils/IconManager";
@@ -49,7 +49,7 @@ class CommonScreen extends Component {
         }
     }
 
-    render() {        
+    render() {
         return (
             <View style={styles.MAINVIW}>
                 <Preloader isLoader={this.state.visible} />
@@ -94,7 +94,7 @@ class CommonScreen extends Component {
                     </View>
                 </View>
                 <View style={styles.VIW2}>
-                    <Text style={{textAlign:"center"}}>
+                    <Text style={{ textAlign: "center" }}>
                         <Text style={styles.TXT2}>Get</Text>
                         <Text style={[styles.TXT2, { color: "#FE2C55" }]}> {IncData.Request}</Text>
                         <Text style={styles.TXT2}> Real likes in </Text>
@@ -104,15 +104,15 @@ class CommonScreen extends Component {
                 </View>
                 <View style={[styles.VIW5, { borderWidth: this.state.borderWidth, borderColor: "red" }]}>
                     <View style={styles.VIW6}>
-                        <TextInput onChangeText={(val) => this.onChangeTextIN(val)} style={styles.TXTINPUT} placeholder="Enter Tiktok Video URL" />
+                        <TextInput value={this.state.VideoUrl} onChangeText={(val) => this.onChangeTextIN(val)} style={styles.TXTINPUT} placeholder="Enter Tiktok Video URL" />
                     </View>
-                    <TouchableOpacity style={styles.VIW7}>
+                    <TouchableOpacity style={styles.VIW7} onPress={() => this.onWatchIconClick()}>
                         <Image source={Icons.Video} style={styles.IMG} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.VIW8}>
                     <View style={{ flex: 1 }}>
-                        <TouchableOpacity style={styles.BTNSTYLE}>
+                        <TouchableOpacity style={styles.BTNSTYLE} onPress={() => this.pasteUrl()}>
                             <Text style={styles.TXT3}>Paste URL</Text>
                         </TouchableOpacity>
                     </View>
@@ -143,7 +143,7 @@ class CommonScreen extends Component {
                 if (res.tiktok_like.success == "true") {
                     this.props.setCoins(res.tiktok_like.coin)
                     this.setState({ visible: false })
-                   setTimeout(()=> this.setState({ success: true }),1000)
+                    setTimeout(() => this.setState({ success: true }), 1000)
                 }
                 else {
                     this.setState({ visible: false })
@@ -169,6 +169,29 @@ class CommonScreen extends Component {
         else {
             this.setState({ borderWidth: 1 })
         }
+    }
+
+
+    onWatchIconClick = () => {
+        let checkURl = /^(?!\s*$).+/
+        let url = this.state.VideoUrl
+        if (checkURl.test(url.trim())) {
+            if (url.match(/vm.tiktok.com/g) || url.match(/vt.tiktok.com/g)) {
+                Linking.openURL(url)
+            }
+            else {
+                alert("Url Must be Of Tiktok videos!!")
+            }
+        }
+        else {
+            this.setState({ borderWidth: 1 })
+        }
+    }
+
+    pasteUrl = async () => {
+
+        let url = await Clipboard.getString()
+        this.setState({ VideoUrl: url })
 
     }
 
@@ -178,7 +201,7 @@ class CommonScreen extends Component {
             this.setState({ VideoUrl: val, borderWidth: 0 })
         }
         else {
-            this.setState({ borderWidth: 1 })
+            this.setState({ borderWidth: 1, VideoUrl: "" })
         }
 
     }

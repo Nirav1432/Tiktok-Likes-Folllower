@@ -64,9 +64,15 @@ class LoginScreen extends Component {
           <Preloader isLoader={this.state.visible} />
 
           <View style={styles.VIW2} >
-            <View style={styles.VIW1}>
-              <Image style={styles.IMG2} source={require('../Icons/LoginImage.jpg')} />
-            </View>
+            {
+              Platform.OS === "android" ?
+                <View style={styles.VIW1}>
+                  <Image style={styles.IMG2} source={require('../Icons/LoginImage.jpg')} />
+                </View>
+                :
+                <Image style={styles.IMG2} source={require('../Icons/LoginImage.jpg')} />
+            }
+
             <Image source={Icons.AppIcon} style={[styles.IMG1, { top: this.state.top }]} resizeMode="contain" />
           </View>
 
@@ -178,10 +184,10 @@ class LoginScreen extends Component {
     }
 
     Services.login(param).then(async (res) => {
-      if (res.user.success == "true") {      
+      if (res.user.success == "true") {
         let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
         let secondPair = ["DMD", JSON.stringify(res.user.coin)]
-        await AsyncStorage.multiSet([FirstPair,secondPair])            
+        await AsyncStorage.multiSet([FirstPair, secondPair])
         await this.props.setGlobalData()
         this.props.navigation.navigate("Sidemenu")
       }

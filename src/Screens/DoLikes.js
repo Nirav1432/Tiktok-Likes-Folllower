@@ -8,7 +8,11 @@ import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections'
 import Preloader from '../Components/Preloader';
+import { WebView } from 'react-native-webview';
 import { NavigationEvents } from 'react-navigation';
+import AppStateListener from "react-native-appstate-listener";
+
+const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
 class DoLikes extends Component {
     constructor(props) {
@@ -16,14 +20,18 @@ class DoLikes extends Component {
         this.state = {
             DatafromServer: [],
             visible: true,
-            isPressed: false
+            goForDoLike: false,
+            checkNewLikes: false,
+            VideoUrl: "",
+            Likes: 0,
+            NewLikes: 0
         };
     }
 
-    componentDidMount() {      
+    componentDidMount() {
         let id = this.props.Data.CommonData.userId
         this.getData(id)
-    }   
+    }
 
     getData(id) {
         Services.LikeList(id).then(res => {
@@ -38,31 +46,99 @@ class DoLikes extends Component {
         }).catch((err) => {
             this.setState({ visible: false })
         })
-
     }
 
-    GotoTikTok = () => {
+    GotoTikTok = async (item) => {
+        await this.setState({ goForDoLike: true, VideoUrl: item.video_link, visible: true })
+        //Linking.openURL(item.video_link)
+    }
 
+    handleActive() {
+        if (this.state.goForDoLike) {
+            this.setState({ visible: true, goForDoLike: false, checkNewLikes: true })
+        }
+    }
+
+    getThumbnail = (event) => {
+        let dt = JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]
+        console.log(thumbinfo.videoData.itemInfos)
+        this.setState({ Likes: thumbinfo.videoData.itemInfos.diggCount })
+        Linking.openURL(this.state.VideoUrl)
+    }
+
+    getNewLikes = (event) => {
+        let dt = JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]
+        console.log(thumbinfo.videoData.itemInfos)
+        this.setState({ NewLikes: thumbinfo.videoData.itemInfos.diggCount, visible: false, checkNewLikes: false })
+        console.log('Old Likes -->', this.state.Likes)
+        console.log('New Likes -->', this.state.NewLikes)
+        if (this.state.NewLikes > this.state.Likes){
+            alert('Congrats')
+        }
     }
 
     render() {
+
         return (
             <View style={styles.MAINVIW}>
-                
-                <Preloader isLodaer={this.state.visible} />
+
+                <Preloader isLoader={this.state.visible} />
+
                 <Header title={"Do Likes"} backPress={() => this.props.navigation.goBack()} />
 
-                <NavigationEvents
-                //  onDidFocus={()=>alert('Yes')}
+                <AppStateListener
+                    onActive={() => this.handleActive()}
                 />
-              
+
+                {
+                    this.state.goForDoLike ?
+                        <View style={{ height: hp(0) }}>
+                            <WebView
+                                source={{ uri: this.state.VideoUrl }}
+                                javaScriptEnabled={true}
+                                allowUniversalAccessFromFileURLs={true}
+                                allowFileAccess={true}
+                                injectedJavaScript={VM_INJECTED_JAVASCRIPT}
+                                mixedContentMode={'always'}
+                                onMessage={event => this.getThumbnail(event.nativeEvent.data)}
+                                onError={() => this.setState({ visible: false })}
+                                onHttpError={() => this.setState({ visible: false })}
+                                style={{ height: 0 }}
+                            />
+                        </View>
+                        :
+                        <></>
+                }
+
+                {
+                    this.state.checkNewLikes ?
+                        <View style={{ height: hp(0) }}>
+                            <WebView
+                                source={{ uri: this.state.VideoUrl }}
+                                javaScriptEnabled={true}
+                                allowUniversalAccessFromFileURLs={true}
+                                allowFileAccess={true}
+                                injectedJavaScript={VM_INJECTED_JAVASCRIPT}
+                                mixedContentMode={'always'}
+                                onMessage={event => this.getNewLikes(event.nativeEvent.data)}
+                                onError={() => this.setState({ visible: false })}
+                                onHttpError={() => this.setState({ visible: false })}
+                                style={{ height: 0 }}
+                            />
+                        </View>
+                        :
+                        <></>
+                }
+
                 <View style={{ flex: 1 }}>
                     <FlatList
                         data={this.state.DatafromServer}
                         renderItem={({ item, index }) => (
                             <View style={styles.VIW1}>
                                 <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
-                                <TouchableOpacity style={styles.BTN} onPress={() => Linking.openURL(item.video_link)}>
+                                <TouchableOpacity style={styles.BTN} onPress={() => this.GotoTikTok(item)}>
                                     <View style={styles.VIW2}>
                                         <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
                                             <Text style={styles.TXT}>+</Text>
