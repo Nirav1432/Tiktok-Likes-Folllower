@@ -11,11 +11,11 @@ import Preloader from '../Components/Preloader';
 import { WebView } from 'react-native-webview';
 import { NavigationEvents } from 'react-navigation';
 import AppStateListener from "react-native-appstate-listener";
-
+import Congratulations from '../Components/Popups/Congratulations'
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
-var oldlikes=0
-var newlikes=0
+var oldlikes = 0
+var newlikes = 0
 class DoLikes extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +26,8 @@ class DoLikes extends Component {
             checkNewLikes: false,
             VideoUrl: "",
             Likes: 0,
-            NewLikes: 0
+            NewLikes: 0,
+            congo: false
         };
     }
 
@@ -60,24 +61,24 @@ class DoLikes extends Component {
         }
     }
 
-    getThumbnail = async(event) => {
-        let dt =await JSON.parse(event)
-        let thumbinfo = dt["/v/:id"]        
-        oldlikes=await thumbinfo.videoData.itemInfos.diggCount  
-        await this.setState({})     
+    getThumbnail = async (event) => {
+        let dt = await JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]
+        oldlikes = await thumbinfo.videoData.itemInfos.diggCount
+        await this.setState({})
         Linking.openURL(this.state.VideoUrl)
     }
 
-    getNewLikes = async(event) => {
-        let dt =await JSON.parse(event)
-        let thumbinfo = dt["/v/:id"]        
-        newlikes=await thumbinfo.videoData.itemInfos.diggCount  
-       await this.setState({ visible: false, })
-      await  this.setState({checkNewLikes: false })
-        console.log('Old Likes -->',oldlikes)
+    getNewLikes = async (event) => {
+        let dt = await JSON.parse(event)
+        let thumbinfo = dt["/v/:id"]
+        newlikes = await thumbinfo.videoData.itemInfos.diggCount
+        await this.setState({ visible: false, })
+        await this.setState({ checkNewLikes: false })
+        console.log('Old Likes -->', oldlikes)
         console.log('New Likes -->', newlikes)
-        if (newlikes > oldlikes){
-           setTimeout(()=>alert('Congrats'),1000) 
+        if (newlikes > oldlikes) {
+            setTimeout(() => this.setState({ congo: true }), 1000)
         }
     }
 
@@ -94,6 +95,10 @@ class DoLikes extends Component {
                     onActive={() => this.handleActive()}
                 />
 
+                <Congratulations
+                    visible={this.state.congo}
+                    ClosePop={() => this.setState({ congo: false })}
+                />
                 {
                     this.state.goForDoLike ?
                         <View style={{ height: hp(0) }}>

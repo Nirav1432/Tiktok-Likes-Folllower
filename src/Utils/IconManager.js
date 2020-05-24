@@ -36,7 +36,8 @@ module.exports = {
         whiteVideo:require('../Icons/whiteVideo.jpg'),
         mobile:require('../Icons/mobile.jpg'),
         PinkDM:require('../Icons/PinkDM.png'),
-        heartWhite:require('../Icons/heartWhite.png')
+        heartWhite:require('../Icons/heartWhite.png'),
+        polo:require('../Icons/polo.png')
     }
 
 
