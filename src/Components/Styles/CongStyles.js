@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     IMG: { height: hp(6), width: hp(6) },
     TXT1: { fontFamily: Fonts.LatoBlack, fontSize: hp(3.2), color: "white" },
     TXT2: { fontFamily: Fonts.LatoBold, color: "white", fontSize: hp(2.3), alignSelf: "center", textAlign: "center" },
-    TXT3: { fontFamily: Fonts.LatoBlack, color: "white", fontSize: hp(2.5) },
+    TXT3: { fontFamily: Fonts.LatoBlack, color: "white", fontSize: hp(2) },
     BTNS1: { marginRight: hp(2), justifyContent: "center", alignItems: "center", height: hp(5.5), width: wp(27), borderRadius: hp(100), backgroundColor: "#FE2C55", elevation: 10 },
     BTNS2: { marginLeft: hp(2), justifyContent: "center", alignItems: "center", height: hp(5.5), width: wp(27), borderRadius: hp(100), backgroundColor: "#FE2C55", elevation: 10 },
-    VIWX: { justifyContent: "center", alignItems: "center", flex: 1 }
+    VIWX: { justifyContent: "center", alignItems: "center", flex: 1, paddingHorizontal:wp(2) }
 
 })
 
