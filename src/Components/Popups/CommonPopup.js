@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../Styles/GetFollowerPopStyles'
 import Modal from 'react-native-modal';
 import { Icons } from '../../Utils/IconManager';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default class CommonPopup extends Component {
     constructor(props) {
@@ -32,9 +33,9 @@ export default class CommonPopup extends Component {
                     <View style={styles.VIW4}>
                         {
                             this.props.type == "Like" ?
-                                <Text style={styles.TXT2}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
+                                <Text style={[styles.TXT2,{fontSize:hp(2)}]}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
                                 :
-                                <Text style={styles.TXT2}>Your follower requested process{"\n"}Successfully</Text>
+                                <Text style={[styles.TXT2,{fontSize:hp(2)}]}>Your follower requested process{"\n"}Successfully</Text>
                         }
 
                     </View>
