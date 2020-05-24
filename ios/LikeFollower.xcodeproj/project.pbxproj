@@ -661,6 +661,7 @@
 			baseConfigurationReference = 0D3540C92D596C05B8CE2DE9 /* Pods-LikeFollower.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hardik Lukhi (QSMQH7336R)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -684,6 +685,7 @@
 			baseConfigurationReference = 24F729B280498D6AF716CEF7 /* Pods-LikeFollower.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hardik Lukhi (QSMQH7336R)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
