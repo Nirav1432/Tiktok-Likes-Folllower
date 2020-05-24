@@ -42,14 +42,16 @@ class DoLikes extends Component {
     }
 
     getData(id) {
-        Services.LikeList(id).then(res => {
+        Services.LikeList(id).then(async (res) => {
             if (res.success == "true") {
                 this.setState({ DatafromServer: res.like_image })
                 this.setState({ visible: false })
             }
             else {
                 alert('No Data Found !!')
-                this.setState({ visible: false })
+                this.setState({ visible: false, })
+                await this.setState({ DatafromServer: [] })
+                this.setState({})
             }
         }).catch((err) => {
             this.setState({ visible: false })
@@ -87,7 +89,7 @@ class DoLikes extends Component {
                 if (res.success == "true") {
                     await this.props.setCoins(res.coin)
                     await this.getData(id)
-                    this.setState({ visible: false })                    
+                    this.setState({ visible: false })
                     setTimeout(() => this.setState({ congo: true }), 500)
                 }
                 else {

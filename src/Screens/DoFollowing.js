@@ -28,13 +28,15 @@ class DoFollowing extends Component {
   }
 
   getNewFollower = (id) => {
-    Services.Following(id).then((res) => {
+    Services.Following(id).then(async (res) => {
       if (res.success == "true") {
-        this.setState({ datafromserver: res.followers })
+        await this.setState({ datafromserver: res.followers })
         this.setState({ visible: false })
       }
       else {
         this.setState({ visible: false })
+        await this.setState({ datafromserver: [] })
+        this.setState({})
       }
     })
   }
@@ -49,7 +51,7 @@ class DoFollowing extends Component {
         await this.getNewFollower(userId)
       }
       else {
-        this.setState({ visible: false })
+        this.setState({ visible: false, datafromserver: [] })
       }
     })
   }
