@@ -32,7 +32,7 @@ export default class CommonPopup extends Component {
                     <View style={styles.VIW4}>
                         {
                             this.props.type == "Like" ?
-                                <Text style={styles.TXT2}>Congratulations! Your Like requested process{"\n"}Successfully</Text>
+                                <Text style={styles.TXT2}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
                                 :
                                 <Text style={styles.TXT2}>Your follower requested process{"\n"}Successfully</Text>
                         }
