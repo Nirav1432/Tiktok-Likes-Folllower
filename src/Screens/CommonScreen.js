@@ -59,7 +59,14 @@ class CommonScreen extends Component {
                 />
                 <CommonPopup
                     visible={this.state.success}
-                    type={"Like"}
+                    type={this.props.navigation.getParam('type') == "Get Likes" ?
+                        "Like"
+                        :
+                        this.props.navigation.getParam('type') == "Get Comments" ?
+                            "Comment"
+                            :
+                            "Shares"
+                    }
                     ClosePop={() => this.setState({ success: false, VideoUrl: "" })}
                 />
                 {
@@ -86,7 +93,15 @@ class CommonScreen extends Component {
                     <View>
                         <Text>
                             <Text style={styles.TXT1}>Get</Text>
-                            <Text style={[styles.TXT1, { color: "#FE2C55" }]}> Likes</Text>
+                            <Text style={[styles.TXT1, { color: "#FE2C55" }]}> {
+                                this.props.navigation.getParam('type') == "Get Likes" ?
+                                    "Likes"
+                                    :
+                                    this.props.navigation.getParam('type') == "Get Comments" ?
+                                        "Comment"
+                                        :
+                                        "Share"
+                            }</Text>
                         </Text>
                     </View>
                     <View>
@@ -97,7 +112,15 @@ class CommonScreen extends Component {
                     <Text style={{ textAlign: "center" }}>
                         <Text style={styles.TXT2}>Get</Text>
                         <Text style={[styles.TXT2, { color: "#FE2C55" }]}> {IncData.Request}</Text>
-                        <Text style={styles.TXT2}> Real likes in </Text>
+                        <Text style={styles.TXT2}> Real {
+                            this.props.navigation.getParam('type') == "Get Likes" ?
+                                "Likes"
+                                :
+                                this.props.navigation.getParam('type') == "Get Comments" ?
+                                    "Comment"
+                                    :
+                                    "Shares"
+                        } in </Text>
                         <Text style={[styles.TXT2, { color: "#FE2C55" }]}> {IncData.Diamonds}</Text>
                         <Text style={styles.TXT2}> diamonds</Text>
                     </Text>
@@ -137,21 +160,62 @@ class CommonScreen extends Component {
         let thumbinfo = dt["/v/:id"]
         let thumbNail = thumbinfo.shareMeta.image.url
         if (thumbNail != null || thumbNail != "") {
+
             let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: thumbNail }
-            // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: 1, like_coin: 1, video_thumb: thumbNail }
-            Services.RequestLikes(data).then((res) => {
-                if (res.tiktok_like.success == "true") {
-                    this.props.setCoins(res.tiktok_like.coin)
-                    this.setState({ visible: false })
-                    setTimeout(() => this.setState({ success: true }), 1000)
-                }
-                else {
+
+            if (this.props.navigation.getParam('type') == "Get Likes") {
+
+                Services.RequestLikes(data).then(async (res) => {
+                    if (res.tiktok_like.success == "true") {
+                        this.props.setCoins(res.tiktok_like.coin)
+                        this.setState({ visible: false })
+                        setTimeout(() => this.setState({ success: true }), 500)
+                    }
+                    else {
+                        await this.setState({ visible: false })
+                        alert("Something Went Wrong, Try Again Later")
+                    }
+                }).catch(() => {
                     this.setState({ visible: false })
                     alert("Something Went Wrong, Try Again Later")
-                }
-            }).catch(() => {
-                alert("Something Went Wrong, Try Again Later")
-            })
+                })
+            }
+            else if (this.props.navigation.getParam('type') == "Get Comments") {
+
+                Services.RequestComment(data).then(async (res) => {
+                    if (res.tiktok_like.success == "true") {
+                        this.props.setCoins(res.tiktok_like.coin)
+                        this.setState({ visible: false })
+                        setTimeout(() => this.setState({ success: true }), 500)
+                    }
+                    else {
+                        await this.setState({ visible: false })
+                        alert("Something Went Wrong, Try Again Later")
+                    }
+                }).catch(() => {
+                    this.setState({ visible: false })
+                    alert("Something Went Wrong, Try Again Later")
+                })
+
+            }
+            else {
+                Services.RequestShare(data).then(async (res) => {
+                    if (res.tiktok_like.success == "true") {
+                        this.props.setCoins(res.tiktok_like.coin)
+                        await this.setState({ visible: false })
+                        setTimeout(() => this.setState({ success: true }), 500)
+                    }
+                    else {
+                        await this.setState({ visible: false })
+                        alert("Something Went Wrong, Try Again Later")
+                    }
+                }).catch(() => {
+                    this.setState({ visible: false })
+                    alert("Something Went Wrong, Try Again Later")
+                })
+            }
+
+
         }
     }
 

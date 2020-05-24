@@ -57,7 +57,7 @@ export default class GetComments extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })} onPress={() => this.props.navigation.navigate('CommonScreen', { type: "Get Comments", data: { Diamonds: item.coin, Request: item.request } })}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.GetComments} style={styles.IMG4} resizeMode="contain" />
                                     </View>

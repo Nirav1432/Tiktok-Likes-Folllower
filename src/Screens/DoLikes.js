@@ -17,6 +17,8 @@ const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.strin
 
 var oldlikes = 0
 var newlikes = 0
+var id = ""
+
 class DoLikes extends Component {
     constructor(props) {
         super(props);
@@ -28,13 +30,14 @@ class DoLikes extends Component {
             VideoUrl: "",
             Likes: 0,
             NewLikes: 0,
+            request_user_id: "",
             congo: false,
             sorry: false
         };
     }
 
     componentDidMount() {
-        let id = this.props.Data.CommonData.userId
+        id = this.props.Data.CommonData.userId
         this.getData(id)
     }
 
@@ -54,7 +57,7 @@ class DoLikes extends Component {
     }
 
     GotoTikTok = async (item) => {
-        await this.setState({ goForDoLike: true, VideoUrl: item.video_link, visible: true })
+        await this.setState({ goForDoLike: true, VideoUrl: item.video_link, visible: true, request_user_id: item.user_id })
     }
 
     handleActive() {
@@ -75,14 +78,26 @@ class DoLikes extends Component {
         let dt = await JSON.parse(event)
         let thumbinfo = dt["/v/:id"]
         newlikes = await thumbinfo.videoData.itemInfos.diggCount
-        await this.setState({ visible: false, })
         await this.setState({ checkNewLikes: false })
         console.log('Old Likes -->', oldlikes)
         console.log('New Likes -->', newlikes)
         if (newlikes > oldlikes) {
-            setTimeout(() => this.setState({ congo: true }), 500)
+            let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
+            Services.DoLike(data).then(async (res) => {
+                if (res.success == "true") {
+                    await this.props.setCoins(res.coin)
+                    await this.getData(id)
+                    this.setState({ visible: false })                    
+                    setTimeout(() => this.setState({ congo: true }), 500)
+                }
+                else {
+                    this.setState({ visible: false })
+                }
+            })
+
         }
-        else{
+        else {
+            await this.setState({ visible: false, })
             setTimeout(() => this.setState({ sorry: true }), 500)
         }
     }

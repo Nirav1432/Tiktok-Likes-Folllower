@@ -43,14 +43,14 @@ class GetFollower extends Component {
                     if (obj.type == 2) {
                         this.state.DataFromServer.push(obj)
                     }
-                }                
-            }            
+                }
+            }
         }).catch((res) => {
             this.setState({ visible: false })
         })
     }
 
-    PopupMangement = () => {    
+    PopupMangement = () => {
 
         this.setState({ Visi: false })
         let data = { user_id: this.state.userId, request_follower: this.state.RequestFollowers, follower_coin: this.state.ClickedDiamond }
@@ -60,13 +60,13 @@ class GetFollower extends Component {
             this.setState({ NotEnough: true })
         }
         else {
-            
+
             this.setState({ visible: true })
             Services.RequestFollower(data).then(async (res) => {
                 if (res.tiktok_follower.success == "true") {
                     this.setState({ visible: false })
                     await this.props.setCoins(res.tiktok_follower.coin)
-                  setTimeout(() =>this.setState({ Visi1: true }), 1000)
+                    setTimeout(() => this.setState({ Visi1: true }), 500)
                 }
             })
         }

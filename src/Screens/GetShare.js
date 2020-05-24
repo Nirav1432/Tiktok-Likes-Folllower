@@ -58,7 +58,7 @@ export default class GetShare extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.Share1} style={styles.IMG44} resizeMode="contain" />
                                     </View>

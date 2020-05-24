@@ -18,26 +18,41 @@ export default class CommonPopup extends Component {
                 <View style={styles.VIW2}>
                     <View style={styles.VIW3}>
                         <View style={styles.VIW6}>
-                            <Image source={this.props.type == "Like" ? Icons.Like : Icons.follow} style={styles.IMG} resizeMode="contain" />
+                            <Image source={this.props.type == "Like" ?
+                                Icons.Like :
+                                this.props.type == "Comment" ?
+                                Icons.comment
+                                :
+                                Icons.shareHome
+                            }
+
+
+                                style={styles.IMG} resizeMode="contain" />
                         </View>
                         <View style={styles.VIW7}>
                             {
                                 this.props.type == "Like" ?
                                     <Text style={styles.TXT1}>Like Request</Text>
                                     :
-                                    <Text style={styles.TXT1}>Follow Request</Text>
+                                    this.props.type == "Comment" ?
+                                        <Text style={styles.TXT1}>Comment Request</Text>
+                                        :
+                                        <Text style={styles.TXT1}>Share Request</Text>
                             }
 
                         </View>
                     </View>
-                    <View style={styles.VIW4}>
+                    <View style={styles.VIW4}>                      
                         {
                             this.props.type == "Like" ?
-                                <Text style={[styles.TXT2,{fontSize:hp(2)}]}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
+                                <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
                                 :
-                                <Text style={[styles.TXT2,{fontSize:hp(2)}]}>Your follower requested process{"\n"}Successfully</Text>
-                        }
+                                this.props.type == "Comment" ?
+                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Comment requested{"\n"}processed Successfully.</Text>
+                                    :
+                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Share requested{"\n"}processed Successfully.</Text>
 
+                        }
                     </View>
                     <View style={styles.VIW5}>
                         <TouchableOpacity style={styles.BTNS1} onPress={() => this.props.ClosePop()}>
