@@ -143,7 +143,7 @@ class CommonScreen extends Component {
                         <TouchableOpacity style={styles.BTNSTYLE1} onPress={() => this.PopupMangement()}>
                             <Text style={styles.TXT3}>Submit</Text>
                             <Image source={Icons.premium_quality} style={styles.IMG1} resizeMode="contain" />
-                            <Text style={styles.TXT3}>60</Text>
+                            <Text style={styles.TXT3}>{IncData.Diamonds}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -167,8 +167,8 @@ class CommonScreen extends Component {
 
                 Services.RequestLikes(data).then(async (res) => {
                     if (res.tiktok_like.success == "true") {
-                        this.props.setCoins(res.tiktok_like.coin)
-                        this.setState({ visible: false })
+                        await this.props.setCoins(res.tiktok_like.coin)
+                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
                         setTimeout(() => this.setState({ success: true }), 500)
                     }
                     else {
@@ -184,8 +184,8 @@ class CommonScreen extends Component {
 
                 Services.RequestComment(data).then(async (res) => {
                     if (res.tiktok_like.success == "true") {
-                        this.props.setCoins(res.tiktok_like.coin)
-                        this.setState({ visible: false })
+                        await this.props.setCoins(res.tiktok_like.coin)
+                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
                         setTimeout(() => this.setState({ success: true }), 500)
                     }
                     else {
@@ -201,8 +201,8 @@ class CommonScreen extends Component {
             else {
                 Services.RequestShare(data).then(async (res) => {
                     if (res.tiktok_like.success == "true") {
-                        this.props.setCoins(res.tiktok_like.coin)
-                        await this.setState({ visible: false })
+                        await this.props.setCoins(res.tiktok_like.coin)
+                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
                         setTimeout(() => this.setState({ success: true }), 500)
                     }
                     else {

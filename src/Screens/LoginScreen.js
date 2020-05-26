@@ -185,9 +185,9 @@ class LoginScreen extends Component {
 
     Services.login(param).then(async (res) => {
       if (res.user.success == "true") {
-        let FirstPair = ["UserNaData", JSON.stringify(FinalData)]
-        let secondPair = ["DMD", JSON.stringify(res.user.coin)]
-        await AsyncStorage.multiSet([FirstPair, secondPair])
+        FinalData["Tiktok"] = this.state.TiktokUrl  
+        FinalData["Type"] = this.state.type        
+        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))      
         await this.props.setGlobalData()
         this.props.navigation.navigate("Sidemenu")
       }

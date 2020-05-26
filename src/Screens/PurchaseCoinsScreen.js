@@ -6,41 +6,9 @@ import Header from '../Components/Header';
 import { connect } from 'react-redux';
 import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
+import { Icons } from '../Utils/IconManager'
+import RazorpayCheckout from 'react-native-razorpay';
 
-var offers = [
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 60
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 900
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 60
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 100
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 60
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 100
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 60
-  },
-  {
-    title: " Get 1200 Diamonds in $0,99 USD",
-    diamonds: 100
-  },
-]
 
 class PurchaseCoinsScreen extends Component {
 
@@ -48,13 +16,16 @@ class PurchaseCoinsScreen extends Component {
     super(props);
     this.state = {
       offers: [],
-      visible: true
+      visible: true,
     };
   }
 
   UNSAFE_componentWillMount() {
     let id = this.props.Data.CommonData.userId
     this.getPaymentCoins(id)
+    // fetch('https://data.fixer.io/api/latest').then(res=>{
+    //   console.log(res.json())
+    // })
   }
 
   getPaymentCoins = (id) => {
@@ -64,8 +35,26 @@ class PurchaseCoinsScreen extends Component {
     })
   }
 
+  payToDestination = (amount) => {
+    let FinalAmount = (amount * 100)
+    var options = {
+      description: 'For Test a Rezorpay',
+      image: Icons.AppIcon,
+      currency: 'USD',
+      key: 'rzp_test_5dtxC28tVPpcLX',
+      amount: FinalAmount.toString(),
+      name: 'Nirav Bhesaniya',
+      theme: { color: '#FE2C55' }
+    }
+    RazorpayCheckout.open(options).then((data) => {
+      console.log(data)
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 
   render() {
+
     return (
       <View style={styles.MAINVIW}>
         <Preloader isLoader={this.state.visible} />
@@ -81,17 +70,17 @@ class PurchaseCoinsScreen extends Component {
                       <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                     </View>
                     <View>
-                      <Text style={styles.TXT6}>{" Get "+ item.coin +" Diamonds in "+item.doller}</Text>
+                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + '$' + item.doller + " " + item.type}</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.buy}>
+                  <TouchableOpacity style={styles.buy} onPress={() => this.payToDestination(item.doller)}>
                     <Text style={styles.TXT3}>Buy</Text>
                   </TouchableOpacity>
                 </View>
               }
             />
             :
-            <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
               <Text style={styles.TXT6}>{"No Offers Available Currently"}</Text>
             </View>
 

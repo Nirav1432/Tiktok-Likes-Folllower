@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Linking } from 'react-native';
 import styles from './styles/DoFollowingStyles';
 import { Icons } from "../Utils/IconManager";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -9,8 +9,17 @@ import { Services } from '../Configurations/Api/Connections';
 import { connect } from 'react-redux';
 import Preloader from '../Components/Preloader';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
+import AppStateListener from "react-native-appstate-listener";
+import Congratulations from '../Components/Popups/Congratulations'
+import SorryPop from '../Components/Popups/SorryPop';
+import { WebView } from 'react-native-webview';
 
 var userId = ""
+const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
+const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
+
+var oldlikes = 0
+var newlikes = 0
 
 class DoFollowing extends Component {
 
@@ -19,11 +28,21 @@ class DoFollowing extends Component {
     this.state = {
       datafromserver: [],
       visible: true,
+      goForDoLike: false,
+      checkNewLikes: false,
+      VideoUrl: "",
+      ProfileUrl: "",
+      request_user_id: "",
+      congo: false,
+      sorry: false,
+      getUserLike: false,
+      Type: ""
     };
   }
 
-  UNSAFE_componentWillMount() {
+  async UNSAFE_componentWillMount() {
     userId = this.props.Data.CommonData.userId
+    await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type })
     this.getNewFollower(userId)
   }
 
@@ -31,7 +50,7 @@ class DoFollowing extends Component {
     Services.Following(id).then(async (res) => {
       if (res.success == "true") {
         await this.setState({ datafromserver: res.followers })
-        this.setState({ visible: false })
+        this.setState({ getUserLike: true })
       }
       else {
         this.setState({ visible: false })
@@ -56,11 +75,81 @@ class DoFollowing extends Component {
     })
   }
 
+  GotoTikTok = async (item) => {
+    await this.setState({ VideoUrl: item.user_link, visible: true, request_user_id: item.user_id, goForDoLike: true })
+    Linking.openURL(this.state.VideoUrl)
+  }
+
+
+
+  handleActive() {
+    if (this.state.goForDoLike) {
+      this.setState({ visible: true, checkNewLikes: true })
+    }
+  }
+
   render() {
     return (
       <View style={styles.MAINVIW}>
+
         <Preloader isLoader={this.state.visible} />
+
         <Header title={"Do Following"} backPress={() => this.props.navigation.goBack()} />
+
+        <AppStateListener
+          onActive={() => this.handleActive()}
+        />
+
+        <Congratulations
+          visible={this.state.congo}
+          ClosePop={() => this.setState({ congo: false })}
+        />
+
+        <SorryPop
+          visible={this.state.sorry}
+          ClosePop={() => this.setState({ sorry: false })}
+        />
+
+        {
+          this.state.getUserLike ?
+            <View style={{ height: hp(0) }}>
+              <WebView
+                source={{ uri: this.state.ProfileUrl }}
+                javaScriptEnabled={true}
+                allowUniversalAccessFromFileURLs={true}
+                allowFileAccess={true}
+                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                mixedContentMode={'always'}
+                onMessage={event => this.state.Type == "vm" ? this.VM_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
+                onError={() => this.setState({ visible: false })}
+                onHttpError={() => this.setState({ visible: false })}
+                style={{ height: 0 }}
+              />
+            </View>
+            :
+            <></>
+        }
+
+        {
+          this.state.checkNewLikes ?
+            <View style={{ height: hp(0) }}>
+              <WebView
+                source={{ uri: this.state.ProfileUrl }}
+                javaScriptEnabled={true}
+                allowUniversalAccessFromFileURLs={true}
+                allowFileAccess={true}
+                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                mixedContentMode={'always'}
+                onMessage={event => this.state.Type == "vm" ? this.VM_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
+                onError={() => this.setState({ visible: false })}
+                onHttpError={() => this.setState({ visible: false })}
+                style={{ height: 0 }}
+              />
+            </View>
+            :
+            <></>
+        }
+
         <View>
           <FlatList
             data={this.state.datafromserver}
@@ -92,7 +181,7 @@ class DoFollowing extends Component {
                         <Text style={styles.TXT22}>5</Text>
                       </View>
                     </View>
-                    <TouchableOpacity style={styles.Button} onPress={() => this.followUser(item)}>
+                    <TouchableOpacity style={styles.Button} onPress={() => this.GotoTikTok(item)}>
                       <Text style={styles.TXT3}>Follow</Text>
                     </TouchableOpacity>
                   </View>
@@ -133,6 +222,105 @@ class DoFollowing extends Component {
 
     );
   }
+
+
+
+  WWW_getOldLikes = async (data) => {
+    let DATA = JSON.parse(data)
+    let FinalData = await DATA.props.pageProps.userData
+    oldlikes = FinalData.following
+    this.setState({ visible: false })
+  }
+
+
+  WWW_getNewLikes = async (data) => {
+
+    let DATA = JSON.parse(data)
+    let FinalData = await DATA.props.pageProps.userData
+    newlikes = FinalData.following
+
+    this.setState({ checkNewLikes: false, goForDoLike: false })
+
+    console.log('Old Followers -->', oldlikes)
+    console.log('New NewFOllowers -->', newlikes)
+
+
+    if (newlikes > oldlikes) {
+      let data = { user_id: userId, request_user: this.state.request_user_id }
+      Services.DoFollower(data).then(async (res) => {
+        if (res.success == "true") {
+          await this.props.setCoins(res.coin)
+          await this.getNewFollower(userId)
+          this.setState({ visible: false })
+          setTimeout(() => this.setState({ congo: true }), 500)          
+        }
+        else {
+          this.setState({ visible: false })
+        }
+      })    
+    }
+    else {
+      await this.setState({ visible: false, })
+      setTimeout(() => this.setState({ sorry: true }), 500)
+    }
+  }
+
+
+
+  VM_getOldLikes = async (event) => {
+
+    let obj = await JSON.parse(event)
+
+    var result = Object.keys(obj).map(function (key) {
+      return [Number(key), obj[key]];
+    });
+
+    oldlikes = await result[0][1].userData.following
+
+    this.setState({ visible: false })
+  }
+
+
+
+  VM_getNewLikes = async (event) => {
+
+    let obj = await JSON.parse(event)
+
+    var result = Object.keys(obj).map(function (key) {
+      return [Number(key), obj[key]];
+    });
+
+    newlikes = await result[0][1].userData.following
+
+    this.setState({ checkNewLikes: false, goForDoLike: false })
+
+
+    console.log('Old Likes -->', oldlikes)
+    console.log('New Likes -->', newlikes)
+
+
+    if (newlikes > oldlikes) {
+      let data = { user_id: userId, request_user: this.state.request_user_id }
+      Services.DoFollower(data).then(async (res) => {
+        if (res.success == "true") {
+          await this.props.setCoins(res.coin)
+          await this.getNewFollower(userId)
+          this.setState({ visible: false })
+          setTimeout(() => this.setState({ congo: true }), 500)
+        }
+        else {
+          this.setState({ visible: false })
+        }
+      })     
+    }
+    else {
+      await this.setState({ visible: false, })
+      setTimeout(() => this.setState({ sorry: true }), 500)
+    }
+
+
+  }
+
 }
 const mapStateToProps = (state) => {
   return {
