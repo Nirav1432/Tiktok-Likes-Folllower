@@ -164,8 +164,15 @@ class LoginScreen extends Component {
       return [Number(key), obj[key]];
     });
 
-    let FinalData = await result[0][1].userData
-    this.CheckLogin(FinalData)
+    if (result[0][1].userData != undefined) {
+      let FinalData = await result[0][1].userData
+      this.CheckLogin(FinalData)
+    }
+    else {
+      this.setState({ visible: false })
+      alert('Invalid Url ! Please Enter Tiktok Profile Url')
+
+    }
   }
 
 
@@ -185,9 +192,9 @@ class LoginScreen extends Component {
 
     Services.login(param).then(async (res) => {
       if (res.user.success == "true") {
-        FinalData["Tiktok"] = this.state.TiktokUrl  
-        FinalData["Type"] = this.state.type        
-        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))      
+        FinalData["Tiktok"] = this.state.TiktokUrl
+        FinalData["Type"] = this.state.type
+        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
         await this.props.setGlobalData()
         this.props.navigation.navigate("Sidemenu")
       }

@@ -40,8 +40,8 @@ class PurchaseCoinsScreen extends Component {
     var options = {
       description: 'For Test a Rezorpay',
       image: Icons.AppIcon,
-      currency: 'USD',
-      key: 'rzp_test_5dtxC28tVPpcLX',
+      currency: 'INR',
+      key: "rzp_test_0gruu49Oyj2Fga",
       amount: FinalAmount.toString(),
       name: 'Nirav Bhesaniya',
       theme: { color: '#FE2C55' }
