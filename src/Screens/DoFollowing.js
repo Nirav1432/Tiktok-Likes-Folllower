@@ -42,7 +42,7 @@ class DoFollowing extends Component {
 
   async UNSAFE_componentWillMount() {
     userId = this.props.Data.CommonData.userId
-    await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type })
+    await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type, uniqueId: '@' + this.props.Data.CommonData.uniqueId })
     this.getNewFollower(userId)
   }
 
@@ -114,13 +114,13 @@ class DoFollowing extends Component {
           this.state.getUserLike ?
             <View style={{ height: hp(0) }}>
               <WebView
-                source={{ uri: this.state.ProfileUrl }}
+                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
                 javaScriptEnabled={true}
                 allowUniversalAccessFromFileURLs={true}
                 allowFileAccess={true}
-                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
                 mixedContentMode={'always'}
-                onMessage={event => this.state.Type == "vm" ? this.VM_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
+                onMessage={event => this.state.Type == "vm" ? this.WWW_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
                 onError={() => this.setState({ visible: false })}
                 onHttpError={() => this.setState({ visible: false })}
                 style={{ height: 0 }}
@@ -130,17 +130,18 @@ class DoFollowing extends Component {
             <></>
         }
 
+
         {
           this.state.checkNewLikes ?
             <View style={{ height: hp(0) }}>
               <WebView
-                source={{ uri: this.state.ProfileUrl }}
+                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
                 javaScriptEnabled={true}
                 allowUniversalAccessFromFileURLs={true}
                 allowFileAccess={true}
-                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
                 mixedContentMode={'always'}
-                onMessage={event => this.state.Type == "vm" ? this.VM_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
+                onMessage={event => this.state.Type == "vm" ? this.WWW_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
                 onError={() => this.setState({ visible: false })}
                 onHttpError={() => this.setState({ visible: false })}
                 style={{ height: 0 }}
@@ -149,6 +150,7 @@ class DoFollowing extends Component {
             :
             <></>
         }
+
 
         <View>
           <FlatList
@@ -242,7 +244,7 @@ class DoFollowing extends Component {
     this.setState({ checkNewLikes: false, goForDoLike: false })
 
     console.log('Old Followers -->', oldlikes)
-    console.log('New NewFOllowers -->', newlikes)
+    console.log('New Followers -->', newlikes)
 
 
     if (newlikes > oldlikes) {
@@ -252,12 +254,15 @@ class DoFollowing extends Component {
           await this.props.setCoins(res.coin)
           await this.getNewFollower(userId)
           this.setState({ visible: false })
-          setTimeout(() => this.setState({ congo: true }), 500)          
+          setTimeout(() => this.setState({ congo: true }), 500)
+          oldlikes = newlikes
+          newlikes = 0
+          this.setState({})
         }
         else {
           this.setState({ visible: false })
         }
-      })    
+      })
     }
     else {
       await this.setState({ visible: false, })
@@ -282,44 +287,44 @@ class DoFollowing extends Component {
 
 
 
-  VM_getNewLikes = async (event) => {
+  // VM_getNewLikes = async (event) => {
 
-    let obj = await JSON.parse(event)
+  //   let obj = await JSON.parse(event)
 
-    var result = Object.keys(obj).map(function (key) {
-      return [Number(key), obj[key]];
-    });
+  //   var result = Object.keys(obj).map(function (key) {
+  //     return [Number(key), obj[key]];
+  //   });
 
-    newlikes = await result[0][1].userData.following
+  //   newlikes = await result[0][1].userData.following
 
-    this.setState({ checkNewLikes: false, goForDoLike: false })
-
-
-    console.log('Old Likes -->', oldlikes)
-    console.log('New Likes -->', newlikes)
+  //   this.setState({ checkNewLikes: false, goForDoLike: false })
 
 
-    if (newlikes > oldlikes) {
-      let data = { user_id: userId, request_user: this.state.request_user_id }
-      Services.DoFollower(data).then(async (res) => {
-        if (res.success == "true") {
-          await this.props.setCoins(res.coin)
-          await this.getNewFollower(userId)
-          this.setState({ visible: false })
-          setTimeout(() => this.setState({ congo: true }), 500)
-        }
-        else {
-          this.setState({ visible: false })
-        }
-      })     
-    }
-    else {
-      await this.setState({ visible: false, })
-      setTimeout(() => this.setState({ sorry: true }), 500)
-    }
+  //   console.log('Old Likes -->', oldlikes)
+  //   console.log('New Likes -->', newlikes)
 
 
-  }
+  //   if (newlikes > oldlikes) {
+  //     let data = { user_id: userId, request_user: this.state.request_user_id }
+  //     Services.DoFollower(data).then(async (res) => {
+  //       if (res.success == "true") {
+  //         await this.props.setCoins(res.coin)
+  //         await this.getNewFollower(userId)
+  //         this.setState({ visible: false })
+  //         setTimeout(() => this.setState({ congo: true }), 500)
+  //       }
+  //       else {
+  //         this.setState({ visible: false })
+  //       }
+  //     })
+  //   }
+  //   else {
+  //     await this.setState({ visible: false, })
+  //     setTimeout(() => this.setState({ sorry: true }), 500)
+  //   }
+
+
+  // }
 
 }
 const mapStateToProps = (state) => {

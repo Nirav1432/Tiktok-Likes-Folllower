@@ -35,19 +35,21 @@ class DoLikes extends Component {
             congo: false,
             sorry: false,
             getUserLike: false,
-            Type: ""
+            Type: "",
+            uniqueId: ""
         };
     }
 
     async  componentDidMount() {
         id = this.props.Data.CommonData.userId
-        await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type })
+        await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type, uniqueId: '@' + this.props.Data.CommonData.uniqueId })
         this.getData(id)
     }
 
 
 
     getData(id) {
+        console.log("https://www.tiktok.com/" + this.state.uniqueId)
         Services.LikeList(id).then(async (res) => {
             if (res.success == "true") {
                 this.setState({ DatafromServer: res.like_image })
@@ -105,13 +107,13 @@ class DoLikes extends Component {
                     this.state.getUserLike ?
                         <View style={{ height: hp(0) }}>
                             <WebView
-                                source={{ uri: this.state.ProfileUrl }}
+                                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
                                 javaScriptEnabled={true}
                                 allowUniversalAccessFromFileURLs={true}
                                 allowFileAccess={true}
-                                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
                                 mixedContentMode={'always'}
-                                onMessage={event => this.state.Type == "vm" ? this.VM_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
+                                onMessage={event => this.state.Type == "vm" ? this.WWW_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
                                 onError={() => this.setState({ visible: false })}
                                 onHttpError={() => this.setState({ visible: false })}
                                 style={{ height: 0 }}
@@ -126,13 +128,13 @@ class DoLikes extends Component {
                     this.state.checkNewLikes ?
                         <View style={{ height: hp(0) }}>
                             <WebView
-                                source={{ uri: this.state.ProfileUrl }}
+                                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
                                 javaScriptEnabled={true}
                                 allowUniversalAccessFromFileURLs={true}
                                 allowFileAccess={true}
-                                injectedJavaScript={this.state.Type == "vm" ? VM_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
                                 mixedContentMode={'always'}
-                                onMessage={event => this.state.Type == "vm" ? this.VM_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
+                                onMessage={event => this.state.Type == "vm" ? this.WWW_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
                                 onError={() => this.setState({ visible: false })}
                                 onHttpError={() => this.setState({ visible: false })}
                                 style={{ height: 0 }}
@@ -193,8 +195,6 @@ class DoLikes extends Component {
     }
 
 
-
-
     WWW_getNewLikes = async (data) => {
 
         let DATA = JSON.parse(data)
@@ -215,6 +215,9 @@ class DoLikes extends Component {
                     await this.getData(id)
                     this.setState({ visible: false })
                     setTimeout(() => this.setState({ congo: true }), 500)
+                    oldlikes=newlikes
+                    newlikes=0
+                    this.setState({})
                 }
                 else {
                     this.setState({ visible: false })
@@ -230,60 +233,60 @@ class DoLikes extends Component {
 
 
 
-    VM_getOldLikes = async (event) => {
+    // VM_getOldLikes = async (event) => {
 
-        let obj = await JSON.parse(event)
+    //     let obj = await JSON.parse(event)
 
-        var result = Object.keys(obj).map(function (key) {
-            return [Number(key), obj[key]];
-        });
+    //     var result = Object.keys(obj).map(function (key) {
+    //         return [Number(key), obj[key]];
+    //     });
 
-        oldlikes = await result[0][1].userData.digg
+    //     oldlikes = await result[0][1].userData.digg
 
-        this.setState({ visible: false })
-    }
-
-
-
-    VM_getNewLikes = async (event) => {
-
-        let obj = await JSON.parse(event)
-
-        var result = Object.keys(obj).map(function (key) {
-            return [Number(key), obj[key]];
-        });
-
-        newlikes = await result[0][1].userData.digg
-
-        this.setState({ checkNewLikes: false, goForDoLike: false })
+    //     this.setState({ visible: false })
+    // }
 
 
-        console.log('Old Likes -->', oldlikes)
-        console.log('New Likes -->', newlikes)
+
+    // VM_getNewLikes = async (event) => {
+
+    //     let obj = await JSON.parse(event)
+
+    //     var result = Object.keys(obj).map(function (key) {
+    //         return [Number(key), obj[key]];
+    //     });
+
+    //     newlikes = await result[0][1].userData.digg
+
+    //     this.setState({ checkNewLikes: false, goForDoLike: false })
 
 
-        if (newlikes > oldlikes) {
-            let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
-            Services.DoLike(data).then(async (res) => {
-                if (res.success == "true") {
-                    await this.props.setCoins(res.coin)
-                    await this.getData(id)
-                    this.setState({ visible: false })
-                    setTimeout(() => this.setState({ congo: true }), 500)
-                }
-                else {
-                    this.setState({ visible: false })
-                }
-            })
-
-        }
-        else {
-            await this.setState({ visible: false, })
-            setTimeout(() => this.setState({ sorry: true }), 500)
-        }
+    //     console.log('Old Likes -->', oldlikes)
+    //     console.log('New Likes -->', newlikes)
 
 
-    }
+    //     if (newlikes > oldlikes) {
+    //         let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
+    //         Services.DoLike(data).then(async (res) => {
+    //             if (res.success == "true") {
+    //                 await this.props.setCoins(res.coin)
+    //                 await this.getData(id)
+    //                 this.setState({ visible: false })
+    //                 setTimeout(() => this.setState({ congo: true }), 500)
+    //             }
+    //             else {
+    //                 this.setState({ visible: false })
+    //             }
+    //         })
+
+    //     }
+    //     else {
+    //         await this.setState({ visible: false, })
+    //         setTimeout(() => this.setState({ sorry: true }), 500)
+    //     }
+
+
+    // }
 
 
 }

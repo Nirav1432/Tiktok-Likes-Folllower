@@ -157,65 +157,80 @@ class CommonScreen extends Component {
 
     getThumbnail = (event) => {
         let dt = JSON.parse(event)
-        let thumbinfo = dt["/v/:id"]
-        let thumbNail = thumbinfo.shareMeta.image.url
-        if (thumbNail != null || thumbNail != "") {
+        if (dt["/v/:id"] != undefined) {
+            let thumbinfo = dt["/v/:id"]
+            let thumbNail = thumbinfo.shareMeta.image.url
+            if (thumbNail != null || thumbNail != "") {
 
-            let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: thumbNail }
+                if (this.props.navigation.getParam('type') == "Get Likes") {
 
-            if (this.props.navigation.getParam('type') == "Get Likes") {
+                    let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: thumbNail }
 
-                Services.RequestLikes(data).then(async (res) => {
-                    if (res.tiktok_like.success == "true") {
-                        await this.props.setCoins(res.tiktok_like.coin)
-                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
-                        setTimeout(() => this.setState({ success: true }), 500)
-                    }
-                    else {
-                        await this.setState({ visible: false })
+                    Services.RequestLikes(data).then(async (res) => {
+                        if (res.tiktok_like.success == "true") {
+                            await this.props.setCoins(res.tiktok_like.coin)
+                            await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
+                            setTimeout(() => this.setState({ success: true }), 500)
+                        }
+                        else {
+                            await this.setState({ visible: false })
+                            alert("Something Went Wrong, Try Again Later")
+                        }
+                    }).catch(() => {
+                        this.setState({ visible: false })
                         alert("Something Went Wrong, Try Again Later")
-                    }
-                }).catch(() => {
-                    this.setState({ visible: false })
-                    alert("Something Went Wrong, Try Again Later")
-                })
-            }
-            else if (this.props.navigation.getParam('type') == "Get Comments") {
+                    })
+                }
+                else if (this.props.navigation.getParam('type') == "Get Comments") {
 
-                Services.RequestComment(data).then(async (res) => {
-                    if (res.tiktok_like.success == "true") {
-                        await this.props.setCoins(res.tiktok_like.coin)
-                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
-                        setTimeout(() => this.setState({ success: true }), 500)
-                    }
-                    else {
-                        await this.setState({ visible: false })
+                    //   let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: thumbNail }
+                    let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: 1, comment_coin: 1, video_thumb: thumbNail }
+
+                    Services.RequestComment(data).then(async (res) => {
+                        console.log(res.tiktok_comment.success)
+                        if (res.tiktok_comment.success == "true") {
+                            await this.props.setCoins(res.tiktok_comment.coin)
+                            await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
+                            setTimeout(() => this.setState({ success: true }), 500)
+                        }
+                        else {
+                            await this.setState({ visible: false })
+                            alert("Something Went Wrong, Try Again Later")
+                        }
+                    }).catch(() => {
+                        this.setState({ visible: false })
                         alert("Something Went Wrong, Try Again Later")
-                    }
-                }).catch(() => {
-                    this.setState({ visible: false })
-                    alert("Something Went Wrong, Try Again Later")
-                })
+                    })
 
-            }
-            else {
-                Services.RequestShare(data).then(async (res) => {
-                    if (res.tiktok_like.success == "true") {
-                        await this.props.setCoins(res.tiktok_like.coin)
-                        await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
-                        setTimeout(() => this.setState({ success: true }), 500)
-                    }
-                    else {
-                        await this.setState({ visible: false })
+                }
+                else {
+
+                    // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: IncData.Request, share_coin: IncData.Diamonds, video_thumb: thumbNail }
+                    let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: 1, share_coin: 1, video_thumb: thumbNail }
+
+                    Services.RequestShare(data).then(async (res) => {
+                        console.log(res)
+                        if (res.tiktok_share.success == "true") {
+                            await this.props.setCoins(res.tiktok_share.coin)
+                            await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
+                            setTimeout(() => this.setState({ success: true }), 500)
+                        }
+                        else {
+                            await this.setState({ visible: false })
+                            alert("Something Went Wrong, Try Again Later")
+                        }
+                    }).catch(() => {
+                        this.setState({ visible: false })
                         alert("Something Went Wrong, Try Again Later")
-                    }
-                }).catch(() => {
-                    this.setState({ visible: false })
-                    alert("Something Went Wrong, Try Again Later")
-                })
+                    })
+                }
+
+
             }
-
-
+        }
+        else {
+            this.setState({ visible: false, VideoUrl: "" })
+            alert("Invalid Url, Please Enter Video URL!!")
         }
     }
 

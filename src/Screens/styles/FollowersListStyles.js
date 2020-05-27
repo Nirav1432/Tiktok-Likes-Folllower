@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
-    MAINVIW: { flex: 1,backgroundColor: "#E9ECF2"},
+    MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
     VIW1: { height: hp(88), backgroundColor: "#E9ECF2" },
     VIW2: { height: hp(15), flexDirection: "row", padding: hp(2), borderRadius: hp(1), backgroundColor: "white", elevation: 10, marginBottom: hp(2), marginHorizontal: hp(2) },
     VIW3: { justifyContent: "center", flex: 6, },

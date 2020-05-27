@@ -37,7 +37,8 @@ export const Services = {
   FollowerList: data => api.get('/following/', data).then(onSuccess, onError),
   Following: data => api.get('/follower/' + data).then(onSuccess, onError),
   PaymentCoins: data => api.get('/payment-coin').then(onSuccess, onError),
-  LikeList: data => api.get('/like/' + data).then(onSuccess, onError)
+  LikeList: data => api.get('/like/' + data).then(onSuccess, onError),
+  LikeVideosList: data => api.get('/liker/' + data).then(onSuccess, onError),
 }
 
 
