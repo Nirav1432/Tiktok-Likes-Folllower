@@ -215,7 +215,7 @@ class DoFollowing extends Component {
         {
           this.state.datafromserver.length == 0 ?
             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-              <Text style={styles.TXT1}>{"No Follower Found"}</Text>
+              <Text style={[styles.TXT1,{color:"black"}]}>{"No Follower Found"}</Text>
             </View>
             :
             <></>

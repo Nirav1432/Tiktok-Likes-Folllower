@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flat: { backgroundColor: "transparent" },
     CMNVIW: { justifyContent: "center", alignItems: "flex-end", flex: 4 },
     IMG: { height: hp(10), width: hp(10), borderRadius: hp(100) },
-    TXT: { fontFamily: Fonts.LatoBlack, fontSize: hp(2.5) },
+    TXT: { fontFamily: Fonts.LatoBlack, fontSize: hp(2) },
     TXT1: { fontSize: hp(1.6), fontFamily: Fonts.LatoBlack, color: "white" },
     BTN: { justifyContent: 'center', elevation: 10, alignItems: 'center', height: hp(4.6), backgroundColor: "#FE2C55", padding: hp(2), borderRadius: hp(100) }
 })

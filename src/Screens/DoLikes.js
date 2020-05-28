@@ -48,8 +48,7 @@ class DoLikes extends Component {
 
 
 
-    getData(id) {
-        console.log("https://www.tiktok.com/" + this.state.uniqueId)
+    getData(id) {        
         Services.LikeList(id).then(async (res) => {
             if (res.success == "true") {
                 this.setState({ DatafromServer: res.like_image })
@@ -148,9 +147,15 @@ class DoLikes extends Component {
                     <FlatList
                         data={this.state.DatafromServer}
                         renderItem={({ item, index }) => (
-                            <View style={styles.VIW1}>
-                                <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
-                                <TouchableOpacity style={styles.BTN} onPress={() => this.GotoTikTok(item)}>
+                            <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>                
+                                {
+                                    item.video_thumb == null ?
+                                        <Image source={require('../Icons/thumb.png')} style={styles.IMG} resizeMode="cover" />
+                                        :
+                                        <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
+                                }
+
+                                <View style={styles.BTN}>
                                     <View style={styles.VIW2}>
                                         <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
                                             <Text style={styles.TXT}>+</Text>
@@ -162,11 +167,11 @@ class DoLikes extends Component {
                                             <Text style={styles.TXT2}>5</Text>
                                         </View>
                                     </View>
-                                    <TouchableOpacity style={styles.VIW3}>
+                                    <View style={styles.VIW3}>
                                         <Image style={styles.IMG3} source={Icons.right} resizeMode="contain" />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
-                            </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
                         )}
                         numColumns={3}
                         style={{
@@ -215,8 +220,8 @@ class DoLikes extends Component {
                     await this.getData(id)
                     this.setState({ visible: false })
                     setTimeout(() => this.setState({ congo: true }), 500)
-                    oldlikes=newlikes
-                    newlikes=0
+                    oldlikes = newlikes
+                    newlikes = 0
                     this.setState({})
                 }
                 else {
@@ -230,66 +235,8 @@ class DoLikes extends Component {
             setTimeout(() => this.setState({ sorry: true }), 500)
         }
     }
-
-
-
-    // VM_getOldLikes = async (event) => {
-
-    //     let obj = await JSON.parse(event)
-
-    //     var result = Object.keys(obj).map(function (key) {
-    //         return [Number(key), obj[key]];
-    //     });
-
-    //     oldlikes = await result[0][1].userData.digg
-
-    //     this.setState({ visible: false })
-    // }
-
-
-
-    // VM_getNewLikes = async (event) => {
-
-    //     let obj = await JSON.parse(event)
-
-    //     var result = Object.keys(obj).map(function (key) {
-    //         return [Number(key), obj[key]];
-    //     });
-
-    //     newlikes = await result[0][1].userData.digg
-
-    //     this.setState({ checkNewLikes: false, goForDoLike: false })
-
-
-    //     console.log('Old Likes -->', oldlikes)
-    //     console.log('New Likes -->', newlikes)
-
-
-    //     if (newlikes > oldlikes) {
-    //         let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
-    //         Services.DoLike(data).then(async (res) => {
-    //             if (res.success == "true") {
-    //                 await this.props.setCoins(res.coin)
-    //                 await this.getData(id)
-    //                 this.setState({ visible: false })
-    //                 setTimeout(() => this.setState({ congo: true }), 500)
-    //             }
-    //             else {
-    //                 this.setState({ visible: false })
-    //             }
-    //         })
-
-    //     }
-    //     else {
-    //         await this.setState({ visible: false, })
-    //         setTimeout(() => this.setState({ sorry: true }), 500)
-    //     }
-
-
-    // }
-
-
 }
+
 const mapStateToProps = (state) => {
     return {
         Data: state.LoginData
@@ -380,6 +327,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(DoLikes);
 
 //     getThumbnail = async (event) => {
 //         let dt = await JSON.parse(event)
+//         console.log(dt)
 //         let thumbinfo = dt["/v/:id"]
 //         oldlikes = await thumbinfo.videoData.itemInfos.diggCount
 //         await this.setState({})
