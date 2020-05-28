@@ -22,7 +22,7 @@ class Homescreen extends Component {
 
   async UNSAFE_componentWillMount() {
     SplashScreen.hide()
-    this.setAllData() 
+    this.setAllData()
   }
 
 
@@ -74,67 +74,70 @@ class Homescreen extends Component {
 
             </View>
 
-            <View style={styles.VIW2}>
-              <Image source={{ uri: AllData.coversMedium[0] }} style={styles.IMG1} />
-              <Text style={styles.TXT1}>{AllData.nickName}</Text>
-              <View style={styles.VIW6}>
-                <View style={styles.CMNVIW}>
-                  <Text style={styles.TXT2}>{custom_number_format(AllData.following)}</Text>
-                  <Text style={styles.TXT3}>Following</Text>
+            <View style={styles.VIW333}>
+
+              <View style={styles.VIW2}>
+                <Image source={{ uri: AllData.coversMedium[0] }} style={styles.IMG1} />
+                <Text style={styles.TXT1}>{AllData.nickName}</Text>
+                <View style={styles.VIW6}>
+                  <View style={styles.CMNVIW}>
+                    <Text style={styles.TXT2}>{custom_number_format(AllData.following)}</Text>
+                    <Text style={styles.TXT3}>Following</Text>
+                  </View>
+                  <View style={styles.CMNVIW}>
+                    <Text style={styles.TXT2}>{custom_number_format(AllData.fans)}</Text>
+                    <Text style={styles.TXT3}>Followers</Text>
+                  </View>
+                  <View style={styles.CMNVIW}>
+                    <Text style={styles.TXT2}>{custom_number_format(parseInt(AllData.heart))}</Text>
+                    <Text style={styles.TXT3}>Likes</Text>
+                  </View>
                 </View>
-                <View style={styles.CMNVIW}>
-                  <Text style={styles.TXT2}>{custom_number_format(AllData.fans)}</Text>
-                  <Text style={styles.TXT3}>Followers</Text>
+              </View>
+
+              <View style={styles.VIW3}>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Follower")}>
+                    <Image style={styles.IMG4} source={Icons.AddFL} />
+                    <Text style={styles.TXT5}>Follower</Text>
+                  </TouchableOpacity>
                 </View>
-                <View style={styles.CMNVIW}>
-                  <Text style={styles.TXT2}>{custom_number_format(parseInt(AllData.heart))}</Text>
-                  <Text style={styles.TXT3}>Likes</Text>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Likes")}>
+                    <Image style={styles.IMG4} source={Icons.Like} />
+                    <Text style={styles.TXT5}>Like</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments")}>
+                    <Image style={styles.IMG4} source={Icons.comment} />
+                    <Text style={styles.TXT5}>Comment</Text>
+                  </TouchableOpacity>
+
                 </View>
               </View>
-            </View>
-
-            <View style={styles.VIW3}>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Follower")}>
-                  <Image style={styles.IMG4} source={Icons.AddFL} />
-                  <Text style={styles.TXT5}>Follower</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Likes")}>
-                  <Image style={styles.IMG4} source={Icons.Like} />
-                  <Text style={styles.TXT5}>Like</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments")}>
-                  <Image style={styles.IMG4} source={Icons.comment} />
-                  <Text style={styles.TXT5}>Comment</Text>
-                </TouchableOpacity>
-
-              </View>
-            </View>
 
 
-            <View style={styles.VIW3}>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Share")}>
-                  <Image style={styles.IMG4} source={Icons.shareHome} />
-                  <Text style={styles.TXT5}>Share</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("EarnScreen")}>
-                  <Image style={styles.IMG4} source={Icons.Earn} />
-                  <Text style={styles.TXT5}>Earn</Text>
-                </TouchableOpacity>
+              <View style={styles.VIW3}>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Share")}>
+                    <Image style={styles.IMG4} source={Icons.shareHome} />
+                    <Text style={styles.TXT5}>Share</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("EarnScreen")}>
+                    <Image style={styles.IMG4} source={Icons.Earn} />
+                    <Text style={styles.TXT5}>Earn</Text>
+                  </TouchableOpacity>
 
-              </View>
-              <View style={styles.VIW12}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("PurchaseCoinsScreen")}>
-                  <Image style={styles.IMG4} source={Icons.purchase} />
-                  <Text style={styles.TXT5}>Purchase Coins</Text>
-                </TouchableOpacity>
+                </View>
+                <View style={styles.VIW12}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("PurchaseCoinsScreen")}>
+                    <Image style={styles.IMG4} source={Icons.purchase} />
+                    <Text style={styles.TXT5}>Purchase Coins</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 
