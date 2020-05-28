@@ -157,7 +157,7 @@ class DoLikes extends Component {
                                         <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>
                                             {
                                                 item.video_thumb == null ?
-                                                    <Image source={require('../Icons/thumb.png')} style={styles.IMG} resizeMode="cover" />
+                                                    <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />
                                                     :
                                                     <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
                                             }

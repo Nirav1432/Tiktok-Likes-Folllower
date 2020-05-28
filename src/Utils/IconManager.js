@@ -38,7 +38,8 @@ module.exports = {
         PinkDM:require('../Icons/PinkDM.png'),
         heartWhite:require('../Icons/heartWhite.png'),
         polo:require('../Icons/polo.png'),
-        sad:require('../Icons/sad.png')
+        sad:require('../Icons/sad.png'),
+        thumbnail:require('../Icons/thumb.png')
     }
 
 

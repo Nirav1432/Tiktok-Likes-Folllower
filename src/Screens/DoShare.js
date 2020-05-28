@@ -181,7 +181,7 @@ class DoShare extends Component {
                                         <View style={styles.VIW1}>
                                             {
                                                 item.video_thumb == null ?
-                                                    <Image source={require('../Icons/thumb.png')} style={styles.IMG} resizeMode="cover" />
+                                                    <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />
                                                     :
                                                     <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
                                             }
