@@ -3,6 +3,9 @@ import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import Header from '../Components/Header';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from "./styles/FollowersListStyles";
+import { Services } from '../Configurations/Api/Connections';
+import {connect} from 'react-redux'
+
 const data = [
     {
         "id": 7,
@@ -47,15 +50,26 @@ const data = [
         "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
     }
 ]
-export default class CommentList extends Component {
+
+class CommentList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userId:""
         };
     }
-    componentDidMount() {
 
+    async  componentDidMount() {
+        let id=await this.props.Data.CommonData.userId
+        this.getcmtlist(id)
     }
+
+    getcmtlist=(id)=>{
+        Services.CommentList(id).then((res)=>{
+            
+        })
+    }
+
     render() {
         return (
             <View styles={styles.MAINVIW}>
@@ -90,3 +104,16 @@ export default class CommentList extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentList);

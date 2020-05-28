@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, Linking } from 'react-native';
 import styles from './styles/DoLikesStyles';
 import { Icons } from "../Utils/IconManager";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
 import Header from '../Components/Header';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import { connect } from 'react-redux'
@@ -48,7 +48,7 @@ class DoLikes extends Component {
 
 
 
-    getData(id) {        
+    getData(id) {
         Services.LikeList(id).then(async (res) => {
             if (res.success == "true") {
                 this.setState({ DatafromServer: res.like_image })
@@ -101,91 +101,100 @@ class DoLikes extends Component {
                     visible={this.state.sorry}
                     ClosePop={() => this.setState({ sorry: false })}
                 />
-
                 {
-                    this.state.getUserLike ?
-                        <View style={{ height: hp(0) }}>
-                            <WebView
-                                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
-                                javaScriptEnabled={true}
-                                allowUniversalAccessFromFileURLs={true}
-                                allowFileAccess={true}
-                                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
-                                mixedContentMode={'always'}
-                                onMessage={event => this.state.Type == "vm" ? this.WWW_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
-                                onError={() => this.setState({ visible: false })}
-                                onHttpError={() => this.setState({ visible: false })}
-                                style={{ height: 0 }}
-                            />
+                    this.state.DatafromServer.length == 0 ?
+                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+                            <Text style={[styles.TXT2, { color: "black", fontSize:heightPercentageToDP(2.2) }]}>{"No More Likes's for today"}</Text>
                         </View>
                         :
-                        <></>
-                }
+                        <View style={{flex:1}}>
+
+                            {
+                                this.state.getUserLike ?
+                                    <View style={{ height: hp(0) }}>
+                                        <WebView
+                                            source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
+                                            javaScriptEnabled={true}
+                                            allowUniversalAccessFromFileURLs={true}
+                                            allowFileAccess={true}
+                                            injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                                            mixedContentMode={'always'}
+                                            onMessage={event => this.state.Type == "vm" ? this.WWW_getOldLikes(event.nativeEvent.data) : this.WWW_getOldLikes(event.nativeEvent.data)}
+                                            onError={() => this.setState({ visible: false })}
+                                            onHttpError={() => this.setState({ visible: false })}
+                                            style={{ height: 0 }}
+                                        />
+                                    </View>
+                                    :
+                                    <></>
+                            }
 
 
-                {
-                    this.state.checkNewLikes ?
-                        <View style={{ height: hp(0) }}>
-                            <WebView
-                                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
-                                javaScriptEnabled={true}
-                                allowUniversalAccessFromFileURLs={true}
-                                allowFileAccess={true}
-                                injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
-                                mixedContentMode={'always'}
-                                onMessage={event => this.state.Type == "vm" ? this.WWW_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
-                                onError={() => this.setState({ visible: false })}
-                                onHttpError={() => this.setState({ visible: false })}
-                                style={{ height: 0 }}
-                            />
+                            {
+                                this.state.checkNewLikes ?
+                                    <View style={{ height: hp(0) }}>
+                                        <WebView
+                                            source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
+                                            javaScriptEnabled={true}
+                                            allowUniversalAccessFromFileURLs={true}
+                                            allowFileAccess={true}
+                                            injectedJavaScript={this.state.Type == "vm" ? WWW_INJECTED_JAVASCRIPT : WWW_INJECTED_JAVASCRIPT}
+                                            mixedContentMode={'always'}
+                                            onMessage={event => this.state.Type == "vm" ? this.WWW_getNewLikes(event.nativeEvent.data) : this.WWW_getNewLikes(event.nativeEvent.data)}
+                                            onError={() => this.setState({ visible: false })}
+                                            onHttpError={() => this.setState({ visible: false })}
+                                            style={{ height: 0 }}
+                                        />
+                                    </View>
+                                    :
+                                    <></>
+                            }
+
+                            <View style={{ flex: 1 }}>
+                                <FlatList
+                                    data={this.state.DatafromServer}
+                                    renderItem={({ item, index }) => (
+                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>
+                                            {
+                                                item.video_thumb == null ?
+                                                    <Image source={require('../Icons/thumb.png')} style={styles.IMG} resizeMode="cover" />
+                                                    :
+                                                    <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
+                                            }
+
+                                            <View style={styles.BTN}>
+                                                <View style={styles.VIW2}>
+                                                    <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
+                                                        <Text style={styles.TXT}>+</Text>
+                                                    </View>
+                                                    <View style={styles.VIW4}>
+                                                        <Image source={Icons.premium_quality} style={styles.IMG2} resizeMode="contain" />
+                                                    </View>
+                                                    <View style={styles.VIW4}>
+                                                        <Text style={styles.TXT2}>5</Text>
+                                                    </View>
+                                                </View>
+                                                <View style={styles.VIW3}>
+                                                    <Image style={styles.IMG3} source={Icons.right} resizeMode="contain" />
+                                                </View>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )}
+                                    numColumns={3}
+                                    style={{
+                                        flexWrap: "wrap",
+                                        alignSelf: this.state.DatafromServer.length < 3 ? "auto" : "center"
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                />
+                            </View>
+                            <View style={styles.VIW5}>
+                                <TouchableOpacity style={styles.SubmitBotton} >
+                                    <Text style={styles.TXT22}>NEXT</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        :
-                        <></>
                 }
-
-                <View style={{ flex: 1 }}>
-                    <FlatList
-                        data={this.state.DatafromServer}
-                        renderItem={({ item, index }) => (
-                            <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>                
-                                {
-                                    item.video_thumb == null ?
-                                        <Image source={require('../Icons/thumb.png')} style={styles.IMG} resizeMode="cover" />
-                                        :
-                                        <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
-                                }
-
-                                <View style={styles.BTN}>
-                                    <View style={styles.VIW2}>
-                                        <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
-                                            <Text style={styles.TXT}>+</Text>
-                                        </View>
-                                        <View style={styles.VIW4}>
-                                            <Image source={Icons.premium_quality} style={styles.IMG2} resizeMode="contain" />
-                                        </View>
-                                        <View style={styles.VIW4}>
-                                            <Text style={styles.TXT2}>5</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.VIW3}>
-                                        <Image style={styles.IMG3} source={Icons.right} resizeMode="contain" />
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                        numColumns={3}
-                        style={{
-                            flexWrap: "wrap",
-                            alignSelf: this.state.DatafromServer.length < 3 ? "auto" : "center"
-                        }}
-                        showsVerticalScrollIndicator={false}
-                    />
-                </View>
-                <View style={styles.VIW5}>
-                    <TouchableOpacity style={styles.SubmitBotton} >
-                        <Text style={styles.TXT22}>NEXT</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
 
         );
