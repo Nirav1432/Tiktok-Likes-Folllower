@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2", alignItems: "center", justifyContent: "flex-end" },
     VIW1: { height: "100%", width: "100%", backgroundColor: "#FA647F", opacity: 0.5, borderBottomLeftRadius: hp(100), borderBottomRightRadius: hp(100) },
     VIW2: { height: "50%",overflow:"hidden", justifyContent: "flex-start", alignItems: "center", width: "100%",},
-    IMG1: { height: hp(13.53), width: hp(13.53), borderRadius: hp(0),position:"absolute" },
+    IMG1: { height: hp(11.53), width: hp(11.53), borderRadius: hp(0),position:"absolute" },
     IMG2: { height: "100%", width: "100%", borderBottomLeftRadius: hp(100), borderBottomRightRadius: hp(100) },
 
     VIW3: { width: "100%", justifyContent:"center", alignItems: "center", height: "50%"},

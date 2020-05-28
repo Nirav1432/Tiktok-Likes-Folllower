@@ -50,7 +50,7 @@ class LoginScreen extends Component {
   }
 
   KeyboardShown = () => {
-    this.setState({ top: hp(5) })
+    this.setState({ top: hp(8) })
   }
 
   render() {

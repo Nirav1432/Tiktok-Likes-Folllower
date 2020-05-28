@@ -148,7 +148,7 @@ class CommonScreen extends Component {
                     </View>
                 </View>
                 <View style={styles.VIW9}>
-                    <Text style={styles.TXT4}>Note: When you get likes on your old video then{"\n"}
+                    <Text style={styles.TXT4}>Note: When you get likes on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
             </View>
