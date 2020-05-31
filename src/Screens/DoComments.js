@@ -71,12 +71,25 @@ class DoComments extends Component {
 
     isVideoViewed = async () => {
         await BackgroundTimer.stopBackgroundTimer()
+        this.setState({ goForDoLike: false })
         if (seconds == 0) {
-            this.setState({ visible: false, goForDoLike: false })
-            setTimeout(() => this.setState({ congo: true  }), 500)
+            let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
+            Services.DoComment(data).then(async (res) => {
+                if (res.success == "true") {
+                    await this.props.setCoins(res.coin)
+                    await this.getData(id)
+                    this.setState({ visible: false })
+                    setTimeout(() => this.setState({ congo: true }), 500)
+                    seconds=-1
+                    this.setState({})
+                }
+                else {
+                    this.setState({ visible: false })
+                }
+            })
         }
         else {
-            this.setState({ visible: false, goForDoLike: false  })
+            this.setState({ visible: false, goForDoLike: false })
             setTimeout(() => this.setState({ sorry: true }), 500)
         }
     }
