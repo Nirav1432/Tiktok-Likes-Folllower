@@ -41,7 +41,7 @@ export default class GetComments extends Component {
         return (
             <View style={styles.MAINVIW}>
                 <Preloader isLoader={this.state.visible} />
-                <Header title={"Get Comments"} backPress={() => this.props.navigation.goBack()} />
+                <Header title={"Get Views"} backPress={() => this.props.navigation.goBack()} />
 
                 <FlatList
                     data={this.state.DataFromServer}
@@ -52,17 +52,17 @@ export default class GetComments extends Component {
                                     <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                                 </View>
                                 <View>
-                                    <Text style={styles.TXT6}>{"Get " + item.request + " Real Comments in " + item.coin}</Text>
+                                    <Text style={styles.TXT6}>{"Get " + item.request + " Real Views in " + item.coin}</Text>
                                     <Text style={styles.TXT6}>{"Diamonds."}</Text>
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })} onPress={() => this.props.navigation.navigate('CommonScreen', { type: "Get Comments", data: { Diamonds: item.coin, Request: item.request } })}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })} onPress={() => this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.GetComments} style={styles.IMG4} resizeMode="contain" />
                                     </View>
                                     <View style={styles.VIW18}>
-                                        <Text style={styles.TXT4}>{"Get " + item.request + " Comments"}</Text>
+                                        <Text style={styles.TXT4}>{"Get " + item.request + " Views"}</Text>
                                     </View>
                                     <View style={styles.VIW19}>
                                         <Image source={Icons.right} style={styles.IMG3} resizeMode="contain" />

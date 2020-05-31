@@ -17,18 +17,18 @@ export default class Comments extends Component {
     render() {
         return (
             <View style={styles.MAINVIW}>
-                <Header title={"Comments"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
+                <Header title={"View"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
                 <View style={styles.VIW2}>
                     <View style={styles.VIW12}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("GetComments")}>
                             <Image style={styles.IMG4} source={Icons.comment} />
-                            <Text style={styles.TXT55}>Get Comments</Text>
+                            <Text style={styles.TXT55}>Get Views</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.VIW12}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentList")}>
                             <Image style={styles.IMG4} source={Icons.CommentList} />
-                            <Text style={styles.TXT55}>Comments List</Text>
+                            <Text style={styles.TXT55}>Views List</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

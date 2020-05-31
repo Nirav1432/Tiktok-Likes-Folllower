@@ -3,13 +3,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
-    VIW1: { height: hp(88), backgroundColor: "#E9ECF2" },
-    VIW2: { height: hp(15), flexDirection: "row", padding: hp(2), borderRadius: hp(1), backgroundColor: "white", elevation: 10, marginBottom: hp(2), marginHorizontal: hp(2) },
+    VIW1: { backgroundColor: "#E9ECF2", height: "88%", paddingBottom: hp(1) },
+    VIW2: { height: hp(15), flexDirection: "row", padding: hp(2), borderRadius: hp(1), backgroundColor: "white", elevation: 5, marginBottom: hp(2), marginHorizontal: hp(2) },
     VIW3: { justifyContent: "center", flex: 6, },
     VIW4: { justifyContent: "center", alignItems: "flex-start", flex: 4 },
-
-
-    flat: { backgroundColor: "transparent" },
+    flat: { backgroundColor: "#E9ECF2" },
     CMNVIW: { justifyContent: "center", alignItems: "flex-end", flex: 4 },
     IMG: { height: hp(10), width: hp(10), borderRadius: hp(100) },
     TXT: { fontFamily: Fonts.LatoBlack, fontSize: hp(2) },

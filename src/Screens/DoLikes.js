@@ -54,8 +54,7 @@ class DoLikes extends Component {
                 this.setState({ DatafromServer: res.like_image })
                 this.setState({ getUserLike: true })
             }
-            else {
-                alert('No Data Found !!')
+            else {            
                 this.setState({ visible: false, })
                 await this.setState({ DatafromServer: [] })
                 this.setState({})
@@ -188,11 +187,11 @@ class DoLikes extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <View style={styles.VIW5}>
+                            {/* <View style={styles.VIW5}>
                                 <TouchableOpacity style={styles.SubmitBotton} >
                                     <Text style={styles.TXT22}>NEXT</Text>
                                 </TouchableOpacity>
-                            </View>
+                            </View> */}
                         </View>
                 }
             </View>

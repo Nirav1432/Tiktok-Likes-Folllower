@@ -38,35 +38,37 @@ class LikesList extends Component {
                 <Preloader isLoader={this.state.visible} />
                 {
                     this.state.data.length == 0 ?
-                        <View style={{ justifyContent: "center", alignItems: "center", height: "88%" }}>
+                        <View style={{ justifyContent: "center", alignItems: "center", height: "88%",  backgroundColor: "#E9ECF2"  }}>
                             <Text style={[styles.TXT1, { color: "black", fontSize: hp(2.5) }]}>{"No Likes Found"}</Text>
                         </View>
                         :
-                        <FlatList
-                            data={this.state.data}
-                            renderItem={({ item, index }) => (
-                                <View style={[styles.VIW2, { marginTop: index == 0 ? hp(2) : 0 }]}>
-                                    <View style={[styles.VIW4, { flex: null }]}>
-                                        <Image source={{ uri: item.profile }} style={styles.IMG} />
-                                    </View>
-                                    <View style={[styles.VIW3, { flex: null, paddingLeft: wp(4) }]}>
-                                        <Text style={styles.TXT}>
-                                            {
-                                                item.fullname
-                                                // item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname
-                                            }
-                                        </Text>
-                                    </View>
-                                    {/* <View style={styles.CMNVIW}>
+                        <View style={styles.VIW1}>
+                            <FlatList
+                                data={this.state.data}
+                                renderItem={({ item, index }) => (
+                                    <View style={[styles.VIW2, { marginTop: index == 0 ? hp(2) : 0 }]}>
+                                        <View style={[styles.VIW4, { flex: null }]}>
+                                            <Image source={{ uri: item.profile }} style={styles.IMG} />
+                                        </View>
+                                        <View style={[styles.VIW3, { flex: null, paddingLeft: wp(4) }]}>
+                                            <Text style={styles.TXT}>
+                                                {
+                                                    item.fullname
+                                                    // item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname
+                                                }
+                                            </Text>
+                                        </View>
+                                        {/* <View style={styles.CMNVIW}>
                                         <TouchableOpacity style={styles.BTN}>
                                             <Text style={styles.TXT1}>Follow Back</Text>
                                         </TouchableOpacity>
                                     </View> */}
-                                </View>
-                            )}
-                            showsVerticalScrollIndicator={false}
-                            style={styles.flat}
-                        />
+                                    </View>
+                                )}
+                                showsVerticalScrollIndicator={false}
+                                style={styles.flat}
+                            />
+                        </View>
                 }
             </View>
         );

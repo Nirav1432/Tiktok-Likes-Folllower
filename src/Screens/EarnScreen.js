@@ -50,7 +50,7 @@ export default class EarnScreen extends Component {
                     <View style={styles.VIW12}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("DoComments")}>
                             <Image style={styles.IMG4} source={Icons.comment} />
-                            <Text style={styles.TXT5}>Do Comment</Text>
+                            <Text style={styles.TXT5}>Do Views</Text>
                         </TouchableOpacity>
 
                     </View>

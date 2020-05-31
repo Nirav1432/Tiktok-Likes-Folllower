@@ -111,7 +111,7 @@ class Homescreen extends Component {
                 <View style={styles.VIW12}>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments")}>
                     <Image style={styles.IMG4} source={Icons.comment} />
-                    <Text style={styles.TXT5}>Comment</Text>
+                    <Text style={styles.TXT5}>View</Text>
                   </TouchableOpacity>
 
                 </View>

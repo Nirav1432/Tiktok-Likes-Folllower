@@ -42,7 +42,7 @@ class DoShare extends Component {
     }
 
     getData(id) {
-        Services.ShareList(id).then(async (res) => {
+        Services.SharedVideoList(id).then(async (res) => {
             if (res.success == "true") {
                 this.setState({ DatafromServer: res.share_video })
                 this.setState({ visible: false })
@@ -178,14 +178,14 @@ class DoShare extends Component {
                                 <FlatList
                                     data={this.state.DatafromServer}
                                     renderItem={({ item, index }) => (
-                                        <View style={styles.VIW1}>
+                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>
                                             {
                                                 item.video_thumb == null ?
                                                     <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />
                                                     :
                                                     <Image source={{ uri: item.video_thumb }} style={styles.IMG} resizeMode="cover" />
                                             }
-                                            <TouchableOpacity style={styles.BTN} onPress={() => this.GotoTikTok(item)}>
+                                            <TouchableOpacity style={styles.BTN}>
                                                 <View style={styles.VIW2}>
                                                     <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
                                                         <Text style={styles.TXT}>+</Text>
@@ -201,7 +201,7 @@ class DoShare extends Component {
                                                     <Image style={styles.IMG3} source={Icons.right} resizeMode="contain" />
                                                 </TouchableOpacity>
                                             </TouchableOpacity>
-                                        </View>
+                                        </TouchableOpacity>
                                     )}
                                     numColumns={3}
                                     style={{
@@ -211,11 +211,11 @@ class DoShare extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <View style={styles.VIW5}>
+                            {/* <View style={styles.VIW5}>
                                 <TouchableOpacity style={styles.SubmitBotton} >
                                     <Text style={styles.TXT22}>NEXT</Text>
                                 </TouchableOpacity>
-                            </View>
+                            </View> */}
                         </View>
                 }
 

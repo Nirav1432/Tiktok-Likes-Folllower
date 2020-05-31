@@ -62,8 +62,8 @@ class CommonScreen extends Component {
                     type={this.props.navigation.getParam('type') == "Get Likes" ?
                         "Like"
                         :
-                        this.props.navigation.getParam('type') == "Get Comments" ?
-                            "Comment"
+                        this.props.navigation.getParam('type') == "Get Views" ?
+                            "Views"
                             :
                             "Shares"
                     }
@@ -97,8 +97,8 @@ class CommonScreen extends Component {
                                 this.props.navigation.getParam('type') == "Get Likes" ?
                                     "Likes"
                                     :
-                                    this.props.navigation.getParam('type') == "Get Comments" ?
-                                        "Comment"
+                                    this.props.navigation.getParam('type') == "Get Views" ?
+                                        "Views"
                                         :
                                         "Share"
                             }</Text>
@@ -116,8 +116,8 @@ class CommonScreen extends Component {
                             this.props.navigation.getParam('type') == "Get Likes" ?
                                 "Likes"
                                 :
-                                this.props.navigation.getParam('type') == "Get Comments" ?
-                                    "Comment"
+                                this.props.navigation.getParam('type') == "Get Views" ?
+                                    "Views"
                                     :
                                     "Shares"
                         } in </Text>
@@ -148,7 +148,15 @@ class CommonScreen extends Component {
                     </View>
                 </View>
                 <View style={styles.VIW9}>
-                    <Text style={styles.TXT4}>Note: When you get likes on your old video then
+                    <Text style={styles.TXT4}>Note: When you get {
+                           this.props.navigation.getParam('type') == "Get Likes" ?
+                           "likes"
+                           :
+                           this.props.navigation.getParam('type') == "Get Views" ?
+                               "views"
+                               :
+                               "shares"
+                    } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
             </View>
@@ -159,7 +167,7 @@ class CommonScreen extends Component {
         let dt = JSON.parse(event)
         if (dt["/v/:id"] != undefined) {
             let thumbinfo = dt["/v/:id"]
-            let thumbNail = thumbinfo.videoData.itemInfos.covers[0]
+            let thumbNail = thumbinfo.videoData.shareMeta.image.url
             let finalthumb = thumbNail == null ? "" : thumbNail == undefined ? "" : thumbNail
 
             if (this.props.navigation.getParam('type') == "Get Likes") {
@@ -181,7 +189,7 @@ class CommonScreen extends Component {
                     alert("Something Went Wrong, Try Again Later")
                 })
             }
-            else if (this.props.navigation.getParam('type') == "Get Comments") {
+            else if (this.props.navigation.getParam('type') == "Get Views") {
 
                   let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: 1, comment_coin: 1, video_thumb: finalthumb }

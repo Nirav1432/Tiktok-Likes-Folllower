@@ -5,6 +5,7 @@ import Header from '../Components/Header';
 import Preloader from '../Components/Preloader';
 import { Services } from '../Configurations/Api/Connections'
 import { connect } from 'react-redux'
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 var userid = ""
 class ContactUs extends Component {
@@ -15,7 +16,7 @@ class ContactUs extends Component {
         };
     }
     UNSAFE_componentWillMount() {
-        userid = this.props.Data.CommonData.userId        
+        userid = this.props.Data.CommonData.userId
     }
     render() {
         return (
@@ -26,9 +27,14 @@ class ContactUs extends Component {
                     <Text style={styles.TXT1}>if you have any more questions or{"\n"}Concerns, please Contact to us</Text>
                 </View>
                 <TextInput style={[styles.TXTINPUT, { borderColor: "red", borderWidth: this.state.err ? 2 : 0 }]} multiline={true} placeholder="Your Message" onChangeText={(m) => this.CheckMessage(m)} />
-                <TouchableOpacity style={styles.SubmitBotton} onPress={() => this.sendContact()}>
-                    <Text style={styles.TXT2}>Submit</Text>
-                </TouchableOpacity>
+                <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center", marginTop: heightPercentageToDP(2) }}>
+                    <TouchableOpacity style={styles.SubmitBotton} onPress={() => this.sendContact()}>
+                        <Text style={styles.TXT2}>Submit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.SubmitBotton, { marginLeft: heightPercentageToDP(1) }]} onPress={() => this.props.navigation.navigate('ContactUsList')}>
+                        <Text style={styles.TXT2}>My Questions</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -50,11 +56,11 @@ class ContactUs extends Component {
         let CheckMessage = /^(?!\s*$).+/
 
         if (CheckMessage.test(this.state.Message)) {
-            this.setState({ visible:true, err: false, })
-            let Data={user_id:userid,message:this.state.Message}
-            Services.AddContactUS(Data).then((res)=>{
-                if(res.success){
-                    this.setState({visible:false})
+            this.setState({ visible: true, err: false, })
+            let Data = { user_id: userid, message: this.state.Message }
+            Services.AddContactUS(Data).then((res) => {
+                if (res.success) {
+                    this.setState({ visible: false })
                     this.props.navigation.navigate('ContactUsList')
                 }
             })
@@ -62,7 +68,7 @@ class ContactUs extends Component {
         else {
             this.setState({ err: true })
         }
-      
+
     }
 }
 const mapStateToProps = (state) => {

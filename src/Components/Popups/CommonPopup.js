@@ -20,7 +20,7 @@ export default class CommonPopup extends Component {
                         <View style={styles.VIW6}>
                             <Image source={this.props.type == "Like" ?
                                 Icons.Like :
-                                this.props.type == "Comment" ?
+                                this.props.type == "Views" ?
                                 Icons.comment
                                 :
                                 Icons.shareHome
@@ -34,8 +34,8 @@ export default class CommonPopup extends Component {
                                 this.props.type == "Like" ?
                                     <Text style={styles.TXT1}>Like Request</Text>
                                     :
-                                    this.props.type == "Comment" ?
-                                        <Text style={styles.TXT1}>Comment Request</Text>
+                                    this.props.type == "Views" ?
+                                        <Text style={styles.TXT1}>Views Request</Text>
                                         :
                                         <Text style={styles.TXT1}>Share Request</Text>
                             }
@@ -47,8 +47,8 @@ export default class CommonPopup extends Component {
                             this.props.type == "Like" ?
                                 <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
                                 :
-                                this.props.type == "Comment" ?
-                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Comment requested{"\n"}processed Successfully.</Text>
+                                this.props.type == "Views" ?
+                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Views requested{"\n"}processed Successfully.</Text>
                                     :
                                     <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Share requested{"\n"}processed Successfully.</Text>
 
