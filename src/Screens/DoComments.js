@@ -74,7 +74,7 @@ class DoComments extends Component {
         if (seconds == 0)
             this.setState({ visible: false, goForDoLike: false, congo: true })
         else
-            this.setState({ visible: fales, sorry: true })
+            this.setState({ visible: false, sorry: true })
     }
 
     getDuration = async (event) => {
