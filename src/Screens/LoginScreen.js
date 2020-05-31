@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, StatusBar, Platform, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { View, Text, Image, TouchableOpacity, TextInput, StatusBar, Platform, KeyboardAvoidingView, Keyboard, Clipboard } from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 import styles from './styles/LoginscreenStyles'
 import { Icons } from "../Utils/IconManager";
@@ -39,10 +39,12 @@ class LoginScreen extends Component {
     };
   }
 
-  componentDidMount() {
+  async  componentDidMount() {
     SplashScreen.hide()
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
+    let url = await Clipboard.getString()
+    await this.setState({ TiktokUrl: url })
   }
 
   KeyboardDissmissed = () => {
@@ -102,7 +104,7 @@ class LoginScreen extends Component {
               <Text style={styles.TXT1}>Like & Followers</Text>
             </View>
             <View style={styles.VIW5}>
-              <TextInput ref={tl => this.tiktok = tl} onChangeText={(URL) => this.fillBox(URL)} style={[styles.TXTINPUT, { borderWidth: this.state.borderWidth, borderColor: "red" }]} placeholder="Enter Tiktok Profile User Link" />
+              <TextInput defaultValue={this.state.TiktokUrl} ref={tl => this.tiktok = tl} onChangeText={(URL) => this.fillBox(URL)} style={[styles.TXTINPUT, { borderWidth: this.state.borderWidth, borderColor: "red" }]} placeholder="Enter Tiktok Profile User Link" />
             </View>
             <View style={styles.VIW6}>
               <TouchableOpacity style={styles.SRCH} onPress={() => this.GetOfficialDetails()}>

@@ -77,19 +77,19 @@ class Homescreen extends Component {
             <View style={styles.VIW333}>
 
               <View style={styles.VIW2}>
-                <Image source={{ uri: AllData.coversMedium[0] }} style={styles.IMG1} />
-                <Text style={styles.TXT1}>{AllData.nickName}</Text>
+                <Image source={{ uri: this.props.Data.CommonData.coversMedium[0] }} style={styles.IMG1} />
+                <Text style={styles.TXT1}>{this.props.Data.CommonData.nickName}</Text>
                 <View style={styles.VIW6}>
                   <View style={styles.CMNVIW}>
-                    <Text style={styles.TXT2}>{custom_number_format(AllData.following)}</Text>
+                    <Text style={styles.TXT2}>{custom_number_format(this.props.Data.CommonData.following)}</Text>
                     <Text style={styles.TXT3}>Following</Text>
                   </View>
                   <View style={styles.CMNVIW}>
-                    <Text style={styles.TXT2}>{custom_number_format(AllData.fans)}</Text>
+                    <Text style={styles.TXT2}>{custom_number_format(this.props.Data.CommonData.fans)}</Text>
                     <Text style={styles.TXT3}>Followers</Text>
                   </View>
                   <View style={styles.CMNVIW}>
-                    <Text style={styles.TXT2}>{custom_number_format(parseInt(AllData.heart))}</Text>
+                    <Text style={styles.TXT2}>{custom_number_format(parseInt(this.props.Data.CommonData.heart))}</Text>
                     <Text style={styles.TXT3}>Likes</Text>
                   </View>
                 </View>

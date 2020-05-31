@@ -8,6 +8,7 @@ import Preloader from './Preloader';
 import { connect } from 'react-redux'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { WebView } from 'react-native-webview';
+import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
 
 const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
 
@@ -16,13 +17,15 @@ class Sidemenu extends Component {
         super(props);
         this.state = {
             Refresh: false,
-            ProfileUrl: "",
-            visible: false
+            visible: false,
+            uniqueId: "",
+            TiktokUrl: "",
+            Type: ""
         };
     }
 
-    async componentDidMount() {
-        await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok })
+    async componentDidMount() {     
+        await this.setState({ uniqueId: '@' + this.props.Data.CommonData.uniqueId, TiktokUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type })
     }
 
     render() {
@@ -34,7 +37,7 @@ class Sidemenu extends Component {
                     this.state.Refresh ?
                         <View style={{ height: hp(0) }}>
                             <WebView
-                                source={{ uri: this.state.ProfileUrl }}
+                                source={{ uri: "https://www.tiktok.com/" + this.state.uniqueId }}
                                 javaScriptEnabled={true}
                                 allowUniversalAccessFromFileURLs={true}
                                 allowFileAccess={true}
@@ -112,9 +115,15 @@ class Sidemenu extends Component {
     }
 
     async GetNewData(DA) {
-      //  let DATA = JSON.parse(DA)
-        // console.log(DATA)
+        let DATA = await JSON.parse(DA)
+        let FinalData = await DATA.props.pageProps.userData
+        FinalData["Tiktok"] = this.state.TiktokUrl
+        FinalData["Type"] = this.state.type
+        await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
+        await this.props.setGlobalData(FinalData)
         await this.setState({ visible: false, Refresh: false })
+        this.props.navigation.closeDrawer()
+        this.props.navigation.navigate('Home')
     }
 
     async onRefreshPressed() {
@@ -130,7 +139,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) }
     };
 };
 

@@ -249,20 +249,21 @@ class DoFollowing extends Component {
 
     if (newlikes > oldlikes) {
       let data = { user_id: userId, request_user: this.state.request_user_id }
-      Services.DoFollower(data).then(async (res) => {
-        if (res.success == "true") {
-          await this.props.setCoins(res.coin)
-          await this.getNewFollower(userId)
-          this.setState({ visible: false })
-          setTimeout(() => this.setState({ congo: true }), 500)
-          oldlikes = newlikes
-          newlikes = 0
-          this.setState({})
-        }
-        else {
-          this.setState({ visible: false })
-        }
-      })
+      this.setState({ visible: false })
+      // Services.DoFollower(data).then(async (res) => {
+      //   if (res.success == "true") {
+      //     await this.props.setCoins(res.coin)
+      //     await this.getNewFollower(userId)
+      //     this.setState({ visible: false })
+      //     setTimeout(() => this.setState({ congo: true }), 500)
+      //     oldlikes = newlikes
+      //     newlikes = 0
+      //     this.setState({})
+      //   }
+      //   else {
+      //     this.setState({ visible: false })
+      //   }
+      // })
     }
     else {
       await this.setState({ visible: false, })
@@ -284,47 +285,6 @@ class DoFollowing extends Component {
 
     this.setState({ visible: false })
   }
-
-
-
-  // VM_getNewLikes = async (event) => {
-
-  //   let obj = await JSON.parse(event)
-
-  //   var result = Object.keys(obj).map(function (key) {
-  //     return [Number(key), obj[key]];
-  //   });
-
-  //   newlikes = await result[0][1].userData.following
-
-  //   this.setState({ checkNewLikes: false, goForDoLike: false })
-
-
-  //   console.log('Old Likes -->', oldlikes)
-  //   console.log('New Likes -->', newlikes)
-
-
-  //   if (newlikes > oldlikes) {
-  //     let data = { user_id: userId, request_user: this.state.request_user_id }
-  //     Services.DoFollower(data).then(async (res) => {
-  //       if (res.success == "true") {
-  //         await this.props.setCoins(res.coin)
-  //         await this.getNewFollower(userId)
-  //         this.setState({ visible: false })
-  //         setTimeout(() => this.setState({ congo: true }), 500)
-  //       }
-  //       else {
-  //         this.setState({ visible: false })
-  //       }
-  //     })
-  //   }
-  //   else {
-  //     await this.setState({ visible: false, })
-  //     setTimeout(() => this.setState({ sorry: true }), 500)
-  //   }
-
-
-  // }
 
 }
 const mapStateToProps = (state) => {
