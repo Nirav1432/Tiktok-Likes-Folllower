@@ -71,10 +71,14 @@ class DoComments extends Component {
 
     isVideoViewed = async () => {
         await BackgroundTimer.stopBackgroundTimer()
-        if (seconds == 0)
-            this.setState({ visible: false, goForDoLike: false, congo: true })
-        else
-            this.setState({ visible: false, sorry: true })
+        if (seconds == 0) {
+            this.setState({ visible: false, goForDoLike: false })
+            setTimeout(() => this.setState({ congo: true  }), 500)
+        }
+        else {
+            this.setState({ visible: false })
+            setTimeout(() => this.setState({ sorry: true }), 500)
+        }
     }
 
     getDuration = async (event) => {
