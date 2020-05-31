@@ -76,7 +76,7 @@ class DoComments extends Component {
             setTimeout(() => this.setState({ congo: true  }), 500)
         }
         else {
-            this.setState({ visible: false })
+            this.setState({ visible: false, goForDoLike: false  })
             setTimeout(() => this.setState({ sorry: true }), 500)
         }
     }
