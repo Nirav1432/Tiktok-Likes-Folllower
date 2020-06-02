@@ -17,19 +17,16 @@ class PurchaseCoinsScreen extends Component {
     this.state = {
       offers: [],
       visible: true,
+      Type: "INR"
     };
   }
 
   UNSAFE_componentWillMount() {
-    let id = this.props.Data.CommonData.userId
-    this.getPaymentCoins(id)
-    // fetch('https://data.fixer.io/api/latest').then(res=>{
-    //   console.log(res.json())
-    // })
+    this.getPaymentCoins()
   }
 
-  getPaymentCoins = (id) => {
-    Services.PaymentCoins(id).then((res) => {
+  getPaymentCoins = () => {
+    Services.PaymentCoins(this.state.Type).then((res) => {
       this.setState({ offers: res.payment_coin })
       this.setState({ visible: false })
     })
@@ -65,12 +62,26 @@ class PurchaseCoinsScreen extends Component {
               data={this.state.offers}
               renderItem={({ item, index, ss }) =>
                 <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
+                  {
+                    index == 0 ?
+                      <View style={styles.VIW14}>
+                        {/* <TouchableOpacity style={styles.VIW15}>
+                          <Image style={styles.IMG4} source={this.state.Type == "INR" ? Icons.inr_selected : Icons.inr_unselected} />
+                          <Text style={styles.TXT33}>{this.state.Type == "INR" ? "INR" : null}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.VIW15, { marginLeft: hp(4) }]}>
+                          <Image style={styles.IMG4} source={this.state.Type == "USD" ? Icons.usd_selected : Icons.usd_unselected} />
+                          <Text style={styles.TXT33}>{this.state.Type == "USD" ? "USD" : null}</Text>
+                        </TouchableOpacity> */}
+                      </View>
+                      : <></>
+                  }
                   <View style={styles.VIW13}>
                     <View>
                       <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                     </View>
                     <View>
-                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + '$' + item.doller + " " + item.type}</Text>
+                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + item.doller + " " + item.type}</Text>
                     </View>
                   </View>
                   <TouchableOpacity style={styles.buy} onPress={() => this.payToDestination(item.doller)}>

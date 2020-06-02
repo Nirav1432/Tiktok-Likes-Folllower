@@ -39,7 +39,11 @@ module.exports = {
         heartWhite:require('../Icons/heartWhite.png'),
         polo:require('../Icons/polo.png'),
         sad:require('../Icons/sad.png'),
-        thumbnail:require('../Icons/thumb.png')
+        thumbnail:require('../Icons/thumb.png'),
+        usd_selected:require('../Icons/usd_selected.png'),
+        usd_unselected:require('../Icons/usd_unselected.png'),
+        inr_selected:require('../Icons/inr_selected.png'),
+        inr_unselected:require('../Icons/inr_unselected.png')
     }
 
 

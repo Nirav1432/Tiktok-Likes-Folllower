@@ -49,7 +49,7 @@ export const Services = {
 
   Videos: data => api.post('/userVideo', data).then(onSuccess, onError),
   getListofCoins: data => api.get('/selection').then(onSuccess, onError),
-  PaymentCoins: data => api.get('/payment-coin').then(onSuccess, onError),
+  PaymentCoins: type => api.get('/payment-coin/' + type).then(onSuccess, onError),
 
 }
 

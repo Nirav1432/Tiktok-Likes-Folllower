@@ -2939,6 +2939,13 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
+fbemitter@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fbemitter/-/fbemitter-2.1.1.tgz#523e14fdaf5248805bb02f62efc33be703f51865"
+  integrity sha1-Uj4U/a9SSIBbsC9i78M75wP1GGU=
+  dependencies:
+    fbjs "^0.8.4"
+
 fbjs-css-vars@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz#216551136ae02fe255932c3ec8775f18e2c078b8"
@@ -2960,7 +2967,7 @@ fbjs-scripts@^1.1.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.9:
+fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.17"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   integrity sha1-xNWY6taUkRJlPWWIsBpc3Nn5D90=
@@ -5766,6 +5773,13 @@ react-native-background-timer@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.2.0.tgz#ff82d30899209b924983cc00e6ce174b8de5054a"
   integrity sha512-Y7N6diSFko/FCJPMmB0PoBlmY1kEcma7qDVwn8t7zi12GLqpe/Vwls97onkSD8/QL+BR33BygUHOrLTPwgeKfg==
+
+react-native-fbads@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-fbads/-/react-native-fbads-6.3.1.tgz#31c53eabccab6b0615e8a487223720af94be3ff6"
+  integrity sha512-DxAdHX8xDJ5/VyyFseyRJVPjzfI5+0MLJY4AC2nQqx706oAIkti/UAYQVQymeuiCeyU7lNKizmUlolhk6LeoTA==
+  dependencies:
+    fbemitter "^2.1.1"
 
 react-native-gesture-handler@1.6.1:
   version "1.6.1"

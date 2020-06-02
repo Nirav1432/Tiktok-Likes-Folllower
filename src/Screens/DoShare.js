@@ -47,7 +47,7 @@ class DoShare extends Component {
                 this.setState({ DatafromServer: res.share_video })
                 this.setState({ visible: false })
             }
-            else {                
+            else {
                 this.setState({ visible: false, })
                 await this.setState({ DatafromServer: [] })
                 this.setState({})
@@ -69,11 +69,10 @@ class DoShare extends Component {
 
     getThumbnail = async (event) => {
         let dt = await JSON.parse(event)
-        console.log(dt)
         let thumbinfo = dt["/v/:id"]
         oldlikes = await thumbinfo.videoData.itemInfos.shareCount
         await this.setState({})
-        Linking.openURL(this.state.VideoUrl)
+        await Linking.openURL(this.state.VideoUrl)
     }
 
     getNewLikes = async (event) => {

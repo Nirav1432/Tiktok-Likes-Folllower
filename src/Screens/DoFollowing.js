@@ -166,8 +166,8 @@ class DoFollowing extends Component {
                       <Image source={{ uri: item.profile }} style={styles.profileImage} />
                     </View>
                     <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
-                      <Text style={styles.TXT1}>{item.username}</Text>
-                      <Text style={styles.TXT2}>{item.fullname}</Text>
+                      <Text style={styles.TXT1}>{item.username.length > 15 ? item.username.substr(0, 15) + "..." : item.username}</Text>
+                      <Text style={styles.TXT2}>{item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname}</Text>
                     </View>
                   </View>
 
@@ -215,7 +215,7 @@ class DoFollowing extends Component {
         {
           this.state.datafromserver.length == 0 ?
             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-              <Text style={[styles.TXT1,{color:"black"}]}>{"No Follower Found"}</Text>
+              <Text style={[styles.TXT1, { color: "black" }]}>{"No Follower Found"}</Text>
             </View>
             :
             <></>
@@ -249,21 +249,20 @@ class DoFollowing extends Component {
 
     if (newlikes > oldlikes) {
       let data = { user_id: userId, request_user: this.state.request_user_id }
-      this.setState({ visible: false })
-      // Services.DoFollower(data).then(async (res) => {
-      //   if (res.success == "true") {
-      //     await this.props.setCoins(res.coin)
-      //     await this.getNewFollower(userId)
-      //     this.setState({ visible: false })
-      //     setTimeout(() => this.setState({ congo: true }), 500)
-      //     oldlikes = newlikes
-      //     newlikes = 0
-      //     this.setState({})
-      //   }
-      //   else {
-      //     this.setState({ visible: false })
-      //   }
-      // })
+      Services.DoFollower(data).then(async (res) => {
+        if (res.success == "true") {
+          await this.props.setCoins(res.coin)
+          await this.getNewFollower(userId)
+          this.setState({ visible: false })
+          setTimeout(() => this.setState({ congo: true }), 500)
+          oldlikes = newlikes
+          newlikes = 0
+          this.setState({})
+        }
+        else {
+          this.setState({ visible: false })
+        }
+      })
     }
     else {
       await this.setState({ visible: false, })
