@@ -33,27 +33,41 @@ class PurchaseCoinsScreen extends Component {
   }
 
   payToDestination = (amount) => {
-    let FinalAmount = (amount * 100)
-    var options = {
-      description: 'For Test a Rezorpay',
-      image: Icons.AppIcon,
-      currency: 'INR',
-      key: "rzp_test_0gruu49Oyj2Fga",
-      amount: FinalAmount.toString(),
-      name: 'Nirav Bhesaniya',
-      theme: { color: '#FE2C55' }
+    if (this.state.Type == "USD") {
+      alert("Sorry! USD Payment's Facility is Cureently Unavailable")
     }
-    RazorpayCheckout.open(options).then((data) => {
-      console.log(data)
-    }).catch((error) => {
-      console.log(error)
-    });
+    else {
+
+      let FinalAmount = (amount * 100)
+
+      var options = {
+        description: 'For Test a Rezorpay',
+        image: 'https://i.ibb.co/KrWLWqq/App.png',
+        currency: 'INR',
+        key: "rzp_test_0gruu49Oyj2Fga",
+        amount: FinalAmount.toString(),
+        name: 'Nirav Bhesaniya',
+        theme: { color: '#FE2C55' }
+      }
+      RazorpayCheckout.open(options).then((data) => {
+        console.log(data)
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  }
+
+  changeCurrencyList = async () => {
+    await this.setState({ Type: this.state.Type == "INR" ? "USD" : "INR", visible: true })
+    await this.getPaymentCoins()
   }
 
   render() {
-
+    var syb = this.state.type == "INR" ? "₹" : "$"
     return (
-      <View style={styles.MAINVIW}>
+      <View style={styles.MAINVIW}
+
+      >
         <Preloader isLoader={this.state.visible} />
         <Header title={"Purchase Coins"} backPress={() => this.props.navigation.goBack()} />
         {
@@ -65,14 +79,14 @@ class PurchaseCoinsScreen extends Component {
                   {
                     index == 0 ?
                       <View style={styles.VIW14}>
-                        {/* <TouchableOpacity style={styles.VIW15}>
+                        <TouchableOpacity style={styles.VIW15} onPress={() => this.changeCurrencyList()}>
                           <Image style={styles.IMG4} source={this.state.Type == "INR" ? Icons.inr_selected : Icons.inr_unselected} />
                           <Text style={styles.TXT33}>{this.state.Type == "INR" ? "INR" : null}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.VIW15, { marginLeft: hp(4) }]}>
+                        <TouchableOpacity style={[styles.VIW15, { marginLeft: hp(4) }]} onPress={() => this.changeCurrencyList()}>
                           <Image style={styles.IMG4} source={this.state.Type == "USD" ? Icons.usd_selected : Icons.usd_unselected} />
                           <Text style={styles.TXT33}>{this.state.Type == "USD" ? "USD" : null}</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                       </View>
                       : <></>
                   }
@@ -81,7 +95,7 @@ class PurchaseCoinsScreen extends Component {
                       <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                     </View>
                     <View>
-                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + item.doller + " " + item.type}</Text>
+                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + (this.state.Type == "INR" ? "₹" : "$") + item.doller + " " + item.type}</Text>
                     </View>
                   </View>
                   <TouchableOpacity style={styles.buy} onPress={() => this.payToDestination(item.doller)}>

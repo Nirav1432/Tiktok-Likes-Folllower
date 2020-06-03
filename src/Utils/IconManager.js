@@ -43,7 +43,9 @@ module.exports = {
         usd_selected:require('../Icons/usd_selected.png'),
         usd_unselected:require('../Icons/usd_unselected.png'),
         inr_selected:require('../Icons/inr_selected.png'),
-        inr_unselected:require('../Icons/inr_unselected.png')
+        inr_unselected:require('../Icons/inr_unselected.png'),
+        doView:require('../Icons/doView.png'),
+        ViewList:require('../Icons/ViewList.png')
     }
 
 

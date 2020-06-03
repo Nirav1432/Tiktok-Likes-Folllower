@@ -34,7 +34,7 @@ class CommentList extends Component {
     render() {
         return (
             <View styles={styles.MAINVIW}>
-                <Header title={"Comments List"} backPress={() => this.props.navigation.goBack()} />
+                <Header title={"Views List"} backPress={() => this.props.navigation.goBack()} />
                 <Preloader isLoader={this.state.visible} />
                 {
                     this.state.data.length == 0 ?

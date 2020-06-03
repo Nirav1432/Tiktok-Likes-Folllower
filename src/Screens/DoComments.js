@@ -151,7 +151,7 @@ class DoComments extends Component {
                 {
                     this.state.DatafromServer.length == 0 ?
                         <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-                            <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Share's for today"}</Text>
+                            <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Views for today"}</Text>
                         </View>
                         :
                         <View style={{ flex: 1 }}>

@@ -21,13 +21,13 @@ export default class Comments extends Component {
                 <View style={styles.VIW2}>
                     <View style={styles.VIW12}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("GetComments")}>
-                            <Image style={styles.IMG4} source={Icons.comment} />
+                            <Image style={styles.IMG4} source={Icons.doView} />
                             <Text style={styles.TXT55}>Get Views</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.VIW12}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("CommentList")}>
-                            <Image style={styles.IMG4} source={Icons.CommentList} />
+                            <Image style={styles.IMG4} source={Icons.ViewList} />
                             <Text style={styles.TXT55}>Views List</Text>
                         </TouchableOpacity>
                     </View>

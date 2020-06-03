@@ -164,10 +164,10 @@ class CommonScreen extends Component {
     }
 
     getThumbnail = (event) => {
-        let dt = JSON.parse(event)
+        let dt = JSON.parse(event) 
         if (dt["/v/:id"] != undefined) {
             let thumbinfo = dt["/v/:id"]
-            let thumbNail = thumbinfo.videoData.shareMeta.image.url
+            let thumbNail = thumbinfo.shareMeta.image.url
             let finalthumb = thumbNail == null ? "" : thumbNail == undefined ? "" : thumbNail
 
             if (this.props.navigation.getParam('type') == "Get Likes") {

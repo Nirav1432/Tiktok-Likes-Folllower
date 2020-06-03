@@ -21,7 +21,7 @@ export default class CommonPopup extends Component {
                             <Image source={this.props.type == "Like" ?
                                 Icons.Like :
                                 this.props.type == "Views" ?
-                                Icons.comment
+                                Icons.doView
                                 :
                                 Icons.shareHome
                             }

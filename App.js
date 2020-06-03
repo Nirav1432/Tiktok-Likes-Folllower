@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View, Image, Text, StatusBar, TouchableHighlight } from 'react-native'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -34,6 +35,40 @@ import ShareList from './src/Screens/ShareList';
 import { Provider } from 'react-redux';
 import { store } from './src/ReduxConfig/Store/Store'
 import CommonScreen from './src/Screens/CommonScreen';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import SP from 'react-native-splash-screen'
+import AsyncStorage from '@react-native-community/async-storage';
+
+const slides = [
+  {
+    key: 1,
+    title: 'Title 1',
+    text: 'Description.\nSay something cool',
+    image: require('./src/Icons/1S.jpg'),
+    backgroundColor: '#59b2ab',
+  },
+  {
+    key: 2,
+    title: 'Title 2',
+    text: 'Other cool stuff',
+    image: require('./src/Icons/2S.jpg'),
+    backgroundColor: '#febe29',
+  },
+  {
+    key: 3,
+    title: 'Rocket guy',
+    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('./src/Icons/3S.jpg'),
+    backgroundColor: '#22bcb5',
+  },
+  {
+    key: 4,
+    title: 'Rocket guy',
+    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('./src/Icons/4S.jpg'),
+    backgroundColor: '#22bcb5',
+  }
+];
 
 const AllInDrawer = createStackNavigator(
   {
@@ -91,13 +126,61 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      showSlider: false
     };
+  }
+  async componentDidMount() {
+    let isfirsttime = await AsyncStorage.getItem('Fistime')
+    if (isfirsttime == null) {
+      this.setState({ showSlider: true })
+    }
+    else {
+      this.setState({ showSlider: false })
+    }
+    SP.hide()
   }
   render() {
     return (
-      <Provider store={store}>
-        <All />
-      </Provider>
+      this.state.showSlider ?
+        <View style={{ flex: 1, backgroundColor: "#FE2C55" }}>
+          <StatusBar backgroundColor="#FE2C55" />
+          <AppIntroSlider
+            renderItem={this._renderItem}
+            data={slides}
+            onDone={this._onDone}
+          />
+        </View>
+        :
+        <Provider store={store}>
+          <View style={{ flex: 1, zIndex: 50 }}
+            //  onStartShouldSetResponder={(event) => this.AddsManagement(event)}
+            onStartShouldSetResponder={evt => {
+              evt.persist();
+              if (this.childrenIds && this.childrenIds.length) {
+                if (this.childrenIds.includes(evt.target)) {
+                  return;
+                }
+                console.log('Tapped outside');
+              }
+            }}
+          >
+            <All />
+          </View>
+        </Provider>
     );
   }
+  _renderItem = ({ item }) => {
+    return (
+      <Image source={item.image} style={{ height: "100%", width: "100%" }} resizeMode="contain" />
+    );
+  }
+  _onDone = async () => {
+    await AsyncStorage.setItem('Fistime', "false")
+    this.setState({ showSlider: false });
+  }
+
+  AddsManagement = (event) => {
+    console.log(event)
+  }
+
 }
