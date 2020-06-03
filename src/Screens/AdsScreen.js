@@ -22,9 +22,7 @@ export default class AdsScreen extends Component {
 
     render() {
         return (
-            <View>
-                <Text>{null}</Text>
-            </View>
+            <></>
         );
     }
 }

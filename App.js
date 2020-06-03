@@ -38,6 +38,7 @@ import CommonScreen from './src/Screens/CommonScreen';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import SP from 'react-native-splash-screen'
 import AsyncStorage from '@react-native-community/async-storage';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 
 const slides = [
   {
