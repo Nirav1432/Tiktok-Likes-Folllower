@@ -7,8 +7,12 @@ import { connect } from 'react-redux';
 import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
 import { Icons } from '../Utils/IconManager'
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import RazorpayCheckout from 'react-native-razorpay';
+import Congratulations from '../Components/Popups/Congratulations'
 
+let mid = ""
 
 class PurchaseCoinsScreen extends Component {
 
@@ -17,11 +21,14 @@ class PurchaseCoinsScreen extends Component {
     this.state = {
       offers: [],
       visible: true,
-      Type: "INR"
+      Type: "INR",
+      congo: false,
+      selectedCoins: 0
     };
   }
 
-  UNSAFE_componentWillMount() {
+  async UNSAFE_componentWillMount() {
+    mid = await this.props.Data.CommonData.userId
     this.getPaymentCoins()
   }
 
@@ -32,29 +39,46 @@ class PurchaseCoinsScreen extends Component {
     })
   }
 
-  payToDestination = (amount) => {
-    if (this.state.Type == "USD") {
-      alert("Sorry! USD Payment's Facility is Cureently Unavailable")
+  payToDestination = async (amount, coins) => {
+
+    this.setState({ selectedCoins: coins })
+    let FinalAmount = (amount * 100)
+    let Type = this.state.Type == "INR" ? 'INR' : 'USD'
+
+    var options = {
+      description: 'For Test a Rezorpay',
+      image: 'https://i.ibb.co/KrWLWqq/App.png',
+      currency: Type,
+      key: "rzp_test_0gruu49Oyj2Fga",
+      amount: FinalAmount.toString(),
+      name: 'Nirav Bhesaniya',
+      theme: { color: '#FE2C55' }
     }
-    else {
-
-      let FinalAmount = (amount * 100)
-
-      var options = {
-        description: 'For Test a Rezorpay',
-        image: 'https://i.ibb.co/KrWLWqq/App.png',
-        currency: 'INR',
-        key: "rzp_test_0gruu49Oyj2Fga",
-        amount: FinalAmount.toString(),
-        name: 'Nirav Bhesaniya',
-        theme: { color: '#FE2C55' }
+    RazorpayCheckout.open(options).then((data) => {
+      this.setState({ visible: true })
+      let params = {
+        order_id: data.razorpay_payment_id,
+        user_id: mid,
+        coins: coins,
+        currency_type: this.state.Type,
+        currency: amount
       }
-      RazorpayCheckout.open(options).then((data) => {
-        console.log(data)
-      }).catch((error) => {
-        console.log(error)
+      Services.updateWallet(params).then(async (res) => {
+        if (res.success) {
+          await this.props.setCoins(res.coin)
+          this.setState({ visible: false })
+          setTimeout(() => this.setState({ congo: true }), 300)
+        }
+        else {
+          this.setState({ visible: false })
+          alert("Something went wrong !!")
+        }
+
       })
-    }
+    }).catch((error) => {
+      //alert("payment Canceled !!")
+    })
+
   }
 
   changeCurrencyList = async () => {
@@ -65,10 +89,13 @@ class PurchaseCoinsScreen extends Component {
   render() {
     var syb = this.state.type == "INR" ? "₹" : "$"
     return (
-      <View style={styles.MAINVIW}
-
-      >
+      <View style={styles.MAINVIW}>
         <Preloader isLoader={this.state.visible} />
+        <Congratulations
+          visible={this.state.congo}
+          coins={this.state.selectedCoins}
+          ClosePop={() => this.setState({ congo: false })}
+        />
         <Header title={"Purchase Coins"} backPress={() => this.props.navigation.goBack()} />
         {
           this.state.offers.length > 0 ?
@@ -95,10 +122,10 @@ class PurchaseCoinsScreen extends Component {
                       <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
                     </View>
                     <View>
-                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + (this.state.Type == "INR" ? "₹" : "$") + item.doller + " " + item.type}</Text>
+                      <Text style={styles.TXT6}>{" Get " + item.coin + " Diamonds in " + (this.state.Type == "INR" ? "₹" : "$") + (this.state.Type == "INR" ? item.inr : item.doller) + " " + (this.state.Type == "INR" ? "INR" : "USD")}</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.buy} onPress={() => this.payToDestination(item.doller)}>
+                  <TouchableOpacity style={styles.buy} onPress={() => this.payToDestination(this.state.Type == "INR" ? item.inr : item.doller, item.coin)}>
                     <Text style={styles.TXT3}>Buy</Text>
                   </TouchableOpacity>
                 </View>
@@ -123,7 +150,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // setGlobalData: () => { dispatch(putLogin(JSON.stringify(FinalData))) }
+    setCoins: (coins) => dispatch(setDiamonds(coins)),
+    putCouter: (cnt) => dispatch(putcount(cnt)),
+    showAds: () => dispatch(shoeAds())
   };
 };
 

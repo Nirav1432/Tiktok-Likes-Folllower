@@ -6,6 +6,7 @@ import Preloader from '../Components/Preloader';
 import { Services } from '../Configurations/Api/Connections'
 import { connect } from 'react-redux'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 
 var userid = ""
 class ContactUs extends Component {
@@ -31,7 +32,7 @@ class ContactUs extends Component {
                     <TouchableOpacity style={styles.SubmitBotton} onPress={() => this.sendContact()}>
                         <Text style={styles.TXT2}>Submit</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.SubmitBotton, { marginLeft: heightPercentageToDP(1) }]} onPress={() => this.props.navigation.navigate('ContactUsList')}>
+                    <TouchableOpacity style={[styles.SubmitBotton, { marginLeft: heightPercentageToDP(1) }]} onPress={() => this.commonNavigator('ContactUsList')}>
                         <Text style={styles.TXT2}>My Questions</Text>
                     </TouchableOpacity>
                 </View>
@@ -70,10 +71,33 @@ class ContactUs extends Component {
         }
 
     }
+
+    commonNavigator = async (Type) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            this.props.navigation.navigate('ContactUsList')
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            await this.props.putCouter(cnt)
+            this.props.navigation.navigate('ContactUsList')
+        }
+    }
+
 }
 const mapStateToProps = (state) => {
     return {
         Data: state.LoginData
     };
 };
-export default connect(mapStateToProps)(ContactUs);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(ContactUs);

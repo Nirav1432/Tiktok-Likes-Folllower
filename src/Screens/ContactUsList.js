@@ -5,57 +5,7 @@ import Header from '../Components/Header';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
-
-var tempData = [
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'admin',
-    message: "Hello i m fine"
-  },
-  {
-    from: 'user',
-    message: "Hello i m fine"
-  }
-]
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 
 class ContactUsList extends Component {
   constructor(props) {
@@ -74,7 +24,7 @@ class ContactUsList extends Component {
   getMessageList(id) {
     let data = { user_id: id }
     Services.Coversations(data).then((res) => {
-      this.setState({list:res.data.reverse()})
+      this.setState({ list: res.data.reverse() })
     })
   }
 
@@ -113,17 +63,39 @@ class ContactUsList extends Component {
         </View>
         <View style={styles.VIW2}>
           <Text style={styles.TXT2}>if you have any more questions or concerns,{"\n"}please contact to us</Text>
-          <TouchableOpacity style={styles.Button} onPress={() => this.props.navigation.navigate('ContactUs')}>
+          <TouchableOpacity style={styles.Button} onPress={() => this.commonNavigator('ContactUs')}>
             <Text style={styles.TXT3}>Contact Us</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
+  commonNavigator = async (Type) => {
+    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+      await this.props.showAds()
+      await this.props.putCouter(0)
+      this.props.navigation.navigate('ContactUs')
+    }
+    else {
+      let cnt = this.props.Data.adsCounter
+      cnt++;
+      await this.props.putCouter(cnt)
+      this.props.navigation.navigate('ContactUs')
+    }
+  }
+
 }
 const mapStateToProps = (state) => {
   return {
     Data: state.LoginData
   };
 };
-export default connect(mapStateToProps)(ContactUsList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCoins: (coins) => dispatch(setDiamonds(coins)),
+    setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
+    putCouter: (cnt) => dispatch(putcount(cnt)),
+    showAds: () => dispatch(shoeAds())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContactUsList);

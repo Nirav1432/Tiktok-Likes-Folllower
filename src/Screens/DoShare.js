@@ -118,6 +118,7 @@ class DoShare extends Component {
 
                 <Congratulations
                     visible={this.state.congo}
+                    coins={5}
                     ClosePop={() => this.setState({ congo: false })}
                 />
 

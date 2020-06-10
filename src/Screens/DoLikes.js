@@ -36,7 +36,8 @@ class DoLikes extends Component {
             sorry: false,
             getUserLike: false,
             Type: "",
-            uniqueId: ""
+            uniqueId: "",
+            currentIndex: 0
         };
     }
 
@@ -54,7 +55,7 @@ class DoLikes extends Component {
                 this.setState({ DatafromServer: res.like_image })
                 this.setState({ getUserLike: true })
             }
-            else {            
+            else {
                 this.setState({ visible: false, })
                 await this.setState({ DatafromServer: [] })
                 this.setState({})
@@ -66,8 +67,8 @@ class DoLikes extends Component {
 
 
 
-    GotoTikTok = async (item) => {
-        await this.setState({ VideoUrl: item.video_link, visible: true, request_user_id: item.user_id, goForDoLike: true })
+    GotoTikTok = async (item, index) => {
+        await this.setState({ VideoUrl: item.video_link, visible: true, request_user_id: item.user_id, goForDoLike: true, currentIndex: index })
         Linking.openURL(this.state.VideoUrl)
     }
 
@@ -94,6 +95,7 @@ class DoLikes extends Component {
 
                 <Congratulations
                     visible={this.state.congo}
+                    coins={5}
                     ClosePop={() => this.setState({ congo: false })}
                 />
                 <SorryPop
@@ -103,10 +105,10 @@ class DoLikes extends Component {
                 {
                     this.state.DatafromServer.length == 0 ?
                         <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-                            <Text style={[styles.TXT2, { color: "black", fontSize:heightPercentageToDP(2.2) }]}>{"No More Likes's for today"}</Text>
+                            <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Likes's for today"}</Text>
                         </View>
                         :
-                        <View style={{flex:1}}>
+                        <View style={{ flex: 1 }}>
 
                             {
                                 this.state.getUserLike ?
@@ -153,7 +155,7 @@ class DoLikes extends Component {
                                 <FlatList
                                     data={this.state.DatafromServer}
                                     renderItem={({ item, index }) => (
-                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>
+                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item, index)}>
                                             {
                                                 item.video_thumb == null ?
                                                     <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />
@@ -217,15 +219,15 @@ class DoLikes extends Component {
         this.setState({ checkNewLikes: false, goForDoLike: false })
 
         console.log('Old Likes -->', oldlikes)
-        console.log('New Likes -->', newlikes)
-
+        console.log('New Likes -->', newlikes)     
+       
 
         if (newlikes > oldlikes) {
             let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
             Services.DoLike(data).then(async (res) => {
                 if (res.success == "true") {
                     await this.props.setCoins(res.coin)
-                    await this.getData(id)
+                    await this.state.DatafromServer.splice(this.state.currentIndex, 1)
                     this.setState({ visible: false })
                     setTimeout(() => this.setState({ congo: true }), 500)
                     oldlikes = newlikes

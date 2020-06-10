@@ -1,18 +1,20 @@
 import { PUT_LOGIN, SET_DIAMONDS } from '../Actions/Login/LoginActions'
-import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT } from '../Actions/AddCount/AddCount'
+import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS,HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
   coins: 0,
   adsCounter: 0,
-  maxAdsCounter: 0
+  maxAdsCounter: 0,
+  showAds: false
 };
 
 const LoginReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case PUT_LOGIN: {
-      state.CommonData = JSON.parse(action.data)
-      return state
+      return Object.assign({}, state, {
+        CommonData: JSON.parse(action.data)
+      })
     }
       break;
 
@@ -46,6 +48,18 @@ const LoginReducer = (state = initialState, action) => {
     }
       break;
 
+
+    case SHOW_ADS: {
+      return Object.assign({}, state, {
+        showAds: true
+      })
+    }
+
+    case HIDE_ADS: {
+      return Object.assign({}, state, {
+        showAds: false
+      })
+    }
 
     default: {
       return state;

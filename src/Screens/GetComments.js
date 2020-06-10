@@ -6,8 +6,11 @@ import { Services } from '../Configurations/Api/Connections';
 import { Icons } from '../Utils/IconManager'
 import Header from '../Components/Header';
 import Preloader from '../Components/Preloader';
+import { connect } from 'react-redux'
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 
-export default class GetComments extends Component {
+class GetComments extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -57,7 +60,7 @@ export default class GetComments extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true })} onPress={() => this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })}>
+                                <TouchableOpacity style={[styles.VIW16]}  onPress={() => this.commonNavigator(item)}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.GetComments} style={styles.IMG4} resizeMode="contain" />
                                     </View>
@@ -79,4 +82,34 @@ export default class GetComments extends Component {
             </View>
         );
     }
+    commonNavigator = async (item) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            this.props.putCouter(cnt)
+            this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })
+        }
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        setMaxAdsCounter: () => dispatch(puMaxCount(parseInt(OtherData.ads_click))),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetComments);

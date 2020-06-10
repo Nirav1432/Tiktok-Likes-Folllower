@@ -9,8 +9,18 @@ import { connect } from 'react-redux'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { WebView } from 'react-native-webview';
 import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import Rate, { AndroidMarket } from 'react-native-rate'
+
 
 const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
+
+const AndroidRate = {
+    GooglePackageName: "com.harekrishna.tikbooster",
+    preferredAndroidMarket: AndroidMarket.Google,
+    preferInApp: false,
+    openAppStoreIfInAppFails: true,
+}
 
 class Sidemenu extends Component {
     constructor(props) {
@@ -24,8 +34,14 @@ class Sidemenu extends Component {
         };
     }
 
-    async componentDidMount() {     
+    async componentDidMount() {
         await this.setState({ uniqueId: '@' + this.props.Data.CommonData.uniqueId, TiktokUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type })
+    }
+
+    rateMyapp = () => {
+        Rate.rate(AndroidRate, success => {
+          console.log(success)
+        })
     }
 
     render() {
@@ -56,7 +72,7 @@ class Sidemenu extends Component {
                     <Image source={Icons.AppIcon} style={styles.IMG1} resizeMode="contain" />
                 </View>
                 <View style={styles.InnerView2}>
-                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.props.navigation.navigate('ContactUs')}>
+                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.commonNavigator('ContactUs')}>
                         <View style={styles.VIW1}>
                             <Image source={Icons.contact} style={styles.CMNIMG} resizeMode="contain" />
                         </View>
@@ -64,7 +80,7 @@ class Sidemenu extends Component {
                             <Text style={styles.CMNTXT}>Contact us</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.CMNVIW}>
+                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.commonNavigator('PrivacyAndPolicy')}>
                         <View style={styles.VIW1}>
                             <Image source={Icons.lock} style={styles.CMNIMG} resizeMode="contain" />
                         </View>
@@ -72,7 +88,7 @@ class Sidemenu extends Component {
                             <Text style={styles.CMNTXT}>Privacy</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.props.navigation.navigate('ShareAndRate')}>
+                    <TouchableOpacity style={styles.CMNVIW} onPress={()=>this.rateMyapp()}>
                         <View style={styles.VIW1}>
                             <Image source={Icons.star} style={styles.CMNIMG} resizeMode="contain" />
                         </View>
@@ -80,7 +96,7 @@ class Sidemenu extends Component {
                             <Text style={styles.CMNTXT}>Rate App</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.CMNVIW}>
+                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.commonNavigator('ShareAndRate')}>
                         <View style={styles.VIW1}>
                             <Image source={Icons.ShareIcon} style={styles.CMNIMG} resizeMode="contain" />
                         </View>
@@ -130,6 +146,20 @@ class Sidemenu extends Component {
     async onRefreshPressed() {
         await this.setState({ Refresh: true, visible: true })
     }
+
+    commonNavigator = async (Type) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            this.props.navigation.navigate(Type)
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            await this.props.putCouter(cnt)
+            this.props.navigation.navigate(Type)
+        }
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -141,7 +171,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
-        setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) }
+        setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 

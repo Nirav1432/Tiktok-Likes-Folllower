@@ -3,34 +3,68 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { connect } from 'react-redux'
+import NativeAdsView from '../Screens/NativeAdsScreen'
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 
-export default class Likes extends Component {
+let ads = new NativeAdsManager("979168055864310_981496822298100")
+
+ class Likes extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: { follower_coin: 0 }
         };
     }
- 
+
     render() {
         return (
             <View style={styles.MAINVIW}>
                 <Header title={"Like"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
                 <View style={styles.VIW2}>
                     <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("GetLikes")}>
+                        <TouchableOpacity onPress={() => this.commonNavigator("GetLikes")}>
                             <Image style={styles.IMG4} source={Icons.Like} />
                             <Text style={styles.TXT55}>Get Likes</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("LikesList")}>
+                        <TouchableOpacity onPress={() => this.commonNavigator("LikesList")}>
                             <Image style={styles.IMG4} source={Icons.Like_List} />
                             <Text style={styles.TXT55}>Likes List</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+                <NativeAdsView  adsManager={ads}/>
+
             </View>
         );
     }
+    commonNavigator = async (Type) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            this.props.putCouter(0)
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            this.props.putCouter(cnt)
+        }
+        this.props.navigation.navigate(Type)
+    }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Likes);

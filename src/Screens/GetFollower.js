@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
 import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 
 class GetFollower extends Component {
     constructor(props) {
@@ -36,13 +37,19 @@ class GetFollower extends Component {
 
     getData() {
 
-        Services.getListofCoins().then((res) => {
+        Services.getListofCoins().then(async (res) => {
             if (res.selection.length > 0) {
                 this.setState({ visible: false })
                 for (let obj of res.selection) {
                     if (obj.type == 2) {
                         this.state.DataFromServer.push(obj)
                     }
+                }
+                if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+                    setTimeout(async () => {
+                        await this.props.showAds()
+                        await this.props.putCouter(0)
+                    }, 300)
                 }
             }
         }).catch((res) => {
@@ -108,7 +115,7 @@ class GetFollower extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.commonNavigator(item)}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.Group} style={styles.IMG4} resizeMode="contain" />
                                     </View>
@@ -129,6 +136,20 @@ class GetFollower extends Component {
             </View>
         );
     }
+    commonNavigator = async (item) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            if (!this.props.showAds)
+                this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            this.props.putCouter(cnt)
+            this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
+        }
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -139,7 +160,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        setMaxAdsCounter: () => dispatch(puMaxCount(parseInt(OtherData.ads_click))),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 

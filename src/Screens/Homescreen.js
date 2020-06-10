@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, Image, TouchableOpacity, BackHandler, Platform } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles/HomeScreenStyles'
 import { Icons } from '../Utils/IconManager';
 import SplashScreen from 'react-native-splash-screen'
@@ -9,19 +8,18 @@ import { custom_number_format } from '../Utils/functions'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount } from '../ReduxConfig/Actions/AddCount/AddCount';
-import AdsScreen from './AdsScreen';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+
 
 
 let AllData = null
 let OtherData = null
-let counter = 0
+
 
 class Homescreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAdd: false
     };
   }
 
@@ -34,30 +32,37 @@ class Homescreen extends Component {
 
   setAllData = () => {
     AllData = this.props.Data.CommonData
-    Services.setting({ user_id: AllData.userId }).then((res) => {
+    Services.setting({ user_id: AllData.userId }).then(async (res) => {
       OtherData = res.setting
       this.setState({})
-      this.props.setCoins()
-      this.props.setMaxAdsCounter()
+      await this.props.setCoins()
+      await this.props.setMaxAdsCounter()
     })
   }
 
-  commonNavigator = () => {
+  commonNavigator = async (Type) => {
     if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-      this.setState({ showAdd: true })
-      this.props.putCouter(0)
+      if (Type == "side") {
+        await this.props.showAds()
+        await this.props.putCouter(0)
+        this.props.navigation.openDrawer()
+      }
+      else
+      this.props.navigation.navigate(Type)
     }
-    else {    
-      let cnt=this.props.Data.adsCounter
+    else {
+      let cnt = this.props.Data.adsCounter
       cnt++;
-      console.log(cnt)
-      this.props.putCouter(cnt)
-      // this.props.navigation.navigate("Follower")
+      await this.props.putCouter(cnt)
+      if (Type == "side")
+        this.props.navigation.openDrawer()
+      else
+        this.props.navigation.navigate(Type)
     }
+
   }
 
   render() {
-
     console.log(this.props.Data.adsCounter)
     return (
       <>
@@ -67,15 +72,6 @@ class Homescreen extends Component {
 
           <View style={styles.MAINVIW}>
 
-            {
-              this.state.showAdd ?
-                <AdsScreen
-                  closeAdd={() => this.setState({ showAdd: false })}
-                />
-                :
-                <></>
-            }
-
             <StatusBar backgroundColor="#FE2C55" />
 
             <View style={styles.VIW1}>
@@ -83,7 +79,7 @@ class Homescreen extends Component {
               <View style={[styles.VIW13, { top: Platform.OS === "ios" ? hp(3.5) : 0 }]}>
 
                 <View style={styles.VIW7}>
-                  <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} style={styles.BTN}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("side")} style={styles.BTN}>
                     <Image source={Icons.menu} style={styles.IMG2} />
                   </TouchableOpacity>
                 </View>
@@ -126,19 +122,19 @@ class Homescreen extends Component {
 
               <View style={styles.VIW3}>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() =>this.commonNavigator()}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("Follower")}>
                     <Image style={styles.IMG4} source={Icons.AddFL} />
                     <Text style={styles.TXT5}>Follower</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Likes")}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("Likes")}>
                     <Image style={styles.IMG4} source={Icons.Like} />
                     <Text style={styles.TXT5}>Like</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Comments")}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("Comments")}>
                     <Image style={styles.IMG4} source={Icons.doView} />
                     <Text style={styles.TXT5}>View</Text>
                   </TouchableOpacity>
@@ -149,20 +145,20 @@ class Homescreen extends Component {
 
               <View style={styles.VIW3}>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("Share")}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("Share")}>
                     <Image style={styles.IMG4} source={Icons.shareHome} />
                     <Text style={styles.TXT5}>Share</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("EarnScreen")}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("EarnScreen")}>
                     <Image style={styles.IMG4} source={Icons.Earn} />
                     <Text style={styles.TXT5}>Earn</Text>
                   </TouchableOpacity>
 
                 </View>
                 <View style={styles.VIW12}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("PurchaseCoinsScreen")}>
+                  <TouchableOpacity onPress={() => this.commonNavigator("PurchaseCoinsScreen")}>
                     <Image style={styles.IMG4} source={Icons.purchase} />
                     <Text style={styles.TXT5}>Purchase Coins</Text>
                   </TouchableOpacity>
@@ -188,7 +184,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setCoins: () => dispatch(setDiamonds(OtherData.coin)),
     setMaxAdsCounter: () => dispatch(puMaxCount(parseInt(OtherData.ads_click))),
-    putCouter: (cnt) => dispatch(putcount(cnt))
+    putCouter: (cnt) => dispatch(putcount(cnt)),
+    showAds: () => dispatch(shoeAds())
   };
 };
 

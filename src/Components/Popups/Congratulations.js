@@ -23,7 +23,7 @@ export default class Congratulations extends Component {
                                     <Image source={Icons.polo} style={styles.IMG} resizeMode="contain" />
                                 </View>
                                 <View style={styles.VIW7}>
-                                    <Text style={styles.TXT1}>5</Text>
+                                    <Text style={styles.TXT1}>{this.props.coins}</Text>
                                 </View>
                             </View>
                             <View style={styles.VIW4}>

@@ -3,8 +3,14 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+import NativeAdsView from '../Screens/NativeAdsScreen'
+import {connect} from 'react-redux'
 
-export default class Share extends Component {
+let ads = new NativeAdsManager("979168055864310_981496822298100")
+
+class Share extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +18,7 @@ export default class Share extends Component {
         };
     }
     UNSAFE_componentWillMount() {
-       //  this.setState({ data: this.props.navigation.getParam('data') })
+        //  this.setState({ data: this.props.navigation.getParam('data') })
     }
     render() {
         return (
@@ -20,19 +26,46 @@ export default class Share extends Component {
                 <Header title={"Share"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
                 <View style={styles.VIW2}>
                     <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("GetShare")}>
+                        <TouchableOpacity onPress={() => this.commonNavigator("GetShare")}>
                             <Image style={styles.IMG4} source={Icons.shareHome} />
                             <Text style={styles.TXT55}>Get Share</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ShareList")}>
+                        <TouchableOpacity onPress={() => this.commonNavigator("ShareList")}>
                             <Image style={styles.IMG4} source={Icons.ShareList} />
                             <Text style={styles.TXT55}>Share List</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+                <NativeAdsView adsManager={ads} />
             </View>
         );
     }
+    commonNavigator = async (Type) => {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            this.props.putCouter(0)
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            this.props.putCouter(cnt)
+        }
+        this.props.navigation.navigate(Type)
+    }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Share);

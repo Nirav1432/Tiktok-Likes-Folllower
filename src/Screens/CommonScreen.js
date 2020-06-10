@@ -11,6 +11,12 @@ import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import CommonPopup from '../Components/Popups/CommonPopup';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
+import NativeAdsView from '../Screens/NativeAdsScreen'
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+
+
+let ads = new NativeAdsManager("979168055864310_981496822298100")
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
@@ -149,22 +155,23 @@ class CommonScreen extends Component {
                 </View>
                 <View style={styles.VIW9}>
                     <Text style={styles.TXT4}>Note: When you get {
-                           this.props.navigation.getParam('type') == "Get Likes" ?
-                           "likes"
-                           :
-                           this.props.navigation.getParam('type') == "Get Views" ?
-                               "views"
-                               :
-                               "shares"
+                        this.props.navigation.getParam('type') == "Get Likes" ?
+                            "likes"
+                            :
+                            this.props.navigation.getParam('type') == "Get Views" ?
+                                "views"
+                                :
+                                "shares"
                     } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
+                <NativeAdsView adsManager={ads} type="Earn" />
             </View>
         );
     }
 
     getThumbnail = (event) => {
-        let dt = JSON.parse(event) 
+        let dt = JSON.parse(event)
         if (dt["/v/:id"] != undefined) {
             let thumbinfo = dt["/v/:id"]
             let thumbNail = thumbinfo.shareMeta.image.url
@@ -191,7 +198,7 @@ class CommonScreen extends Component {
             }
             else if (this.props.navigation.getParam('type') == "Get Views") {
 
-                  let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: finalthumb }
+                let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: 1, comment_coin: 1, video_thumb: finalthumb }
 
                 Services.RequestComment(data).then(async (res) => {
@@ -274,8 +281,21 @@ class CommonScreen extends Component {
 
     pasteUrl = async () => {
 
-        let url = await Clipboard.getString()
-        this.setState({ VideoUrl: url })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            this.props.putCouter(0)
+            let url = await Clipboard.getString()
+            this.setState({ VideoUrl: url })
+        }
+        else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            this.props.putCouter(cnt)
+            let url = await Clipboard.getString()
+            this.setState({ VideoUrl: url })
+        }
+
+       
 
     }
 
@@ -298,7 +318,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 
