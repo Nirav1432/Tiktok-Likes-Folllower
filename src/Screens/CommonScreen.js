@@ -42,6 +42,12 @@ class CommonScreen extends Component {
         IncData = await this.props.navigation.getParam('data')
         this.setState({ TotalDiamond: this.props.Data.coins })
         this.setState({ userId: this.props.Data.CommonData.userId })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 300)
+        }
     }
 
 
@@ -165,7 +171,9 @@ class CommonScreen extends Component {
                     } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
-                <NativeAdsView adsManager={ads} type="Earn" />
+                <View style={{ flex: 1, marginTop: 10 }}>
+                    <NativeAdsView adsManager={ads} />
+                </View>
             </View>
         );
     }
@@ -295,7 +303,7 @@ class CommonScreen extends Component {
             this.setState({ VideoUrl: url })
         }
 
-       
+
 
     }
 

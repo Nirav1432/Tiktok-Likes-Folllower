@@ -13,6 +13,9 @@ import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
 import BackgroundTimer from 'react-native-background-timer';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
+
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
@@ -57,6 +60,12 @@ class DoComments extends Component {
         }).catch((err) => {
             this.setState({ visible: false })
         })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 700)
+        }
     }
 
     GotoTikTok = async (item) => {
@@ -80,7 +89,7 @@ class DoComments extends Component {
                     await this.getData(id)
                     this.setState({ visible: false })
                     setTimeout(() => this.setState({ congo: true }), 500)
-                    seconds=-1
+                    seconds = -1
                     this.setState({})
                 }
                 else {
@@ -151,8 +160,13 @@ class DoComments extends Component {
 
                 {
                     this.state.DatafromServer.length == 0 ?
-                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-                            <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Views for today"}</Text>
+                        <View style={{ justifyContent: "flex-end", flex: 1 }}>
+                            <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+                                <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Views for today"}</Text>
+                            </View>
+                            <View style={{position:"absolute",width:"100%"}}>
+                                <BannerAds />
+                            </View>
                         </View>
                         :
                         <View style={{ flex: 1 }}>
@@ -213,11 +227,7 @@ class DoComments extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            {/* <View style={styles.VIW5}>
-                                <TouchableOpacity style={styles.SubmitBotton} >
-                                    <Text style={styles.TXT22}>NEXT</Text>
-                                </TouchableOpacity>
-                            </View> */}
+                            <BannerAds />
                         </View>
                 }
 
@@ -235,7 +245,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 

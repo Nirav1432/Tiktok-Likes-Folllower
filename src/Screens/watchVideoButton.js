@@ -4,9 +4,12 @@ import styles from './styles/watchTimerStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Header from '../Components/Header';
 import { Icons } from '../Utils/IconManager';
-import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+import NativeAdsView from '../Screens/NativeAdsScreen'
+import {connect} from 'react-redux'
 
-export default class watchVideoButton extends Component {
+class watchVideoButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,15 +17,14 @@ export default class watchVideoButton extends Component {
         };
     }
 
-    componentDidMount(){
-        AdSettings.addTestDevice(AdSettings.currentDeviceHash)
+    componentDidMount(){       
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+              await this.props.showAds()
+              await this.props.putCouter(0)
+            }, 300)
+          }
     }
-    showAdd = () => {
-        InterstitialAdManager.showAd("979168055864310_979168595864256")
-            .then(didClick => console.log(didClick))
-            .catch(error => console.log(error));
-    }
-
     render() {
         return (
             <View style={styles.MAINVIW}>
@@ -43,3 +45,17 @@ export default class watchVideoButton extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(watchVideoButton);

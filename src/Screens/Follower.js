@@ -46,7 +46,9 @@ class Follower extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <NativeAdsView adsManager={ads} />
+                <View style={{ flex: 1 }}>
+                    <NativeAdsView adsManager={ads} />
+                </View>
             </View>
         );
     }

@@ -3,8 +3,16 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/ShareAndRateStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
+import { connect } from 'react-redux'
 import Share from 'react-native-share';
 import Rate, { AndroidMarket } from 'react-native-rate'
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import NativeAdsView from '../Screens/NativeAdsScreen'
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+
+
+let ads = new NativeAdsManager("979168055864310_981496822298100")
+
 
 const AndroidRate = {
     GooglePackageName: "com.harekrishna.tikbooster",
@@ -12,8 +20,7 @@ const AndroidRate = {
     preferInApp: false,
     openAppStoreIfInAppFails: true,
 }
-
-export default class ShareAndRate extends Component {
+class ShareAndRate extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,6 +28,15 @@ export default class ShareAndRate extends Component {
         };
     }
 
+
+    componentDidMount() {
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 700)
+        }
+    }
 
 
     shareMyapp = () => {
@@ -34,7 +50,7 @@ export default class ShareAndRate extends Component {
 
     rateMyapp = () => {
         Rate.rate(AndroidRate, success => {
-          console.log(success)
+            console.log(success)
         })
     }
 
@@ -52,7 +68,7 @@ export default class ShareAndRate extends Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.VIW2}>
-                            <TouchableOpacity style={styles.Button} onPress={()=>this.rateMyapp()}>
+                            <TouchableOpacity style={styles.Button} onPress={() => this.rateMyapp()}>
                                 <Text style={styles.TXT3}>Rate App</Text>
                             </TouchableOpacity>
                         </View>
@@ -60,7 +76,24 @@ export default class ShareAndRate extends Component {
                     <Text style={styles.Thankyou}>Thank you!</Text>
                     <Text style={styles.LastTXT}>Do not remove this app to get more{"\n"}fans,heart,comments,and share</Text>
                 </View>
+                <View style={{ flex: 1 }}>
+                    <NativeAdsView adsManager={ads} />
+                </View>
             </View>
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
+    };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(ShareAndRate);

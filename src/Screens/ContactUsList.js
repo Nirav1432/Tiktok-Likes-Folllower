@@ -19,6 +19,12 @@ class ContactUsList extends Component {
   UNSAFE_componentWillMount() {
     userid = this.props.Data.CommonData.userId
     this.getMessageList(userid)
+    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+      setTimeout(async () => {
+        await this.props.showAds()
+        await this.props.putCouter(0)
+      }, 700)
+    }
   }
 
   getMessageList(id) {

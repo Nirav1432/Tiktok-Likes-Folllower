@@ -27,6 +27,8 @@ const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.strin
 
 var FinalData = null
 
+var myInterval=null
+
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -40,11 +42,16 @@ class LoginScreen extends Component {
   }
 
   async  componentDidMount() {
+
     SplashScreen.hide()
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
-    let url = await Clipboard.getString()
-    await this.setState({ TiktokUrl: url })
+
+    myInterval = setInterval(async () => {
+      let url = await Clipboard.getString()
+      await this.setState({ TiktokUrl: url })
+    }, 1000)
+
   }
 
   KeyboardDissmissed = () => {
@@ -56,6 +63,7 @@ class LoginScreen extends Component {
   }
 
   render() {
+
     return (
 
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : null}>
@@ -121,6 +129,7 @@ class LoginScreen extends Component {
 
 
   fillBox(URL) {
+    clearInterval(myInterval)
     this.setState({ TiktokUrl: URL })
     let checkURl = /^(?!\s*$).+/
     if (checkURl.test(URL)) {
@@ -133,6 +142,7 @@ class LoginScreen extends Component {
 
 
   GetOfficialDetails() {
+    clearInterval(myInterval)
     let checkURl = /^(?!\s*$).+/
     let url = this.state.TiktokUrl
     if (checkURl.test(url.trim())) {

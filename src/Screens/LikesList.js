@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import Preloader from '../Components/Preloader';
 import BannerAds from './BannerAds';
 import { NavigationEvents } from 'react-navigation';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+
 
 class LikesList extends Component {
     constructor(props) {
@@ -40,6 +42,12 @@ class LikesList extends Component {
                 this.setState({ data: [], visible: false })
             }
         })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 300)
+        }
     }
 
 
@@ -101,7 +109,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 

@@ -13,6 +13,8 @@ import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
 import { WebView } from 'react-native-webview';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+
 
 var userId = ""
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
@@ -56,6 +58,12 @@ class DoFollowing extends Component {
         this.setState({ visible: false })
         await this.setState({ datafromserver: [] })
         this.setState({})
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+          setTimeout(async () => {
+              await this.props.showAds()
+              await this.props.putCouter(0)
+          }, 700)
+      }
       }
     })
   }
@@ -233,6 +241,12 @@ class DoFollowing extends Component {
     let FinalData = await DATA.props.pageProps.userData
     oldlikes = FinalData.following
     this.setState({ visible: false })
+    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+      setTimeout(async () => {
+        await this.props.showAds()
+        await this.props.putCouter(0)
+      }, 700)
+    }
   }
 
 
@@ -294,7 +308,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    setCoins: (coins) => dispatch(setDiamonds(coins))
+    setCoins: (coins) => dispatch(setDiamonds(coins)),
+    putCouter: (cnt) => dispatch(putcount(cnt)),
+    showAds: () => dispatch(shoeAds())
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DoFollowing)

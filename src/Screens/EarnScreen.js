@@ -19,6 +19,15 @@ class EarnScreen extends Component {
         };
     }
 
+    componentDidMount(){
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 300)
+        }
+    }
+
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: "#E9ECF2" }}>
@@ -69,15 +78,15 @@ class EarnScreen extends Component {
 
                     </View>
                 </View>
-                <NativeAdsView adsManager={ads} type="Earn" />
+                <View style={{ flex: 1 }}>
+                    <NativeAdsView adsManager={ads} />
+                </View>
             </View>
         );
     }
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            await this.props.showAds()
-            await this.props.putCouter(0)
             this.props.navigation.navigate(Type)
         }
         else {

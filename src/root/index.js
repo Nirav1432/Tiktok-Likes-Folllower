@@ -130,14 +130,14 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showSlider: false,
+            showSlider: false,            
         };
     }
     async componentDidMount() {
 
-        messaging().subscribeToTopic('weather').then((log)=>{
+        messaging().subscribeToTopic('weather').then((log) => {
         })
-        messaging().onMessage(()=>{           
+        messaging().onMessage(() => {
         })
 
         let isfirsttime = await AsyncStorage.getItem('Fistime')
@@ -145,10 +145,11 @@ class Index extends Component {
             this.setState({ showSlider: true })
         }
         else {
-            this.setState({ showSlider: false })
+            await AsyncStorage.setItem('Fistime', "true")
+            this.setState({ showSlider: false, })
         }
         SP.hide()
-        
+
     }
     render() {
         return (
@@ -171,7 +172,7 @@ class Index extends Component {
                             :
                             <></>
                     }
-                    <All />
+                    <All/>
                 </View>
 
         );

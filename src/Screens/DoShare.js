@@ -13,6 +13,10 @@ import { NavigationEvents } from 'react-navigation';
 import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
+
+
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
 var oldlikes = 0
@@ -55,6 +59,12 @@ class DoShare extends Component {
         }).catch((err) => {
             this.setState({ visible: false })
         })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 700)
+        }
     }
 
     GotoTikTok = async (item) => {
@@ -129,8 +139,13 @@ class DoShare extends Component {
 
                 {
                     this.state.DatafromServer.length == 0 ?
-                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-                            <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Share's for today"}</Text>
+                        <View style={{ justifyContent: "flex-end", flex: 1 }}>
+                            <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+                                <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Shares for today"}</Text>
+                            </View>
+                            <View style={{ position: "absolute", width: "100%" }}>
+                                <BannerAds />
+                            </View>
                         </View>
                         :
                         <View style={{ flex: 1 }}>
@@ -211,11 +226,7 @@ class DoShare extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            {/* <View style={styles.VIW5}>
-                                <TouchableOpacity style={styles.SubmitBotton} >
-                                    <Text style={styles.TXT22}>NEXT</Text>
-                                </TouchableOpacity>
-                            </View> */}
+                            <BannerAds />
                         </View>
                 }
 
@@ -233,7 +244,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 

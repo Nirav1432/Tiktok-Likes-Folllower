@@ -149,8 +149,6 @@ class Sidemenu extends Component {
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            await this.props.showAds()
-            await this.props.putCouter(0)
             this.props.navigation.navigate(Type)
         }
         else {

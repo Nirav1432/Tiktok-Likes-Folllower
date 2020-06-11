@@ -38,21 +38,23 @@ class Share extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <NativeAdsView adsManager={ads} />
+                <View style={{ flex: 1 }}>
+                    <NativeAdsView adsManager={ads} />
+                </View>
             </View>
         );
     }
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            await this.props.showAds()
-            this.props.putCouter(0)
+            this.props.navigation.navigate(Type)
         }
         else {
             let cnt = this.props.Data.adsCounter
             cnt++;
             this.props.putCouter(cnt)
+            this.props.navigation.navigate(Type)
         }
-        this.props.navigation.navigate(Type)
+       
     }
 }
 const mapStateToProps = (state) => {

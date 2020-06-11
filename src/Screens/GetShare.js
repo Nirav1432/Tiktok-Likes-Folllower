@@ -38,6 +38,12 @@ class GetShare extends Component {
         }).catch((res) => {
             this.setState({ visible: false })
         })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 300)
+        }
     }
 
     render() {
@@ -86,8 +92,6 @@ class GetShare extends Component {
     }
     commonNavigator = async (item) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            await this.props.showAds()
-            await this.props.putCouter(0)
             this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
         }
         else {

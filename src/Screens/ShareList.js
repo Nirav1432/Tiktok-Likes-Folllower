@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import Preloader from '../Components/Preloader';
 import BannerAds from './BannerAds';
+import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+
 
 class ShareList extends Component {
     constructor(props) {
@@ -37,6 +39,12 @@ class ShareList extends Component {
                 this.setState({ data: [], visible: false })
             }
         })
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            setTimeout(async () => {
+                await this.props.showAds()
+                await this.props.putCouter(0)
+            }, 300)
+        }
     }
 
 
@@ -95,7 +103,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setCoins: (coins) => dispatch(setDiamonds(coins))
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds())
     };
 };
 
