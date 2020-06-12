@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     VIW11: { justifyContent: "center", height: "100%", width: "100%" },
     IMG2: { height: hp(4), width: hp(4), },
     IMG3: { height: hp(3), width: hp(3) },
-    TXT4: { fontSize: hp(2.2), fontFamily: Fonts.LatoBlack, color: "white", left: hp(0.5) },
+    TXT4: { fontSize: hp(2), fontFamily: Fonts.LatoBlack, color: "white", left: hp(0.5) },
     TXT5: { fontSize: hp(2.5), fontFamily: Fonts.LatoBlack, color: "#E9ECF2" },
     INGBTN: { justifyContent: "center", alignItems: "center", width: wp(13) },
     Title: { justifyContent: "center", left: wp(5), },

@@ -16,9 +16,7 @@ export default class BannerAds extends Component {
     render() {
         return (
             <View style={{
-                position: "absolute",
-                justifyContent: "center",
-                alignItems: "center",
+               position: "absolute",             
                 height: heightPercentageToDP(6),
                 backgroundColor: "white",
                 width: "97%",
@@ -30,7 +28,7 @@ export default class BannerAds extends Component {
             }}>
                 {
                     this.state.adsLoading ?
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                        <View style={{ flexDirection: "row",flex:1,backgroundColor:"gray", justifyContent: "center" }}>
                             <ActivityIndicator color={"#3C64B3"} />
                             <View style={{ justifyContent: "center" }}>
                                 <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
@@ -39,7 +37,7 @@ export default class BannerAds extends Component {
                         :
                         <></>
                 }
-                <View style={{ height: this.state.adsLoading ? 0 : heightPercentageToDP(6) }}>
+                {/* <View style={{ height: this.state.adsLoading ? 0 : heightPercentageToDP(6) }}>
                     <BannerView
                         placementId="579084412746231_579084742746198"
                         type="standard"
@@ -47,7 +45,7 @@ export default class BannerAds extends Component {
                         onLoad={() => this.setState({ adsLoading: false })}
                         onError={err => console.log('error', err)}
                     />
-                </View>
+                </View> */}
             </View>
         );
     }

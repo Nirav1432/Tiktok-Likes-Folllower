@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, } from 'react-native';
+import { View, Text, TouchableOpacity, Image,Platform } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 
-let ads = new NativeAdsManager("979168055864310_981496822298100")
+let ads = new NativeAdsManager(Platform.OS==="android"? "979168055864310_981496822298100":"579084412746231_580335949287744")
 
 class Follower extends Component {
     constructor(props) {

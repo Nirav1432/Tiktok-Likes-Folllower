@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, Dimensions, TouchableOpacity , Platform} from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {
     withNativeAd,
@@ -28,9 +28,9 @@ class NativeAdView extends Component {
                 <View>
                     <View style={{ flexDirection: "row", marginBottom: wp(1.5) }}>
                         <View style={{ flex: 1, justifyContent: "center", bottom: wp(0.3) }}>
-                            <AdChoicesView />
+                            <AdChoicesView style={{height:hp(3),width:hp(3),top:hp(0.5)}}/>
                         </View>
-                        <TriggerableView style={{ flex: 9, left: wp(-1), fontSize: hp(2), justifyContent: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
+                        <TriggerableView style={{ flex: 9, left:Platform.OS==="android"? wp(-1):wp(3), fontSize: hp(2), justifyContent: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
                             {this.props.nativeAd.sponsoredTranslation}
                         </TriggerableView>
                     </View>
@@ -63,6 +63,7 @@ class NativeAdView extends Component {
                         height: hp(5),
                         fontSize: hp(2.5),
                         textAlignVertical: "center",
+                        justifyContent:"center",
                         fontFamily: Fonts.LatoBold,
                         borderRadius: hp(1.5)
                     }}
