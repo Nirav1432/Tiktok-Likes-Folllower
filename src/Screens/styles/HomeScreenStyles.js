@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
 
     IMG1: { height: hp(16), width: hp(16), top: hp(-8), position: "absolute", alignSelf: "center", borderRadius: hp(100), borderWidth: hp(0.3), borderColor: "#FFB9C7" },
-    IMG2: { height: hp(4), width: hp(4), },
+    IMG2: { height: hp(4), width: hp(4) },
     IMG3: { height: hp(3), width: hp(3) },
     BTN: { height: hp(6), width: hp(6), justifyContent: "center" },
     IMG4: { alignSelf: "center", height: hp(10), width: hp(10) },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     TXT1: { alignSelf: "center", fontSize: hp(3), position: "absolute", fontFamily: Fonts.LatoBlack, color: "#FE2C55" },
     TXT2: { fontSize: hp(3), fontFamily: Fonts.LatoBlack, alignSelf: "center" },
     TXT3: { color: "#7C7A7A", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2) },
-    TXT4: { fontSize: hp(2), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
+    TXT4: { fontSize: 20, fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
     TXT5: { color: "black", textAlign: "center", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2), alignSelf: "center" },
 
     CMNVIW: { justifyContent: "flex-end", flex: 1, alignItems: "center" }
