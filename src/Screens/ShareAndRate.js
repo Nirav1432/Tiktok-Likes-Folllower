@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Platform} from 'react-native';
 import styles from './styles/ShareAndRateStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
@@ -16,8 +16,9 @@ let ads = new NativeAdsManager("979168055864310_981496822298100")
 
 const AndroidRate = {
     GooglePackageName: "com.harekrishna.tikbooster",
+    AppleAppID:"2193813192",
     preferredAndroidMarket: AndroidMarket.Google,
-    preferInApp: false,
+    preferInApp: true,
     openAppStoreIfInAppFails: true,
 }
 class ShareAndRate extends Component {
@@ -41,7 +42,7 @@ class ShareAndRate extends Component {
 
     shareMyapp = () => {
         let options = {
-            url: "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
+            url:Platform.OS==="ios"?"https://apps.apple.com/in/app/lego-duplo-world/id1458749093": "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
         }
         Share.open(options)
             .then((res) => { console.log(res) })
