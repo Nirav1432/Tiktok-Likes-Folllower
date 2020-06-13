@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     TXT1: { alignSelf: "center", fontSize: hp(3), position: "absolute", fontFamily: Fonts.LatoBlack, color: "#FE2C55" },
     TXT2: { fontSize: hp(3), fontFamily: Fonts.LatoBlack, alignSelf: "center" },
     TXT3: { color: "#7C7A7A", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2) },
-    TXT4: { fontSize: Platform.OS === "ios" ? hp(2) : hp(2.5), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
+    TXT4: { fontSize: Platform.OS === "ios" ? hp(2) : hp(2.3), fontFamily: Fonts.LatoBlack, color: "white", left: hp(1) },
     TXT5: { color: "black", textAlign: "center", fontFamily: Fonts.LatoBold, marginTop: hp(1), fontSize: hp(2), alignSelf: "center" },
 
     CMNVIW: { justifyContent: "flex-end", flex: 1, alignItems: "center" }

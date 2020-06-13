@@ -7,11 +7,7 @@ const styles = StyleSheet.create({
     VIW2: { height: hp(15), marginBottom: hp(2), flexDirection: "row", padding: hp(2), borderRadius: hp(1), backgroundColor: "white", elevation: 5, marginHorizontal: hp(2) },
     VIW3: { justifyContent: "center", flex: 6, },
     VIW4: { justifyContent: "center", alignItems: "flex-start", flex: 4 },
-    flat: { 
-        // backgroundColor: "#E9ECF2"
-        backgroundColor:"red"
-    
-    },
+    flat: { backgroundColor: "#E9ECF2" },
     CMNVIW: { justifyContent: "center", alignItems: "flex-end", flex: 4 },
     IMG: { height: hp(10), width: hp(10), borderRadius: hp(100) },
     TXT: { fontFamily: Fonts.LatoBlack, fontSize: hp(2) },

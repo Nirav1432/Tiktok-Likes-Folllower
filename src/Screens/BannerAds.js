@@ -16,13 +16,12 @@ export default class BannerAds extends Component {
     render() {
         return (
             <View style={{
-                //  position: "absolute",
-                flex: 1,
-                justifyContent: "flex-end",
+                position: "absolute",
                 height: heightPercentageToDP(6),
                 backgroundColor: "transparent",
                 width: "100%",
-                alignSelf: "center",
+                alignSelf: "center",               
+                bottom:Platform.OS==="ios"? heightPercentageToDP(4):0,
                 elevation: 3,
 
             }}>
@@ -31,9 +30,9 @@ export default class BannerAds extends Component {
                         <View style={{
                             flexDirection: "row",
                             borderWidth: heightPercentageToDP(0.2),
-                            backgroundColor: "white",
+                            backgroundColor:"white",
                             borderColor: "#3C64B3",
-                            borderRadius: heightPercentageToDP(1), height: heightPercentageToDP(6), justifyContent: "center"
+                            borderRadius: heightPercentageToDP(1), flex: 1, justifyContent: "center"
                         }}>
                             <ActivityIndicator color={"#3C64B3"} />
                             <View style={{ justifyContent: "center" }}>
