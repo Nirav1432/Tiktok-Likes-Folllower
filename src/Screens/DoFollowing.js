@@ -62,7 +62,7 @@ class DoFollowing extends Component {
           setTimeout(async () => {
               await this.props.showAds()
               await this.props.putCouter(0)
-          }, 700)
+          }, 1500)
       }
       }
     })
@@ -245,7 +245,7 @@ class DoFollowing extends Component {
       setTimeout(async () => {
         await this.props.showAds()
         await this.props.putCouter(0)
-      }, 700)
+      }, 1500)
     }
   }
 

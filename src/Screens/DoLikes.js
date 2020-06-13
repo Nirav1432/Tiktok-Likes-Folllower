@@ -66,7 +66,7 @@ class DoLikes extends Component {
                     setTimeout(async () => {
                         await this.props.showAds()
                         await this.props.putCouter(0)
-                    }, 700)
+                    }, 1500)
                 }
             }
         }).catch((err) => {
@@ -204,7 +204,9 @@ class DoLikes extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <BannerAds />
+                            <View style={{height:hp(6), backgroundColor:"transparent"}}>
+                                <BannerAds />
+                            </View>
                         </View>
                 }
             </View>
@@ -222,7 +224,7 @@ class DoLikes extends Component {
             setTimeout(async () => {
                 await this.props.showAds()
                 await this.props.putCouter(0)
-            }, 700)
+            }, 1500)
         }
     }
 

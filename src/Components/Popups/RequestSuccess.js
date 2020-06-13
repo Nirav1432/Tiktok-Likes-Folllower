@@ -24,7 +24,7 @@ export default class RequestSuccess extends Component {
                         </View>
                     </View>
                     <View style={styles.VIW4}>
-                        <Text style={styles.TXT2}>Your follower requested process{"\n"}Successfully</Text>
+                        <Text style={styles.TXT2}>Your follower requested process{"\n"}Successfully within 48-96 hours.</Text>
                     </View>
                     <View style={styles.VIW5}>
                         <TouchableOpacity style={styles.BTNS1} onPress={() => this.props.ClosePop()}>

@@ -49,7 +49,7 @@ class GetFollower extends Component {
                     setTimeout(async () => {
                         await this.props.showAds()
                         await this.props.putCouter(0)
-                    }, 300)
+                    }, 2500)
                 }
             }
         }).catch((res) => {

@@ -45,12 +45,12 @@ export default class CommonPopup extends Component {
                     <View style={styles.VIW4}>                      
                         {
                             this.props.type == "Like" ?
-                                <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Like requested{"\n"}processed Successfully.</Text>
+                                <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Like request processed{"\n"}successfully within 48-96 hours.</Text>
                                 :
                                 this.props.type == "Views" ?
-                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Views requested{"\n"}processed Successfully.</Text>
+                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Views request processed{"\n"}successfully within 48-96 hours.</Text>
                                     :
-                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Share requested{"\n"}processed Successfully.</Text>
+                                    <Text style={[styles.TXT2, { fontSize: hp(2) }]}>Congratulations! Your Share request processed{"\n"}successfully within 48-96 hours.</Text>
 
                         }
                     </View>

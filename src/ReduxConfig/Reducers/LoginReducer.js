@@ -1,11 +1,12 @@
-import { PUT_LOGIN, SET_DIAMONDS } from '../Actions/Login/LoginActions'
+import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK,SET_FIRST_TIME } from '../Actions/Login/LoginActions'
 import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS,HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
   coins: 0,
   adsCounter: 0,
   maxAdsCounter: 0,
-  showAds: false
+  showAds: false,
+  isFirstime:false
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -54,12 +55,29 @@ const LoginReducer = (state = initialState, action) => {
         showAds: true
       })
     }
+    break;
 
     case HIDE_ADS: {
       return Object.assign({}, state, {
         showAds: false
       })
     }
+    break;
+
+    case FIRST_TIME_CHECK:{
+      return Object.assign({}, state, {
+        isFirstime: true
+      })
+    }
+    break;
+
+    case SET_FIRST_TIME:{
+      return Object.assign({}, state, {
+        isFirstime: false
+      })
+    }
+    break;
+
 
     default: {
       return state;

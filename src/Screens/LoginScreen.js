@@ -27,7 +27,7 @@ const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.strin
 
 var FinalData = null
 
-var myInterval=null
+var myInterval = null
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -47,10 +47,16 @@ class LoginScreen extends Component {
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
 
-    myInterval = setInterval(async () => {
+    // myInterval = setInterval(async () => {
+    //   let url = await Clipboard.getString()
+    //   await this.setState({ TiktokUrl: url })
+    // }, 1000)
+    if (!this.props.counter.LoginData.isFirstime) {
       let url = await Clipboard.getString()
       await this.setState({ TiktokUrl: url })
-    }, 1000)
+    }
+
+    console.log(this.props)
 
   }
 

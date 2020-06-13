@@ -14,6 +14,7 @@ import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 let ads = new NativeAdsManager("979168055864310_981496822298100")
@@ -46,7 +47,7 @@ class CommonScreen extends Component {
             setTimeout(async () => {
                 await this.props.showAds()
                 await this.props.putCouter(0)
-            }, 300)
+            }, 1500)
         }
     }
 
@@ -63,7 +64,7 @@ class CommonScreen extends Component {
 
     render() {
         return (
-            <View style={styles.MAINVIW}>
+            <ScrollView style={styles.MAINVIW}>
                 <Preloader isLoader={this.state.visible} />
                 <NotEnoughDiamondPop
                     visible={this.state.NotEnough}
@@ -171,10 +172,10 @@ class CommonScreen extends Component {
                     } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
-                <View style={{ flex: 1, marginTop: 10 }}>
+                <View style={{ height:heightPercentageToDP(60), marginVertical: heightPercentageToDP(2) }}>
                     <NativeAdsView adsManager={ads} />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 

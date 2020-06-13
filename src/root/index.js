@@ -41,6 +41,7 @@ import AdsScreen from '../Screens/AdsScreen';
 import { hideAds } from '../ReduxConfig/Actions/AddCount/AddCount'
 import PrivacyAndPolicy from '../Screens/PrivacyAndPolicy';
 import messaging from '@react-native-firebase/messaging';
+import { isFirstTime, setFirstTime } from '../ReduxConfig/Actions/Login/LoginActions'
 
 const slides = [
     {
@@ -130,7 +131,7 @@ class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showSlider: false,            
+            showSlider: false,
         };
     }
     async componentDidMount() {
@@ -142,10 +143,12 @@ class Index extends Component {
 
         let isfirsttime = await AsyncStorage.getItem('Fistime')
         if (isfirsttime == null) {
+            this.props.setFirstTimeTrue()
             this.setState({ showSlider: true })
         }
         else {
             await AsyncStorage.setItem('Fistime', "true")
+            this.props.setFirstTimeFalse()
             this.setState({ showSlider: false, })
         }
         SP.hide()
@@ -172,7 +175,7 @@ class Index extends Component {
                             :
                             <></>
                     }
-                    <All/>
+                    <All />
                 </View>
 
         );
@@ -202,7 +205,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
-        hideAds: () => dispatch(hideAds())
+        hideAds: () => dispatch(hideAds()),
+        setFirstTimeFalse: () => dispatch(setFirstTime()),
+        setFirstTimeTrue: () => dispatch(isFirstTime())
     };
 };
 

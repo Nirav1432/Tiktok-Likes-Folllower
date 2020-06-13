@@ -16,19 +16,24 @@ export default class BannerAds extends Component {
     render() {
         return (
             <View style={{
-               position: "absolute",             
+                position: "absolute",
                 height: heightPercentageToDP(6),
-                backgroundColor: "white",
-                width: "97%",
+                backgroundColor: "transparent",
+                width: "100%",
                 alignSelf: "center",
-                bottom: heightPercentageToDP(1),
-                elevation: 3, borderWidth: heightPercentageToDP(0.2),
-                borderColor: "#3C64B3",
-                borderRadius: heightPercentageToDP(1)
+                // bottom: heightPercentageToDP(1),
+                elevation: 3,
+
             }}>
                 {
                     this.state.adsLoading ?
-                        <View style={{ flexDirection: "row",flex:1,backgroundColor:"gray", justifyContent: "center" }}>
+                        <View style={{
+                            flexDirection: "row",
+                            borderWidth: heightPercentageToDP(0.2),
+                            backgroundColor:"white",
+                            borderColor: "#3C64B3",
+                            borderRadius: heightPercentageToDP(1), flex: 1, justifyContent: "center"
+                        }}>
                             <ActivityIndicator color={"#3C64B3"} />
                             <View style={{ justifyContent: "center" }}>
                                 <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
@@ -37,15 +42,15 @@ export default class BannerAds extends Component {
                         :
                         <></>
                 }
-                {/* <View style={{ height: this.state.adsLoading ? 0 : heightPercentageToDP(6) }}>
+                <View style={{ height: this.state.adsLoading ? 0 : heightPercentageToDP(6) }}>
                     <BannerView
                         placementId="579084412746231_579084742746198"
                         type="standard"
                         onPress={() => console.log('click')}
                         onLoad={() => this.setState({ adsLoading: false })}
-                        onError={err => console.log('error', err)}
+                        onError={err => this.setState({ adsLoading: false })}
                     />
-                </View> */}
+                </View>
             </View>
         );
     }

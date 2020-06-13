@@ -7,10 +7,12 @@ import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/A
 import { connect } from 'react-redux'
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { ScrollView } from 'react-native-gesture-handler';
 
 let ads = new NativeAdsManager("979168055864310_981496822298100")
 
- class Likes extends Component {
+class Likes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,23 +24,25 @@ let ads = new NativeAdsManager("979168055864310_981496822298100")
         return (
             <View style={styles.MAINVIW}>
                 <Header title={"Like"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
-                <View style={styles.VIW2}>
-                    <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.commonNavigator("GetLikes")}>
-                            <Image style={styles.IMG4} source={Icons.Like} />
-                            <Text style={styles.TXT55}>Get Likes</Text>
-                        </TouchableOpacity>
+                <ScrollView>
+                    <View style={styles.VIW2}>
+                        <View style={styles.VIW12}>
+                            <TouchableOpacity onPress={() => this.commonNavigator("GetLikes")}>
+                                <Image style={styles.IMG4} source={Icons.Like} />
+                                <Text style={styles.TXT55}>Get Likes</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.VIW12}>
+                            <TouchableOpacity onPress={() => this.commonNavigator("LikesList")}>
+                                <Image style={styles.IMG4} source={Icons.Like_List} />
+                                <Text style={styles.TXT55}>Likes List</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.VIW12}>
-                        <TouchableOpacity onPress={() => this.commonNavigator("LikesList")}>
-                            <Image style={styles.IMG4} source={Icons.Like_List} />
-                            <Text style={styles.TXT55}>Likes List</Text>
-                        </TouchableOpacity>
+                    <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
+                        <NativeAdsView adsManager={ads} />
                     </View>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <NativeAdsView adsManager={ads} />
-                </View>
+                </ScrollView>
             </View>
         );
     }
@@ -52,7 +56,7 @@ let ads = new NativeAdsManager("979168055864310_981496822298100")
             this.props.putCouter(cnt)
             this.props.navigation.navigate(Type)
         }
-       
+
     }
 }
 const mapStateToProps = (state) => {

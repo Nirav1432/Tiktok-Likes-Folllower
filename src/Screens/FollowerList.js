@@ -37,7 +37,7 @@ class FollowerList extends Component {
             setTimeout(async () => {
                 await this.props.showAds()
                 await this.props.putCouter(0)
-            }, 300)
+            }, 1500)
         }
     }
 
@@ -52,8 +52,11 @@ class FollowerList extends Component {
                 <Preloader isLoader={this.state.visible} />
                 {
                     this.state.daFromS.length == 0 ?
-                        <View style={{ justifyContent: "center", alignItems: "center", height: "88%", backgroundColor: "#E9ECF2" }}>
-                            <Text style={[styles.TXT1, { color: "black", fontSize: heightPercentageToDP(2.3) }]}>{"No Follower Found"}</Text>
+                        <View style={{ justifyContent: "flex-end", alignItems: "center", height: "88%", backgroundColor: "#E9ECF2" }}>
+                            <View style={{ flex: 1, justifyContent: "center" }}>
+                                <Text style={[styles.TXT1, { color: "black", fontSize: heightPercentageToDP(2.3) }]}>{"No Follower Found"}</Text>
+                            </View>
+                            <BannerAds />
                         </View>
                         :
                         <View style={styles.VIW1}>
