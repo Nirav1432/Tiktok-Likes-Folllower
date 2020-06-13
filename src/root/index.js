@@ -42,6 +42,7 @@ import { hideAds } from '../ReduxConfig/Actions/AddCount/AddCount'
 import PrivacyAndPolicy from '../Screens/PrivacyAndPolicy';
 import messaging from '@react-native-firebase/messaging';
 import { isFirstTime, setFirstTime } from '../ReduxConfig/Actions/Login/LoginActions'
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const slides = [
     {
@@ -134,10 +135,28 @@ class Index extends Component {
             showSlider: false,
         };
     }
+
     async componentDidMount() {
+
+        await crashlytics().log('XXX')
+
+        await Promise.all([
+            crashlytics().setUserId("1432"),
+            crashlytics().setUserName("Nirav Bhesaniya"),
+            crashlytics().setUserEmail("Art.nn@gmail.cim"),
+        ]).then((res) => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        //  crashlytics().crash()
+
+        
 
         messaging().subscribeToTopic('weather').then((log) => {
         })
+
         messaging().onMessage(() => {
         })
 
@@ -151,9 +170,11 @@ class Index extends Component {
             this.props.setFirstTimeFalse()
             this.setState({ showSlider: false, })
         }
+        
         SP.hide()
 
     }
+
     render() {
         return (
             this.state.showSlider ?
