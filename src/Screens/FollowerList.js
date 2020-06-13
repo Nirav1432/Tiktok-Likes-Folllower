@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Linking, Platform } from 'react-native';
 import Header from '../Components/Header';
 import { heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
 import styles from "./styles/FollowersListStyles";
@@ -63,7 +63,7 @@ class FollowerList extends Component {
                             <FlatList
                                 data={this.state.daFromS}
                                 renderItem={({ item, index }) => (
-                                    <View style={{ paddingBottom: index == this.state.daFromS.length - 1 ? hp(7) : 0 }}>
+                                    <View style={{ paddingBottom: index == this.state.daFromS.length - 1 ? Platform.OS==="ios"?hp(9): hp(7) : 0 }}>
                                         <View style={[styles.VIW2, { marginTop: index == 0 ? hp(2) : 0, }]}>
                                             <View style={styles.VIW4}>
                                                 <Image source={{ uri: item.profile }} style={styles.IMG} />

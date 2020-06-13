@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Platform } from 'react-native';
 import Header from '../Components/Header';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import styles from "./styles/FollowersListStyles";
@@ -66,7 +66,7 @@ class ShareList extends Component {
                             <FlatList
                                 data={this.state.data}
                                 renderItem={({ item, index }) => (
-                                    <View style={{ paddingBottom: index == this.state.data.length - 1 ? hp(7) : 0 }}>
+                                    <View style={{ paddingBottom: index == this.state.data.length - 1 ? Platform.OS==="ios"?hp(9): hp(7) : 0 }}>
                                         <View style={[styles.VIW2, { marginTop: index == 0 ? hp(2) : 0 }]}>
                                             <View style={[styles.VIW4, { flex: null }]}>
                                                 <Image source={{ uri: item.profile }} style={styles.IMG} />

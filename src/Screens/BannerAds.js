@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, Platform } from 'react-native';
 import { BannerView } from 'react-native-fbads';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { Fonts } from "../Utils/fonts";
@@ -20,8 +20,8 @@ export default class BannerAds extends Component {
                 height: heightPercentageToDP(6),
                 backgroundColor: "transparent",
                 width: "100%",
-                alignSelf: "center",
-                // bottom: heightPercentageToDP(1),
+                alignSelf: "center",               
+                bottom:Platform.OS==="ios"? heightPercentageToDP(3.5):0,
                 elevation: 3,
 
             }}>
