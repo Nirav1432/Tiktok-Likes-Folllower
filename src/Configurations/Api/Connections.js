@@ -51,7 +51,8 @@ export const Services = {
   getListofCoins: data => api.get('/selection').then(onSuccess, onError),
   PaymentCoins: type => api.get('/payment-coin').then(onSuccess, onError),
 
-  updateWallet:data => api.post('/update-wallet',data).then(onSuccess, onError)
+  updateWallet:data => api.post('/update-wallet',data).then(onSuccess, onError),
+  userVideo:data=>api.post('/userVideo',data).then(onSuccess, onError)
 
 }
 

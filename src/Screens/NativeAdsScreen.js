@@ -23,9 +23,9 @@ class NativeAdView extends Component {
             <View style={{
                 borderWidth: hp(0.3),
                 borderColor: "#3C64B3",
-                backgroundColor: "white", 
+                backgroundColor: "white",
                 borderRadius: hp(3),
-                 marginHorizontal: hp(2.5),
+                marginHorizontal: hp(2.5),
                 height: "100%",
                 padding: hp(1.5)
             }}>
@@ -42,11 +42,11 @@ class NativeAdView extends Component {
                         <View style={{ justifyContent: "center", alignItems: "center" }}>
                             <AdIconView style={{ width: hp(6), height: hp(6), alignSelf: "center" }} />
                         </View>
-                        <View style={{ justifyContent: "flex-start", flex: 1, paddingLeft: wp(2) }}>
-                            <TriggerableView style={{ fontSize: hp(3), fontFamily: Fonts.LatoBold }}>
+                        <View style={{ justifyContent: "center", flex: 1, paddingLeft: wp(2) }}>
+                            <TriggerableView style={{ fontSize: hp(2.5), fontFamily: Fonts.LatoBold }}>
                                 {this.props.nativeAd.advertiserName}
                             </TriggerableView>
-                            <TriggerableView style={{ fontSize: hp(2.5), marginTop: wp(0.5), fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
+                            <TriggerableView style={{ fontSize: hp(2), marginTop: wp(1), fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
                                 {this.props.nativeAd.socialContext}
                             </TriggerableView>
                         </View>

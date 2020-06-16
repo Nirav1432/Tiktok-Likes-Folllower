@@ -41,22 +41,17 @@ class LoginScreen extends Component {
     };
   }
 
-  async  componentDidMount() {
+  async componentDidMount() {
 
     SplashScreen.hide()
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
 
-    // myInterval = setInterval(async () => {
-    //   let url = await Clipboard.getString()
-    //   await this.setState({ TiktokUrl: url })
-    // }, 1000)
-    if (!this.props.counter.LoginData.isFirstime) {
-      let url = await Clipboard.getString()
-      await this.setState({ TiktokUrl: url })
-    }
-
-    console.log(this.props)
+    myInterval = setInterval(async () => {
+      let urlX = await Clipboard.getString()
+      if (urlX.match(/www.tiktok.com/g) || urlX.match(/vm.tiktok.com/g))
+        await this.setState({ TiktokUrl: urlX })
+    }, 500)
 
   }
 
@@ -135,7 +130,6 @@ class LoginScreen extends Component {
 
 
   fillBox(URL) {
-    clearInterval(myInterval)
     this.setState({ TiktokUrl: URL })
     let checkURl = /^(?!\s*$).+/
     if (checkURl.test(URL)) {
@@ -147,8 +141,7 @@ class LoginScreen extends Component {
   }
 
 
-  GetOfficialDetails() {
-    clearInterval(myInterval)
+  GetOfficialDetails() {   
     let checkURl = /^(?!\s*$).+/
     let url = this.state.TiktokUrl
     if (checkURl.test(url.trim())) {

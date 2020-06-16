@@ -1,45 +1,146 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import styles from './styles/watchTimerStyles';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
 import Header from '../Components/Header';
 import { Icons } from '../Utils/IconManager';
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { Services } from '../Configurations/Api/Connections';
+import Congratulations from '../Components/Popups/Congratulations';
+import Preloader from '../Components/Preloader';
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
+import Modal from 'react-native-modal';
+import { Fonts } from '../Utils/fonts'
+
+
 
 class watchVideoButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: { follower_coin: 0 }
+            data: { follower_coin: 0 },
+            congo: false,
+            Coins: 0,
+            Preloader: false,
+            displayButton: false
         };
     }
 
-    componentDidMount(){       
+    componentDidMount() {
+
+        this.getTime()
+
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
             setTimeout(async () => {
-              await this.props.showAds()
-              await this.props.putCouter(0)
+                await this.props.showAds()
+                await this.props.putCouter(0)
             }, 300)
-          }
+        }
     }
+
+    getTime = () => {
+        Services.setting({ user_id: this.props.Data.CommonData.userId }).then((res) => {
+            if (res.setting.success == "true") {
+                if (res.setting.user_video == "true") {
+                    this.setState({ displayButton: true })
+                }
+                else {
+                    this.setState({ displayButton: false })
+                }
+            }
+        })
+    }
+
+    showAdd() {
+        this.setState({ showloader: true })
+        InterstitialAdManager.showAd("979168055864310_979168595864256")
+            .then((didClick) => {
+
+                this.setState({ Preloader: true, showloader: false })
+
+                let date = new Date()
+
+                let Month = date.getMonth().toString().length == 1 ? '0' + date.getMonth() : date.getMonth()
+                let day = date.getDay().toString().length == 1 ? '0' + date.getDay() : date.getDay()
+                let Hour = date.getHours.toString().length == 1 ? '0' + date.getHours() : date.getHours()
+                let Minutes = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes()
+                let sec = date.getSeconds().toString().length == 1 ? '0' + date.getSeconds() : date.getSeconds()
+
+                let Fulldate = date.getFullYear() + "-" + Month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+
+                let data = {
+                    user_id: this.props.Data.CommonData.userId,
+                    full_name: this.props.Data.CommonData.nickName,
+                    time: Fulldate
+                }
+
+                Services.userVideo(data).then(res => {
+                    if (res.success == "true") {
+                        this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
+                        this.props.setCoins(res.coin)
+                        setTimeout(() => this.setState({ congo: true }), 500)
+                    }
+                    else
+                        alert('Something went wrong !!')
+                })
+            })
+            .catch(error => {
+
+            });
+    }
+
+
     render() {
         return (
             <View style={styles.MAINVIW}>
                 <Header title={"Watch Video"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
+                <Preloader isLoader={this.state.Preloader} />
+                {this.state.showloader ?
+                    <Modal style={{ zIndex: 1000 }} isVisible={this.state.showloader} animationIn="slideInRight" animationOut="slideOutRight" >
+                        <View style={{ flexDirection: "row", zIndex: 1500, width: "90%", alignSelf: "center", backgroundColor: "white", height: heightPercentageToDP(10) }}>
+                            <View style={{ width: "20%", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                                <ActivityIndicator size={"large"} color="black" />
+                            </View>
+                            <View style={{ width: "80%", height: "100%", justifyContent: "center", alignItems: "flex-start" }}>
+                                <Text style={{ fontSize: heightPercentageToDP(2), color: "black", fontFamily: Fonts.LatoBold }}>Showing Ads</Text>
+                            </View>
+                        </View>
+                    </Modal>
+                    :
+                    <></>
+                }
+                <Congratulations
+                    visible={this.state.congo}
+                    coins={10}
+                    ClosePop={() => this.setState({ congo: false })}
+                />
                 <View>
                     <Text style={styles.TXT1}>Get More Diamonds</Text>
                     <Text style={styles.TXT2}>Get an extra diamonds every time{"\n"}when you click on below butoon.</Text>
-                    <TouchableOpacity style={styles.Timer2} onPress={() => this.showAdd()}>
-                        <View style={styles.watchView2}>
-                            <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
-                        </View>
-                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", left: hp(2) }}>
-                            <Text style={styles.timerTExt}>Watch Video</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {
+                        this.state.displayButton ?
+                            <TouchableOpacity style={styles.Timer} >
+                                <View style={styles.watchView}>
+                                    <Image source={Icons.watch} style={styles.watch} resizeMode="contain" />
+                                </View>
+                                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={styles.timerTExt}>01:59</Text>
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity style={styles.Timer2} onPress={() => this.showAdd()}>
+                                <View style={styles.watchView2}>
+                                    <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
+                                </View>
+                                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", left: hp(2) }}>
+                                    <Text style={styles.timerTExt}>Watch Video</Text>
+                                </View>
+                            </TouchableOpacity>
+                    }
+
                 </View>
             </View>
         );
@@ -54,7 +155,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        setCoins: (coins) => dispatch(setDiamonds(coins)),
     };
 };
 

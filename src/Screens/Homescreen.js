@@ -79,7 +79,7 @@ class Homescreen extends Component {
               <View style={[styles.VIW13, { top: Platform.OS === "ios" ? hp(3.5) : 0 }]}>
 
                 <View style={styles.VIW7}>
-                  <TouchableOpacity onPress={() => this.commonNavigator("side")} style={styles.BTN}>
+                  <TouchableOpacity onPress={() =>  this.props.navigation.openDrawer()} style={styles.BTN}>
                     <Image source={Icons.menu} style={styles.IMG2} />
                   </TouchableOpacity>
                 </View>

@@ -39,7 +39,7 @@ class CommonScreen extends Component {
         };
     }
 
-    async  componentDidMount() {
+    async componentDidMount() {
         IncData = await this.props.navigation.getParam('data')
         this.setState({ TotalDiamond: this.props.Data.coins })
         this.setState({ userId: this.props.Data.CommonData.userId })
@@ -172,7 +172,7 @@ class CommonScreen extends Component {
                     } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
-                <View style={{ height:heightPercentageToDP(60), marginVertical: heightPercentageToDP(2) }}>
+                <View style={{ height: heightPercentageToDP(60), marginVertical: heightPercentageToDP(2) }}>
                     <NativeAdsView adsManager={ads} />
                 </View>
             </ScrollView>
@@ -183,9 +183,13 @@ class CommonScreen extends Component {
         let dt = JSON.parse(event)
         if (dt["/v/:id"] != undefined) {
             let thumbinfo = dt["/v/:id"]
-            let thumbNail = thumbinfo.shareMeta.image.url
-            let finalthumb = thumbNail == null ? "" : thumbNail == undefined ? "" : thumbNail
-
+            let TempthumbNail = thumbinfo.shareMeta.image.url.toString()
+            let Cutted = TempthumbNail.substr(35)
+            let Trail = Cutted.substr(0, Cutted.indexOf('?'))
+            let TEmpMakeThumb = "https://p16-va-tiktok.ibyteimg.com/"
+            let XFinal = TEmpMakeThumb + Trail
+            let finalthumb = XFinal == null ? "" : XFinal == undefined ? "" : XFinal        
+   
             if (this.props.navigation.getParam('type') == "Get Likes") {
 
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: finalthumb }
