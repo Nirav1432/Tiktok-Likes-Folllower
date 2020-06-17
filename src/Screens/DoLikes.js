@@ -117,10 +117,7 @@ class DoLikes extends Component {
                         <View style={{ justifyContent: "flex-end", flex: 1 }}>
                             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
                                 <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Likes for today"}</Text>
-                            </View>
-                            <View style={{ position: "absolute", width: "100%" }}>
-                                <BannerAds />
-                            </View>
+                            </View>                         
                         </View>
                         :
                         <View style={{ flex: 1 }}>
@@ -204,9 +201,10 @@ class DoLikes extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <BannerAds />
+                          
                         </View>
                 }
+                  <BannerAds />
             </View>
 
         );

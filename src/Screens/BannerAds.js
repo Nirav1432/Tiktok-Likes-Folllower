@@ -24,7 +24,6 @@ export default class BannerAds extends Component {
                 alignSelf: "center",              
                 elevation: 3,
                 bottom:Platform.OS==="ios"?heightPercentageToDP(1.2):0
-
             }}>
                 {
                     this.state.adsLoading ?
@@ -45,11 +44,10 @@ export default class BannerAds extends Component {
                         :
                         <></>
                 }
-                <View style={{ height: this.state.adsLoading ? 0 : "100%"}}>
+                <View style={{ height: this.state.adsLoading ? 0 : "6%"}}>
                     <BannerView
                         placementId="579084412746231_579084742746198"
-                        type="standard"
-                        style={{height:"100%"}}
+                        type="standard"                        
                         onPress={() => console.log('click')}
                         onLoad={() => this.setState({ adsLoading: false })}
                         onError={err => this.setState({ adsLoading: false })}

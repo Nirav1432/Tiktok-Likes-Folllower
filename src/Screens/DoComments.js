@@ -163,13 +163,10 @@ class DoComments extends Component {
                         <View style={{ justifyContent: "flex-end", flex: 1 }}>
                             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
                                 <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Views for today"}</Text>
-                            </View>
-                            <View style={{ position: "absolute", width: "100%" }}>
-                                <BannerAds />
-                            </View>
+                            </View>                           
                         </View>
                         :
-                        <View style={{ flex: 1 }}>
+                        <View style={{ height:"88%" }}>
                             {
                                 this.state.goForDoLike ?
                                     <View style={{ height: hp(0) }}>
@@ -190,7 +187,7 @@ class DoComments extends Component {
                                     <></>
                             }
 
-                            <View style={{ flex: 1 }}>
+                            <View style={{  }}>
                                 <FlatList
                                     data={this.state.DatafromServer}
                                     renderItem={({ item, index }) => (
@@ -225,13 +222,11 @@ class DoComments extends Component {
                                         alignSelf: this.state.DatafromServer.length < 3 ? "auto" : "center"
                                     }}
                                     showsVerticalScrollIndicator={false}
-                                />
-                            </View>
-                            <BannerAds />
+                                />                                
+                            </View>                                                     
                         </View>
                 }
-
-
+                <BannerAds />   
             </View>
 
         );

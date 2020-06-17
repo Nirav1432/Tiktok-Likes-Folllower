@@ -4,7 +4,7 @@ import { Fonts } from '../../Utils/fonts';
 
 const styles = StyleSheet.create({
 
-    MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
+    MAINVIW: {  backgroundColor: "#E9ECF2",height:"100%",justifyContent:"flex-end" },
     VIW1: { height: hp(20), width: wp(30), borderRadius: hp(2), overflow: "hidden", marginTop: wp(2), marginHorizontal: wp(1), justifyContent: "flex-end", alignItems: "center" },
     VIW2: { justifyContent: "center", alignItems: "center", flexDirection: "row", width: "100%", height: "100%", right: wp(2) },
     VIW3: { justifyContent: "center", alignItems: "center", right: wp(1.5), height: hp(2.5), width: hp(2.5), position: "absolute", alignSelf: "flex-end", borderRadius: 100, backgroundColor: "#D02345" },
