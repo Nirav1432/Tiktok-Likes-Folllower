@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Platform } from 'react-native';
 import styles from './styles/GetFollowerStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import GetFollowerPop from '../Components/Popups/GetFollowerPop'
@@ -12,6 +12,7 @@ import { Services } from '../Configurations/Api/Connections';
 import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
 
 class GetFollower extends Component {
     constructor(props) {
@@ -45,12 +46,12 @@ class GetFollower extends Component {
                         this.state.DataFromServer.push(obj)
                     }
                 }
-                if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-                    setTimeout(async () => {
-                        await this.props.showAds()
-                        await this.props.putCouter(0)
-                    }, 2500)
-                }
+                // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+                //     setTimeout(async () => {
+                //         await this.props.showAds()
+                //         await this.props.putCouter(0)
+                //     }, 2500)
+                // }
             }
         }).catch((res) => {
             this.setState({ visible: false })
@@ -74,6 +75,10 @@ class GetFollower extends Component {
                     this.setState({ visible: false })
                     await this.props.setCoins(res.tiktok_follower.coin)
                     setTimeout(() => this.setState({ Visi1: true }), 500)
+                }
+                else{
+                    this.setState({ visible: false })
+                    alert('Sorry! You can Request Only One At Time')
                 }
             })
         }
@@ -104,7 +109,7 @@ class GetFollower extends Component {
                 <FlatList
                     data={this.state.DataFromServer}
                     renderItem={({ item, index, ss }) =>
-                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0 }]}>
+                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0,  marginBottom: index == this.state.DataFromServer.length - 1 ? Platform.OS === "ios" ? hp(9) : hp(8) : hp(2)  }]}>
                             <View style={styles.VIW13}>
                                 <View>
                                     <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
@@ -133,6 +138,7 @@ class GetFollower extends Component {
                     style={styles.FlatList}
                     showsVerticalScrollIndicator={false}
                 />
+                <BannerAds />
             </View>
         );
     }

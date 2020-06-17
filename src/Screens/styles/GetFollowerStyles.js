@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     TXT5: { fontSize: hp(3.5), fontFamily: Fonts.LatoBlack, color: "#E9ECF2" },
     INGBTN: { justifyContent: "center" },
     Title: { justifyContent: "center", left: wp(6) },
-    VIW12: { elevation: 10, height: hp(22), borderRadius: hp(2), backgroundColor: "white", marginHorizontal: hp(2), marginBottom: hp(2) },
+    VIW12: { elevation: 10, height: hp(22), borderRadius: hp(2), backgroundColor: "white", marginHorizontal: hp(2)  },
     FlatList: { flex: 1 },
     VIW13: { height: "45%", justifyContent: "flex-start", padding: hp(2), flexDirection: "row" },
     VIW14: { height: "55%", justifyContent: "center", alignItems: "center" },

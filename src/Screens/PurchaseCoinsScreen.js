@@ -52,14 +52,15 @@ class PurchaseCoinsScreen extends Component {
     let Type = this.state.Type == "INR" ? 'INR' : 'USD'
 
     var options = {
-      description: 'For Test a Rezorpay',
+      // description: 'For Test a Rezorpay',
       image: 'https://i.ibb.co/KrWLWqq/App.png',
       currency: Type,
       key: "rzp_test_0gruu49Oyj2Fga",
       amount: FinalAmount.toString(),
-      name: 'Nirav Bhesaniya',
+      name: 'Sahajanand Infotech',
       theme: { color: '#FE2C55' }
     }
+    
     RazorpayCheckout.open(options).then((data) => {
       this.setState({ visible: true })
       let params = {

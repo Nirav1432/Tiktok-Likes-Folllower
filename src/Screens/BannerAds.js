@@ -17,11 +17,12 @@ export default class BannerAds extends Component {
         return (
             <View style={{
                 position: "absolute",
-                height: heightPercentageToDP(6),
                 backgroundColor: "transparent",
-                width: "100%",
-                alignSelf: "center",               
-                bottom:Platform.OS==="ios"? heightPercentageToDP(4):0,
+                flex:1,
+                width:"100%",
+                height:"6%",
+                alignSelf: "center",
+                bottom: Platform.OS === "ios" ? heightPercentageToDP(4) : 0,
                 elevation: 3,
 
             }}>
@@ -30,9 +31,11 @@ export default class BannerAds extends Component {
                         <View style={{
                             flexDirection: "row",
                             borderWidth: heightPercentageToDP(0.2),
-                            backgroundColor:"white",
+                            backgroundColor: "white",
                             borderColor: "#3C64B3",
-                            borderRadius: heightPercentageToDP(1), flex: 1, justifyContent: "center"
+                            borderRadius: heightPercentageToDP(1),
+                            flex: 1,
+                            justifyContent: "center"
                         }}>
                             <ActivityIndicator color={"#3C64B3"} />
                             <View style={{ justifyContent: "center" }}>
@@ -42,10 +45,11 @@ export default class BannerAds extends Component {
                         :
                         <></>
                 }
-                <View style={{ height: this.state.adsLoading ? 0 : heightPercentageToDP(6) }}>
+                <View style={{ height: this.state.adsLoading ? 0 : "100%"}}>
                     <BannerView
                         placementId="579084412746231_579084742746198"
                         type="standard"
+                        style={{height:"100%"}}
                         onPress={() => console.log('click')}
                         onLoad={() => this.setState({ adsLoading: false })}
                         onError={err => this.setState({ adsLoading: false })}

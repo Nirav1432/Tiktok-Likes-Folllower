@@ -60,10 +60,10 @@ class DoFollowing extends Component {
         this.setState({})
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
           setTimeout(async () => {
-              await this.props.showAds()
-              await this.props.putCouter(0)
+            await this.props.showAds()
+            await this.props.putCouter(0)
           }, 1500)
-      }
+        }
       }
     })
   }
@@ -160,74 +160,51 @@ class DoFollowing extends Component {
             <></>
         }
 
-
-        <View>
-          <FlatList
-            data={this.state.datafromserver}
-            renderItem={({ item, index }) => (
-
-              <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
-
-                <View style={styles.profileView}>
-
-                  <View style={styles.ImageView}>
-                    <View style={styles.VIW2}>
-                      <Image source={{ uri: item.profile }} style={styles.profileImage} />
-                    </View>
-                    <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
-                      <Text style={styles.TXT1}>{item.username.length > 15 ? item.username.substr(0, 15) + "..." : item.username}</Text>
-                      <Text style={styles.TXT2}>{item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname}</Text>
-                    </View>
-                  </View>
-
-                  <View style={styles.VIW3}>
-                    <View style={styles.VIW22}>
-                      <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
-                        <Text style={styles.TXT}>+</Text>
-                      </View>
-                      <View style={styles.VIW4}>
-                        <Image source={Icons.PinkDM} style={styles.IMG2} resizeMode="contain" />
-                      </View>
-                      <View style={styles.VIW4}>
-                        <Text style={styles.TXT22}>5</Text>
-                      </View>
-                    </View>
-                    <TouchableOpacity style={styles.Button} onPress={() => this.GotoTikTok(item)}>
-                      <Text style={styles.TXT3}>Follow</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                </View>
-                {/* <View style={styles.DetailView}>
-                  <View style={styles.Commonview}>
-                    <Text style={styles.TXT4}>10</Text>
-                    <Text style={styles.TXT5}>Following</Text>
-                  </View>
-                  <View style={[styles.Commonview, { left: wp(2) }]}>
-                    <Text style={styles.TXT4}>10</Text>
-                    <Text style={styles.TXT5}>Followers</Text>
-                  </View>
-                  <View style={styles.Commonview}>
-                    <Text style={styles.TXT4}>10</Text>
-                    <Text style={styles.TXT5}>Likes</Text>
-                  </View>
-                  <View style={styles.Commonview}>
-                    <Text style={styles.TXT4}>10</Text>
-                    <Text style={styles.TXT5}>Videos</Text>
-                  </View>
-                </View> */}
-              </View>
-            )}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
         {
           this.state.datafromserver.length == 0 ?
             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
               <Text style={[styles.TXT1, { color: "black" }]}>{"No Follower Found"}</Text>
             </View>
             :
-            <></>
+            <FlatList
+              data={this.state.datafromserver}
+              renderItem={({ item, index }) => (
+
+                <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
+
+                  <View style={styles.profileView}>
+
+                    <View style={styles.ImageView}>
+                      <View style={styles.VIW2}>
+                        <Image source={{ uri: item.profile }} style={styles.profileImage} />
+                      </View>
+                      <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
+                        <Text style={styles.TXT1}>{item.username.length > 15 ? item.username.substr(0, 15) + "..." : item.username}</Text>
+                        <Text style={styles.TXT2}>{item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname}</Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.VIW3}>
+                      <View style={styles.VIW22}>
+                        <View style={[styles.VIW4, { bottom: hp(0.2) }]}>
+                          <Text style={styles.TXT}>+</Text>
+                        </View>
+                        <View style={styles.VIW4}>
+                          <Image source={Icons.PinkDM} style={styles.IMG2} resizeMode="contain" />
+                        </View>
+                        <View style={styles.VIW4}>
+                          <Text style={styles.TXT22}>5</Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity style={styles.Button} onPress={() => this.GotoTikTok(item)}>
+                        <Text style={styles.TXT3}>Follow</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>                      
+                </View>
+              )}
+              showsVerticalScrollIndicator={false}
+            />
         }
       </View>
 

@@ -3,12 +3,18 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from '../Styles/GetFollowerPopStyles'
 import Modal from 'react-native-modal';
 import { Icons } from '../../Utils/IconManager';
+import { withNavigation } from 'react-navigation';
 
-export default class RequestSuccess extends Component {
+class RequestSuccess extends Component {
     constructor(props) {
         super(props);
         this.state = {
         };
+    }
+
+    ClosePop(){
+        this.props.ClosePop()
+        this.props.navigation.navigate('ShareAndRate')
     }
 
     render() {
@@ -27,7 +33,7 @@ export default class RequestSuccess extends Component {
                         <Text style={styles.TXT2}>Your follower requested process{"\n"}Successfully within 48-96 hours.</Text>
                     </View>
                     <View style={styles.VIW5}>
-                        <TouchableOpacity style={styles.BTNS1} onPress={() => this.props.ClosePop()}>
+                        <TouchableOpacity style={styles.BTNS1} onPress={() => this.ClosePop()}>
                             <Text style={styles.TXT3}>OK</Text>
                         </TouchableOpacity>
                     </View>
@@ -36,3 +42,5 @@ export default class RequestSuccess extends Component {
         );
     }
 }
+
+export default withNavigation(RequestSuccess)

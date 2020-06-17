@@ -21,12 +21,12 @@ class Follower extends Component {
     }
 
     async componentDidMount() {
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 1500)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 1500)
+        // }
     }
 
     render() {
@@ -57,14 +57,17 @@ class Follower extends Component {
     }
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            this.props.putCouter(0)
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            this.props.navigation.navigate(Type)
         }
         else {
             let cnt = this.props.Data.adsCounter
             cnt++;
             this.props.putCouter(cnt)
+            this.props.navigation.navigate(Type)
         }
-        this.props.navigation.navigate(Type)
+       
     }
 }
 const mapStateToProps = (state) => {

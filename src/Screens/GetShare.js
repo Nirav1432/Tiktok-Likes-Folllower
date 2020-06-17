@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Platform } from 'react-native';
 import styles from './styles/GetCommentsStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Services } from '../Configurations/Api/Connections';
@@ -9,6 +9,7 @@ import Preloader from '../Components/Preloader';
 import { connect } from 'react-redux'
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
 
 
 class GetShare extends Component {
@@ -57,7 +58,7 @@ class GetShare extends Component {
                 <FlatList
                     data={this.state.DataFromServer}
                     renderItem={({ item, index, ss }) =>
-                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0 }]}>
+                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0, marginBottom: index == this.state.DataFromServer.length - 1 ? Platform.OS === "ios" ? hp(9) : hp(8) : hp(2) }]}>
                             <View style={styles.VIW13}>
                                 <View>
                                     <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
@@ -86,7 +87,7 @@ class GetShare extends Component {
                     showsVerticalScrollIndicator={false}
                 />
 
-
+                <BannerAds />
             </View>
         );
     }

@@ -9,7 +9,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { connect } from 'react-redux';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
-
+import VersionUpdate from '../Components/Popups/VersionUpdatePop'
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 let AllData = null
@@ -20,6 +21,7 @@ class Homescreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      update: false
     };
   }
 
@@ -35,29 +37,51 @@ class Homescreen extends Component {
     Services.setting({ user_id: AllData.userId }).then(async (res) => {
       OtherData = res.setting
       this.setState({})
+
+
+      let x = await AsyncStorage.getItem('app_version')
+      if (x != null) {
+        if (parseInt(x) < parseInt(OtherData.app_version))
+          this.setState({ update: true })
+      }
+      else
+        await AsyncStorage.setItem('app_version', OtherData.app_version)
+
+
       await this.props.setCoins()
       await this.props.setMaxAdsCounter()
     })
   }
 
   commonNavigator = async (Type) => {
+    // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+    //   if (Type == "side") {
+    //     await this.props.showAds()
+    //     await this.props.putCouter(0)
+    //     this.props.navigation.openDrawer()
+    //   }
+    //   else
+    //     this.props.navigation.navigate(Type)
+    // }
+    // else {
+    //   let cnt = this.props.Data.adsCounter
+    //   cnt++;
+    //   await this.props.putCouter(cnt)
+    //   if (Type == "side")
+    //     this.props.navigation.openDrawer()
+    //   else
+    //     this.props.navigation.navigate(Type)
+    // }
     if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-      if (Type == "side") {
-        await this.props.showAds()
-        await this.props.putCouter(0)
-        this.props.navigation.openDrawer()
-      }
-      else
+      await this.props.showAds()
+      await this.props.putCouter(0)
       this.props.navigation.navigate(Type)
     }
     else {
       let cnt = this.props.Data.adsCounter
       cnt++;
       await this.props.putCouter(cnt)
-      if (Type == "side")
-        this.props.navigation.openDrawer()
-      else
-        this.props.navigation.navigate(Type)
+      this.props.navigation.navigate(Type)
     }
 
   }
@@ -67,6 +91,10 @@ class Homescreen extends Component {
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />
+
+        <VersionUpdate
+          visible={this.state.update}
+        />
 
         {AllData != null && OtherData != null ?
 
@@ -79,7 +107,7 @@ class Homescreen extends Component {
               <View style={[styles.VIW13, { top: Platform.OS === "ios" ? hp(3.5) : 0 }]}>
 
                 <View style={styles.VIW7}>
-                  <TouchableOpacity onPress={() =>  this.props.navigation.openDrawer()} style={styles.BTN}>
+                  <TouchableOpacity onPress={() => this.props.navigation.openDrawer()} style={styles.BTN}>
                     <Image source={Icons.menu} style={styles.IMG2} />
                   </TouchableOpacity>
                 </View>
@@ -159,8 +187,12 @@ class Homescreen extends Component {
                 </View>
                 <View style={styles.VIW12}>
                   <TouchableOpacity onPress={() => this.commonNavigator("PurchaseCoinsScreen")}>
-                    <Image style={styles.IMG4} source={Icons.purchase} />
-                    <Text style={styles.TXT5}>Purchase Coins</Text>
+                    <View style={{ flex: 6.4, justifyContent: "flex-end" }}>
+                      <Image style={styles.IMG4} source={Icons.purchase} />
+                    </View>
+                    <View style={{ flex: 3.6, justifyContent: "flex-start" }}>
+                      <Text style={styles.TXT5}>Purchase{'\n'}diamonds</Text>
+                    </View>
                   </TouchableOpacity>
                 </View>
               </View>

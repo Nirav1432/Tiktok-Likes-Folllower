@@ -15,6 +15,7 @@ import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { ScrollView } from 'react-native-gesture-handler';
+import { withNavigation } from 'react-navigation';
 
 
 let ads = new NativeAdsManager("979168055864310_981496822298100")
@@ -62,6 +63,11 @@ class CommonScreen extends Component {
         }
     }
 
+    redirectToShare=()=>{
+        this.setState({ success: false, VideoUrl: "" })
+        this.props.navigation.navigate('ShareAndRate')
+    }
+
     render() {
         return (
             <ScrollView style={styles.MAINVIW}>
@@ -80,7 +86,7 @@ class CommonScreen extends Component {
                             :
                             "Shares"
                     }
-                    ClosePop={() => this.setState({ success: false, VideoUrl: "" })}
+                    ClosePop={() => this.redirectToShare()}
                 />
                 {
                     this.state.getThumbnail ?
@@ -337,4 +343,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommonScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(CommonScreen));
