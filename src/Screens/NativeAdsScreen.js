@@ -34,7 +34,7 @@ class NativeAdView extends Component {
                         <View style={{ flex: 1, justifyContent: "center", bottom: wp(0.3) }}>
                             <AdChoicesView style={{ height: hp(3), width: hp(3) }} />
                         </View>
-                        <TriggerableView style={{ flex: 9, left: Platform.OS === "android" ? wp(-1) : wp(3), fontSize: hp(2), justifyContent: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
+                        <TriggerableView style={{ flex: 9, left: Platform.OS === "android" ? wp(-1) : wp(15), fontSize: hp(2), justifyContent: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
                             {this.props.nativeAd.sponsoredTranslation}
                         </TriggerableView>
                     </View>
@@ -58,7 +58,9 @@ class NativeAdView extends Component {
                 <TriggerableView style={{ fontSize: hp(2.2), marginLeft: wp(2), bottom: hp(1), fontFamily: Fonts.LatoBold, textAlign: "left", color: "#333333" }}>
                     {this.props.nativeAd.bodyText}
                 </TriggerableView>
-                <TriggerableView
+                {
+                 Platform.OS==="android"?
+<TriggerableView
                     style={{
                         color: '#fff',
                         backgroundColor: "#1E5DEA",
@@ -74,6 +76,24 @@ class NativeAdView extends Component {
                 >
                     {this.props.nativeAd.callToActionText}
                 </TriggerableView>
+                 :
+                 <TriggerableView
+                    style={{
+                      width:"100%",
+                      backgroundColor: "#1E5DEA", 
+                      borderRadius:100,
+                      color:"#fff",
+                      fontFamily: Fonts.LatoBold,
+                      fontSize:hp(2),
+                      textAlign:"center",
+                      paddingVertical:hp(1)
+                    }}
+                >
+                    {this.props.nativeAd.callToActionText}
+                    
+                </TriggerableView>
+                }
+                
             </View>
         );
     }

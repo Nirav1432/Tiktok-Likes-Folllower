@@ -78,7 +78,10 @@ class GetFollower extends Component {
                 }
                 else{
                     this.setState({ visible: false })
-                    alert('Sorry! You can Request Only One At Time')
+                    setTimeout(()=>{
+                        alert('Sorry! You can Request Only One At Time')
+                    },100)
+                    
                 }
             })
         }

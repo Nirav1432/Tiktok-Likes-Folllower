@@ -48,7 +48,7 @@ class FollowerList extends Component {
     render() {
         return (
             <View styles={styles.MAINVIW}>
-                <View style={{ height: "100%" }}>
+                <View style={{ height: "100%"}}>
                     <Header title={"Followers List"} backPress={() => this.props.navigation.goBack()} />
                     <Preloader isLoader={this.state.visible} />
                     {
@@ -56,8 +56,7 @@ class FollowerList extends Component {
                             <View style={{ justifyContent: "flex-end", alignItems: "center", height: hp(88), backgroundColor: "#E9ECF2" }}>
                                 <View style={{ flex: 1, justifyContent: "center" }}>
                                     <Text style={[styles.TXT1, { color: "black", fontSize: heightPercentageToDP(2.3) }]}>{"No Follower Found"}</Text>
-                                </View>
-                                <BannerAds />
+                                </View>                               
                             </View>
                             :
                             <View style={styles.VIW1}>

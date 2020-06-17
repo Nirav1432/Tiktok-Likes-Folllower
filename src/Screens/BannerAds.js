@@ -21,9 +21,9 @@ export default class BannerAds extends Component {
                 flex:1,
                 width:"100%",
                 height:"6%",
-                alignSelf: "center",
-                bottom: Platform.OS === "ios" ? heightPercentageToDP(4) : 0,
+                alignSelf: "center",              
                 elevation: 3,
+                bottom:Platform.OS==="ios"?heightPercentageToDP(1.2):0
 
             }}>
                 {

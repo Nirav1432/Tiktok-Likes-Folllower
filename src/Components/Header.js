@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StatusBar, Platform } from 'react-native';
 import styles from './Styles/HeaderStyles';
 import { Icons } from '../Utils/IconManager';
 import { SafeAreaView, SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -18,7 +18,17 @@ class Header extends Component {
 
     render() {
  
-        return (                           
+        return (         
+                
+            <>      
+            {
+                Platform.OS==="ios"?
+                <SafeAreaConsumer>
+                {insets => <View style={{ paddingTop: 10, backgroundColor: '#FE2C55' }} />}
+            </SafeAreaConsumer>
+                :
+                <></>
+            }        
                 <View style={styles.VIW1} >
                     <View style={styles.VIW7}>
                         <TouchableOpacity onPress={() => this.props.backPress()} style={styles.INGBTN}>
@@ -37,7 +47,8 @@ class Header extends Component {
                             <Text style={styles.TXT4}>{custom_number_format(this.props.Data.coins)}</Text>
                         </View>
                     </View>
-                </View>           
+                </View> 
+                </>          
         );
     }
 }
