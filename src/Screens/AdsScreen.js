@@ -15,7 +15,8 @@ export default class AdsScreen extends Component {
 
     componentDidMount() {
         AdSettings.addTestDevice(AdSettings.currentDeviceHash)
-        setTimeout(() => this.showAdd(), 3000)
+        this.showAdd()
+        // setTimeout(() => this.showAdd(), 3000)
     }
 
     showAdd = () => {

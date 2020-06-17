@@ -164,7 +164,7 @@ class DoComments extends Component {
                             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
                                 <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Views for today"}</Text>
                             </View>
-                            <View style={{position:"absolute",width:"100%"}}>
+                            <View style={{ position: "absolute", width: "100%" }}>
                                 <BannerAds />
                             </View>
                         </View>
@@ -227,9 +227,7 @@ class DoComments extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <View style={{height:hp(6), backgroundColor:"transparent"}}>
-                                <BannerAds />
-                            </View>
+                            <BannerAds />
                         </View>
                 }
 

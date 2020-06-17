@@ -226,9 +226,7 @@ class DoShare extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <View style={{height:hp(6), backgroundColor:"transparent"}}>
-                                <BannerAds />
-                            </View>
+                            <BannerAds />
                         </View>
                 }
 

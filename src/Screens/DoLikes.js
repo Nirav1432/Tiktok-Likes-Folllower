@@ -44,7 +44,7 @@ class DoLikes extends Component {
         };
     }
 
-    async  componentDidMount() {
+    async componentDidMount() {
         id = this.props.Data.CommonData.userId
         await this.setState({ ProfileUrl: this.props.Data.CommonData.Tiktok, Type: this.props.Data.CommonData.Type, uniqueId: '@' + this.props.Data.CommonData.uniqueId })
         this.getData(id)
@@ -204,9 +204,7 @@ class DoLikes extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                            <View style={{height:hp(6), backgroundColor:"transparent"}}>
-                                <BannerAds />
-                            </View>
+                            <BannerAds />
                         </View>
                 }
             </View>

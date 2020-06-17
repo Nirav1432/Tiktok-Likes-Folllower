@@ -9,6 +9,8 @@ import Preloader from '../Components/Preloader';
 import { connect } from 'react-redux'
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
+
 
 class GetComments extends Component {
     constructor(props) {
@@ -40,10 +42,10 @@ class GetComments extends Component {
         })
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
             setTimeout(async () => {
-              await this.props.showAds()
-              await this.props.putCouter(0)
+                await this.props.showAds()
+                await this.props.putCouter(0)
             }, 2500)
-          }
+        }
     }
 
     render() {
@@ -66,7 +68,7 @@ class GetComments extends Component {
                                 </View>
                             </View>
                             <View style={styles.VIW14}>
-                                <TouchableOpacity style={[styles.VIW16]}  onPress={() => this.commonNavigator(item)}>
+                                <TouchableOpacity style={[styles.VIW16]} onPress={() => this.commonNavigator(item)}>
                                     <View style={styles.VIW17}>
                                         <Image source={Icons.GetComments} style={styles.IMG4} resizeMode="contain" />
                                     </View>
@@ -83,13 +85,12 @@ class GetComments extends Component {
                     style={styles.FlatList}
                     showsVerticalScrollIndicator={false}
                 />
-
-
+                <BannerAds/>
             </View>
         );
     }
     commonNavigator = async (item) => {
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {          
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
             this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })
         }
         else {
