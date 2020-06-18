@@ -40,7 +40,7 @@ class Sidemenu extends Component {
 
     rateMyapp = () => {
         Rate.rate(AndroidRate, success => {
-          console.log(success)
+            console.log(success)
         })
     }
 
@@ -88,7 +88,7 @@ class Sidemenu extends Component {
                             <Text style={styles.CMNTXT}>Privacy</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.CMNVIW} onPress={()=>this.rateMyapp()}>
+                    <TouchableOpacity style={styles.CMNVIW} onPress={() => this.rateMyapp()}>
                         <View style={styles.VIW1}>
                             <Image source={Icons.star} style={styles.CMNIMG} resizeMode="contain" />
                         </View>
@@ -150,6 +150,8 @@ class Sidemenu extends Component {
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
             this.props.navigation.navigate(Type)
         }
         else {
