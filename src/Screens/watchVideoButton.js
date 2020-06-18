@@ -27,7 +27,7 @@ class watchVideoButton extends Component {
             data: { follower_coin: 0 },
             congo: false,
             Coins: 0,
-            time: 'Loading...',
+            time: '  Loading...',
             Preloader: false,
             displayButton: true
         };
