@@ -29,7 +29,7 @@ class watchVideoButton extends Component {
             Coins: 0,
             time: 'Loading...',
             Preloader: false,
-            displayButton: false
+            displayButton: true
         };
     }
 
