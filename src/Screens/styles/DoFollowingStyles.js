@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     VIW22: { justifyContent: "center", alignItems: "center", flexDirection: "row", alignSelf: "center" },
     IMG2: { height: hp(2), width: hp(2), marginHorizontal: wp(1.5) },
 
-    Button: { height: hp(5), width: wp(28), borderRadius: hp(100), marginTop: hp(1), elevation: 5, backgroundColor: "#FE2C55", justifyContent: "center", alignItems: "center" },
+    Button: { height: hp(4), width: wp(24), borderRadius: hp(100), marginTop: hp(1), elevation: 5, backgroundColor: "#FE2C55", justifyContent: "center", alignItems: "center" },
     TXT3: { fontFamily: Fonts.LatoBlack, color: "white", fontSize: hp(2) },
 
 

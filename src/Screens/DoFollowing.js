@@ -180,8 +180,8 @@ class DoFollowing extends Component {
                         <Image source={{ uri: item.profile }} style={styles.profileImage} />
                       </View>
                       <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
-                        <Text style={styles.TXT1}>{item.username.length > 10 ? item.username.substr(0, 10) + "..." : item.username}</Text>
-                        <Text style={styles.TXT2}>{item.fullname.length > 10 ? item.fullname.substr(0, 10) + "..." : item.fullname}</Text>
+                        <Text style={styles.TXT1}>{item.username.length > 15 ? item.username.substr(0, 15) + "..." : item.username}</Text>
+                        <Text style={styles.TXT2}>{item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname}</Text>
                       </View>
                     </View>
 
@@ -201,6 +201,7 @@ class DoFollowing extends Component {
                         <Text style={styles.TXT3}>Follow</Text>
                       </TouchableOpacity>
                     </View>
+                    
                   </View>
                 </View>
               )}
