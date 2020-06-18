@@ -15,7 +15,7 @@ import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import Modal from 'react-native-modal';
 import { Fonts } from '../Utils/fonts'
 
-
+let months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 class watchVideoButton extends Component {
     constructor(props) {
@@ -24,6 +24,7 @@ class watchVideoButton extends Component {
             data: { follower_coin: 0 },
             congo: false,
             Coins: 0,
+            time: '00:00',
             Preloader: false,
             displayButton: false
         };
@@ -61,15 +62,15 @@ class watchVideoButton extends Component {
 
                 this.setState({ Preloader: true, showloader: false })
 
-                let date = new Date()
+                var date = new Date()
 
-                let Month = date.getMonth().toString().length == 1 ? '0' + date.getMonth() : date.getMonth()
-                let day = date.getDay().toString().length == 1 ? '0' + date.getDay() : date.getDay()
+                let Month = date.getMonth()
+                let day = date.getDate().toString().length == 1 ? '0' + date.getDate() : date.getDate()
                 let Hour = date.getHours.toString().length == 1 ? '0' + date.getHours() : date.getHours()
-                let Minutes = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes()
+                var Minutes = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes()
                 let sec = date.getSeconds().toString().length == 1 ? '0' + date.getSeconds() : date.getSeconds()
 
-                let Fulldate = date.getFullYear() + "-" + Month + "-" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+                let Fulldate = date.getFullYear() + "-" + months[Month] + "-" + day + " " + Hour + ":" + Minutes + ":" + sec
 
                 let data = {
                     user_id: this.props.Data.CommonData.userId,
@@ -81,11 +82,13 @@ class watchVideoButton extends Component {
                     if (res.success == "true") {
                         this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
                         this.props.setCoins(res.coin)
+                        this.startTime(date.getMinutes(), date.getSeconds(), 200000)
                         setTimeout(() => this.setState({ congo: true }), 500)
                     }
                     else
                         alert('Something went wrong !!')
                 })
+
             })
             .catch(error => {
 
@@ -127,7 +130,7 @@ class watchVideoButton extends Component {
                                     <Image source={Icons.watch} style={styles.watch} resizeMode="contain" />
                                 </View>
                                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                                    <Text style={styles.timerTExt}>01:59</Text>
+                                    <Text style={styles.timerTExt}>{this.state.time}</Text>
                                 </View>
                             </TouchableOpacity>
                             :
@@ -144,6 +147,13 @@ class watchVideoButton extends Component {
                 </View>
             </View>
         );
+    }
+    startTime = (minutes, seconds, timers) => {
+        for (var i = 0; i < timers.length; i++) {
+            console.log("hh")
+            let x = (4 - minutes % 5) + ":" + (seconds >= 50 ? "0" : "") + (59 - seconds);
+            this.setState({ time: x })
+        }
     }
 }
 const mapStateToProps = (state) => {
