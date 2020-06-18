@@ -15,7 +15,10 @@ import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import Modal from 'react-native-modal';
 import { Fonts } from '../Utils/fonts'
 
+
 let months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+
+let Interval = null;
 
 class watchVideoButton extends Component {
     constructor(props) {
@@ -24,7 +27,7 @@ class watchVideoButton extends Component {
             data: { follower_coin: 0 },
             congo: false,
             Coins: 0,
-            time: '00:00',
+            time: 'Loading...',
             Preloader: false,
             displayButton: false
         };
@@ -34,18 +37,28 @@ class watchVideoButton extends Component {
 
         this.getTime()
 
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 300)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 300)
+        // }
+    }
+
+    componentWillUnmount() {
+        clearInterval(Interval)
     }
 
     getTime = () => {
         Services.setting({ user_id: this.props.Data.CommonData.userId }).then((res) => {
             if (res.setting.success == "true") {
-                if (res.setting.user_video == "true") {
+                if (res.setting.user_video == "true") { 
+                    let Time=res.setting.current_time                   
+                    let Min=parseInt(Time.substr(0, Time.indexOf(':')))
+                    let sec=parseInt(Time.substr(Time.indexOf(':') + 1, 2))
+                    let finaltime=Min+(sec/60)
+                    let timer=finaltime*60
+                    this.startTime(timer)
                     this.setState({ displayButton: true })
                 }
                 else {
@@ -81,8 +94,13 @@ class watchVideoButton extends Component {
                 Services.userVideo(data).then(res => {
                     if (res.success == "true") {
                         this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
-                        this.props.setCoins(res.coin)
-                        this.startTime(date.getMinutes(), date.getSeconds(), 200000)
+                        this.props.setCoins(res.coin)                     
+                        let Time = res.time                  
+                        let Min=parseInt(Time.substr(0, Time.indexOf(':')))
+                        let sec=parseInt(Time.substr(Time.indexOf(':') + 1, 2))
+                        let finaltime=Min+(sec/60)
+                        let timer=finaltime*60
+                        this.startTime(timer)
                         setTimeout(() => this.setState({ congo: true }), 500)
                     }
                     else
@@ -134,7 +152,10 @@ class watchVideoButton extends Component {
                                 </View>
                             </TouchableOpacity>
                             :
-                            <TouchableOpacity style={styles.Timer2} onPress={() => this.showAdd()}>
+                            <TouchableOpacity style={styles.Timer2}
+                                onPress={() => this.showAdd()}
+                                // onPress={() => this.startTime(1 * 60)}
+                            >
                                 <View style={styles.watchView2}>
                                     <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
                                 </View>
@@ -148,12 +169,26 @@ class watchVideoButton extends Component {
             </View>
         );
     }
-    startTime = (minutes, seconds, timers) => {
-        let cnt=0
-        setInterval(()=>{
-            cnt+++
-            this.setState({time:"00:0"+cnt})
-    },1000)
+    startTime = (timer) => {     
+
+        this.setState({displayButton:true})
+        Interval = setInterval(() => {
+            let minutes = parseInt(timer / 60, 10);
+            let seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            this.setState({ time: minutes + " : " + seconds })   
+
+            if (--timer < 0) {
+                clearInterval(Interval)
+                this.setState({ displayButton: false })
+            }
+
+        }, 1000)
+
+
     }
 }
 const mapStateToProps = (state) => {
