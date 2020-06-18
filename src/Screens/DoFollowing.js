@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Linking, Platform } from 'react-native';
 import styles from './styles/DoFollowingStyles';
 import { Icons } from "../Utils/IconManager";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -14,6 +14,7 @@ import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
 import { WebView } from 'react-native-webview';
 import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import BannerAds from './BannerAds';
 
 
 var userId = ""
@@ -170,7 +171,7 @@ class DoFollowing extends Component {
               data={this.state.datafromserver}
               renderItem={({ item, index }) => (
 
-                <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0 }]} key={index}>
+                <View style={[styles.VIW1, { marginTop: index == 0 ? hp(2) : 0, marginBottom: index == this.state.datafromserver.length - 1 ? Platform.OS === "ios" ? hp(9) : hp(7) : hp(2) }]} key={index}>
 
                   <View style={styles.profileView}>
 
@@ -179,8 +180,8 @@ class DoFollowing extends Component {
                         <Image source={{ uri: item.profile }} style={styles.profileImage} />
                       </View>
                       <View style={[styles.VIW2, { marginLeft: wp(3) }]}>
-                        <Text style={styles.TXT1}>{item.username.length > 15 ? item.username.substr(0, 15) + "..." : item.username}</Text>
-                        <Text style={styles.TXT2}>{item.fullname.length > 15 ? item.fullname.substr(0, 15) + "..." : item.fullname}</Text>
+                        <Text style={styles.TXT1}>{item.username.length > 10 ? item.username.substr(0, 10) + "..." : item.username}</Text>
+                        <Text style={styles.TXT2}>{item.fullname.length > 10 ? item.fullname.substr(0, 10) + "..." : item.fullname}</Text>
                       </View>
                     </View>
 
@@ -200,12 +201,13 @@ class DoFollowing extends Component {
                         <Text style={styles.TXT3}>Follow</Text>
                       </TouchableOpacity>
                     </View>
-                  </View>                      
+                  </View>
                 </View>
               )}
               showsVerticalScrollIndicator={false}
             />
         }
+        <BannerAds />
       </View>
 
     );
