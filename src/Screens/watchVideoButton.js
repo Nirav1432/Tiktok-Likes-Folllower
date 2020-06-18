@@ -149,11 +149,11 @@ class watchVideoButton extends Component {
         );
     }
     startTime = (minutes, seconds, timers) => {
-        for (var i = 0; i < timers.length; i++) {
-            console.log("hh")
-            let x = (4 - minutes % 5) + ":" + (seconds >= 50 ? "0" : "") + (59 - seconds);
-            this.setState({ time: x })
-        }
+        let cnt=0
+        setInterval(()=>{
+            cnt+++
+            this.setState({time:"00:0"+cnt})
+    },1000)
     }
 }
 const mapStateToProps = (state) => {

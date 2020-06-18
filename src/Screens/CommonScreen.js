@@ -44,12 +44,12 @@ class CommonScreen extends Component {
         IncData = await this.props.navigation.getParam('data')
         this.setState({ TotalDiamond: this.props.Data.coins })
         this.setState({ userId: this.props.Data.CommonData.userId })
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 1500)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 1500)
+        // }
     }
 
 

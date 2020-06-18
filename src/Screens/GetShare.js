@@ -39,12 +39,12 @@ class GetShare extends Component {
         }).catch((res) => {
             this.setState({ visible: false })
         })
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 2500)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 2500)
+        // }
     }
 
     render() {
@@ -93,7 +93,10 @@ class GetShare extends Component {
     }
     commonNavigator = async (item) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
+            await this.props.showAds()
+            await this.props.putCouter(0)
+            if (!this.props.showAds)
+                this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
         }
         else {
             let cnt = this.props.Data.adsCounter

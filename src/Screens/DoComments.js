@@ -60,12 +60,12 @@ class DoComments extends Component {
         }).catch((err) => {
             this.setState({ visible: false })
         })
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 1500)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 1500)
+        // }
     }
 
     GotoTikTok = async (item) => {

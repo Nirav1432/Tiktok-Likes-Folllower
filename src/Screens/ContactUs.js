@@ -18,14 +18,14 @@ class ContactUs extends Component {
     }
     UNSAFE_componentWillMount() {
         userid = this.props.Data.CommonData.userId
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 700)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 700)
+        // }
     }
-    
+
     render() {
         return (
             <View style={styles.MAINVIW}>
@@ -80,7 +80,9 @@ class ContactUs extends Component {
     }
 
     commonNavigator = async (Type) => {
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {    
+        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
             this.props.navigation.navigate('ContactUsList')
         }
         else {
@@ -105,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
         showAds: () => dispatch(shoeAds())
     };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(ContactUs);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

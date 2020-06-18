@@ -37,12 +37,12 @@ class PurchaseCoinsScreen extends Component {
       this.setState({ offers: res.payment_coin })
       this.setState({ visible: false })
     })
-    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-      setTimeout(async () => {
-        await this.props.showAds()
-        await this.props.putCouter(0)
-      }, 1500)
-    }
+    // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+    //   setTimeout(async () => {
+    //     await this.props.showAds()
+    //     await this.props.putCouter(0)
+    //   }, 1500)
+    // }
   }
 
   payToDestination = async (amount, coins) => {

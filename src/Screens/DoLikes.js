@@ -62,12 +62,12 @@ class DoLikes extends Component {
                 this.setState({ visible: false, })
                 await this.setState({ DatafromServer: [] })
                 this.setState({})
-                if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-                    setTimeout(async () => {
-                        await this.props.showAds()
-                        await this.props.putCouter(0)
-                    }, 1500)
-                }
+                // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+                //     setTimeout(async () => {
+                //         await this.props.showAds()
+                //         await this.props.putCouter(0)
+                //     }, 1500)
+                // }
             }
         }).catch((err) => {
             this.setState({ visible: false })

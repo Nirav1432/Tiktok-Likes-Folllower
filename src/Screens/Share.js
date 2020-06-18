@@ -20,12 +20,12 @@ class Share extends Component {
         };
     }
     UNSAFE_componentWillMount() {
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-                await this.props.showAds()
-                await this.props.putCouter(0)
-            }, 1500)
-        }
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        //     setTimeout(async () => {
+        //         await this.props.showAds()
+        //         await this.props.putCouter(0)
+        //     }, 1500)
+        // }
     }
     render() {
         return (
@@ -55,6 +55,8 @@ class Share extends Component {
     }
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+            await this.props.showAds()
+            await this.props.putCouter(0)
             this.props.navigation.navigate(Type)
         }
         else {
