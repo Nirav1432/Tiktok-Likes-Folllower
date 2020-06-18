@@ -4,7 +4,7 @@ import { Fonts } from "../../Utils/fonts";
 const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
-    VIW1: { backgroundColor: "white", borderRadius: hp(2), marginHorizontal: hp(2), marginBottom: hp(2) },
+    VIW1: { backgroundColor: "white", borderRadius: hp(2), marginHorizontal: hp(1.5), marginBottom: hp(2) },
     VIW2: { height: "100%", justifyContent: "center" },
     VIW3: { justifyContent: "center", alignItems: "center" },
     VIW4: { justifyContent: "center" },
