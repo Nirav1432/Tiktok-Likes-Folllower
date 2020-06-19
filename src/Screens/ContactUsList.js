@@ -5,7 +5,9 @@ import Header from '../Components/Header';
 import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+
 
 class ContactUsList extends Component {
   constructor(props) {
@@ -101,7 +103,8 @@ const mapDispatchToProps = (dispatch) => {
     setCoins: (coins) => dispatch(setDiamonds(coins)),
     setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
     putCouter: (cnt) => dispatch(putcount(cnt)),
-    showAds: () => dispatch(shoeAds())
+    showAds: () => dispatch(shoeAds()),
+    hideAds: () => dispatch(hideAds()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ContactUsList);

@@ -13,8 +13,9 @@ import { NavigationEvents } from 'react-navigation';
 import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import BannerAds from './BannerAds';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
@@ -142,7 +143,7 @@ class DoShare extends Component {
                         <View style={{ justifyContent: "flex-end", flex: 1 }}>
                             <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
                                 <Text style={[styles.TXT2, { color: "black", fontSize: heightPercentageToDP(2.2) }]}>{"No More Shares for today"}</Text>
-                            </View>                           
+                            </View>
                         </View>
                         :
                         <View style={{ flex: 1 }}>
@@ -223,11 +224,11 @@ class DoShare extends Component {
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
-                          
+
                         </View>
                 }
 
-<BannerAds />
+                <BannerAds />
             </View>
 
         );
@@ -243,7 +244,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

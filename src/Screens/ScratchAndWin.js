@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/ScratchAndWinStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import {connect} from 'react-redux'
@@ -16,12 +16,7 @@ class ScratchAndWin extends Component {
         };
     }
     componentDidMount(){       
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-            setTimeout(async () => {
-              await this.props.showAds()
-              await this.props.putCouter(0)
-            }, 300)
-          }
+      
     }
     render() {
         return (
@@ -44,7 +39,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

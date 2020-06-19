@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { connect } from 'react-redux'
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
+
 
 let ads = new NativeAdsManager("979168055864310_981496822298100")
 
@@ -48,9 +50,18 @@ class Likes extends Component {
     }
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            await this.props.putCouter(0)
-            this.props.navigation.navigate(Type)
+
+            setTimeout(async () => {
+              let adsResult = await InterStrialAds()
+              if (adsResult) {
+                this.props.hideAds()
+                await this.props.putCouter(0)
+                this.props.navigation.navigate(Type)
+              }
+            }, 3000)
+
         }
         else {
             let cnt = this.props.Data.adsCounter
@@ -70,7 +81,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import Preloader from '../Components/Preloader';
 import BannerAds from './BannerAds';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/AddCount/AddCount';
 
 
 class ShareList extends Component {
@@ -59,8 +59,7 @@ class ShareList extends Component {
                             <View style={{ justifyContent: "flex-end", alignItems: "center", height: "88%", backgroundColor: "#E9ECF2" }}>
                                 <View style={{ flex: 1, justifyContent: "center" }}>
                                     <Text style={[styles.TXT1, { color: "black", fontSize: hp(2.5) }]}>{"No Shares Found"}</Text>
-                                </View>
-                                <BannerAds />
+                                </View>                               
                             </View>
                             :
                             <View style={styles.VIW1}>
@@ -110,7 +109,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

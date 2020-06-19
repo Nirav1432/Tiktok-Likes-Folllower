@@ -13,8 +13,9 @@ import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
 import BackgroundTimer from 'react-native-background-timer';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/AddCount/AddCount';
 import BannerAds from './BannerAds';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
@@ -242,7 +243,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

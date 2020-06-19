@@ -5,11 +5,13 @@ import { Icons } from '../Utils/IconManager';
 import Header from '../Components/Header'
 import { connect } from 'react-redux'
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { ScrollView } from 'react-native-gesture-handler';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
+
 
 let ads = new NativeAdsManager("979168055864310_981496822298100")
 
@@ -90,17 +92,23 @@ class EarnScreen extends Component {
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            await this.props.putCouter(0)
-            this.props.navigation.navigate(Type)
+
+            setTimeout(async () => {
+                let adsResult = await InterStrialAds()
+                this.props.hideAds()
+                await this.props.putCouter(0)
+                this.props.navigation.navigate(Type)
+            }, 3000)
+
         }
         else {
             let cnt = this.props.Data.adsCounter
             cnt++;
-            await this.props.putCouter(cnt)
+            this.props.putCouter(cnt)
             this.props.navigation.navigate(Type)
         }
-
     }
 }
 
@@ -116,7 +124,8 @@ const mapDispatchToProps = (dispatch) => {
         setCoins: () => dispatch(setDiamonds(OtherData.coin)),
         setMaxAdsCounter: () => dispatch(puMaxCount(parseInt(OtherData.ads_click))),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

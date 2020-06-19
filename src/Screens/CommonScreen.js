@@ -13,8 +13,9 @@ import CommonPopup from '../Components/Popups/CommonPopup';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { ScrollView } from 'react-native-gesture-handler';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
 import { withNavigation } from 'react-navigation';
 
 
@@ -63,7 +64,7 @@ class CommonScreen extends Component {
         }
     }
 
-    redirectToShare=()=>{
+    redirectToShare = () => {
         this.setState({ success: false, VideoUrl: "" })
         this.props.navigation.navigate('ShareAndRate')
     }
@@ -194,8 +195,8 @@ class CommonScreen extends Component {
             let Trail = Cutted.substr(0, Cutted.indexOf('?'))
             let TEmpMakeThumb = "https://p16-va-tiktok.ibyteimg.com/"
             let XFinal = TEmpMakeThumb + Trail
-            let finalthumb = XFinal == null ? "" : XFinal == undefined ? "" : XFinal        
-   
+            let finalthumb = XFinal == null ? "" : XFinal == undefined ? "" : XFinal
+
             if (this.props.navigation.getParam('type') == "Get Likes") {
 
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: finalthumb }
@@ -301,19 +302,25 @@ class CommonScreen extends Component {
     pasteUrl = async () => {
 
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            this.props.putCouter(0)
-            let url = await Clipboard.getString()
-            this.setState({ VideoUrl: url })
+
+            setTimeout(async () => {
+                let adsResult = await InterStrialAds()
+                this.props.hideAds()
+                await this.props.putCouter(0)
+                let url = await Clipboard.getString()
+                this.setState({ VideoUrl: url })
+            }, 3000)
+
         }
         else {
             let cnt = this.props.Data.adsCounter
             cnt++;
-            this.props.putCouter(cnt)
+            await this.props.putCouter(cnt)
             let url = await Clipboard.getString()
             this.setState({ VideoUrl: url })
         }
-
 
 
     }
@@ -339,7 +346,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

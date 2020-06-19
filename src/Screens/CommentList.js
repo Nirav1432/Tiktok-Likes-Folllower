@@ -52,8 +52,7 @@ class CommentList extends Component {
                             <View style={{ justifyContent: "flex-end", alignItems: "center", height: "88%", backgroundColor: "#E9ECF2" }}>
                                 <View style={{ flex: 1, justifyContent: "center" }}>
                                     <Text style={[styles.TXT1, { color: "black", fontSize: hp(2.5) }]}>{"No Comment Found"}</Text>
-                                </View>
-                                <BannerAds />
+                                </View>                                
                             </View>
                             :
                             <View style={styles.VIW1}>

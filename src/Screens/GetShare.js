@@ -8,8 +8,11 @@ import Header from '../Components/Header';
 import Preloader from '../Components/Preloader';
 import { connect } from 'react-redux'
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import BannerAds from './BannerAds';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
+
 
 
 class GetShare extends Component {
@@ -93,10 +96,18 @@ class GetShare extends Component {
     }
     commonNavigator = async (item) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            await this.props.putCouter(0)
-            if (!this.props.showAds)
-                this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
+
+            setTimeout(async () => {
+                let adsResult = await InterStrialAds()
+                if (adsResult) {
+                    this.props.hideAds()
+                    await this.props.putCouter(0)
+                    this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
+                }
+            }, 3000)
+
         }
         else {
             let cnt = this.props.Data.adsCounter
@@ -104,6 +115,7 @@ class GetShare extends Component {
             this.props.putCouter(cnt)
             this.props.navigation.navigate('CommonScreen', { type: "Get Shares", data: { Diamonds: item.coin, Request: item.request } })
         }
+       
     }
 }
 
@@ -118,7 +130,8 @@ const mapDispatchToProps = (dispatch) => {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         setMaxAdsCounter: () => dispatch(puMaxCount(parseInt(OtherData.ads_click))),
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 

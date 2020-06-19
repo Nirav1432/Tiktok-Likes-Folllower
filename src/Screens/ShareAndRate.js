@@ -6,7 +6,7 @@ import Header from '../Components/Header';
 import { connect } from 'react-redux'
 import Share from 'react-native-share';
 import Rate, { AndroidMarket } from 'react-native-rate'
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/AddCount/AddCount';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 
@@ -94,7 +94,8 @@ const mapDispatchToProps = (dispatch) => {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(ShareAndRate);

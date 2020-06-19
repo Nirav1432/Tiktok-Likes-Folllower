@@ -8,9 +8,11 @@ import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
 import { Icons } from '../Utils/IconManager'
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import RazorpayCheckout from 'react-native-razorpay';
 import Congratulations from '../Components/Popups/Congratulations'
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+
 
 let mid = ""
 
@@ -159,7 +161,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setCoins: (coins) => dispatch(setDiamonds(coins)),
     putCouter: (cnt) => dispatch(putcount(cnt)),
-    showAds: () => dispatch(shoeAds())
+    showAds: () => dispatch(shoeAds()),
+    hideAds: () => dispatch(hideAds()),
   };
 };
 

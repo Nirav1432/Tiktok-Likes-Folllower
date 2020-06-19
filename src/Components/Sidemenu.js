@@ -9,8 +9,10 @@ import { connect } from 'react-redux'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { WebView } from 'react-native-webview';
 import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import Rate, { AndroidMarket } from 'react-native-rate'
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
+
 
 
 const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
@@ -150,14 +152,21 @@ class Sidemenu extends Component {
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            await this.props.putCouter(0)
-            this.props.navigation.navigate(Type)
+
+            setTimeout(async () => {
+              let adsResult = await InterStrialAds()
+              this.props.hideAds()
+              await this.props.putCouter(0)
+              this.props.navigation.navigate(Type)
+            }, 3000)
+
         }
         else {
             let cnt = this.props.Data.adsCounter
             cnt++;
-            await this.props.putCouter(cnt)
+            this.props.putCouter(cnt)
             this.props.navigation.navigate(Type)
         }
     }
@@ -174,7 +183,9 @@ const mapDispatchToProps = (dispatch) => {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         setGlobalData: (data) => { dispatch(putLogin(JSON.stringify(data))) },
         putCouter: (cnt) => dispatch(putcount(cnt)),
-        showAds: () => dispatch(shoeAds())
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
+
     };
 };
 

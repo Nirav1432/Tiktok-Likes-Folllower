@@ -13,8 +13,9 @@ import AppStateListener from "react-native-appstate-listener";
 import Congratulations from '../Components/Popups/Congratulations'
 import SorryPop from '../Components/Popups/SorryPop';
 import { WebView } from 'react-native-webview';
-import { puMaxCount, putcount, shoeAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import BannerAds from './BannerAds';
+import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 
 
 var userId = ""
@@ -201,7 +202,7 @@ class DoFollowing extends Component {
                         <Text style={styles.TXT3}>Follow</Text>
                       </TouchableOpacity>
                     </View>
-                    
+
                   </View>
                 </View>
               )}
@@ -221,12 +222,6 @@ class DoFollowing extends Component {
     let FinalData = await DATA.props.pageProps.userData
     oldlikes = FinalData.following
     this.setState({ visible: false })
-    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-      setTimeout(async () => {
-        await this.props.showAds()
-        await this.props.putCouter(0)
-      }, 1500)
-    }
   }
 
 
@@ -290,7 +285,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setCoins: (coins) => dispatch(setDiamonds(coins)),
     putCouter: (cnt) => dispatch(putcount(cnt)),
-    showAds: () => dispatch(shoeAds())
+    showAds: () => dispatch(shoeAds()),
+    hideAds: () => dispatch(hideAds()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DoFollowing)

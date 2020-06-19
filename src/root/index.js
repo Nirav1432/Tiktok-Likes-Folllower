@@ -43,6 +43,7 @@ import PrivacyAndPolicy from '../Screens/PrivacyAndPolicy';
 import messaging from '@react-native-firebase/messaging';
 import { isFirstTime, setFirstTime } from '../ReduxConfig/Actions/Login/LoginActions'
 import crashlytics from '@react-native-firebase/crashlytics';
+import CommonLoader from '../Components/CommonLoader';
 
 const slides = [
     {
@@ -188,14 +189,15 @@ class Index extends Component {
                 </View>
                 :
                 <View style={{ flex: 1 }}>
-                    {
+                    <CommonLoader visible={this.props.Data.showAds}/>
+                    {/* {
                         this.props.Data.showAds ?
                             <AdsScreen
                                 closeAdd={() => this.props.hideAds()}
                             />
                             :
                             <></>
-                    }
+                    } */}
                     <All />
                 </View>
 
