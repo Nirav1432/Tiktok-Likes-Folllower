@@ -100,11 +100,9 @@ class GetComments extends Component {
 
             setTimeout(async () => {
                 let adsResult = await InterStrialAds()
-                if (adsResult) {
-                    this.props.hideAds()
-                    await this.props.putCouter(0)
-                    this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })
-                }
+                this.props.hideAds()
+                await this.props.putCouter(0)
+                this.props.navigation.navigate('CommonScreen', { type: "Get Views", data: { Diamonds: item.coin, Request: item.request } })
             }, 3000)
 
         }

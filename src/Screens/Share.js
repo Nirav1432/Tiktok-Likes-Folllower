@@ -61,12 +61,10 @@ class Share extends Component {
             await this.props.showAds()
 
             setTimeout(async () => {
-              let adsResult = await InterStrialAds()
-              if (adsResult) {
+              let adsResult = await InterStrialAds()            
                 this.props.hideAds()
                 await this.props.putCouter(0)
-                this.props.navigation.navigate(Type)
-              }
+                this.props.navigation.navigate(Type)              
             }, 3000)
 
         }

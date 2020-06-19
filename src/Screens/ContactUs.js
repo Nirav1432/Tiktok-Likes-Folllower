@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { puMaxCount, putcount, shoeAds,hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
 
 var userid = ""
@@ -83,16 +84,24 @@ class ContactUs extends Component {
 
     commonNavigator = async (Type) => {
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
             await this.props.showAds()
-            await this.props.putCouter(0)
-            this.props.navigation.navigate('ContactUsList')
-        }
-        else {
+      
+            setTimeout(async () => {
+              let adsResult = await InterStrialAds()
+              this.props.hideAds()
+              await this.props.putCouter(0)
+              this.props.navigation.navigate('ContactUsList')
+            }, 3000)
+      
+          }
+          else {
             let cnt = this.props.Data.adsCounter
             cnt++;
             await this.props.putCouter(cnt)
             this.props.navigation.navigate('ContactUsList')
-        }
+          }
+      
     }
 
 }

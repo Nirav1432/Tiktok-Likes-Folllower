@@ -54,12 +54,10 @@ class Follower extends Component {
             await this.props.showAds()
 
             setTimeout(async () => {
-              let adsResult = await InterStrialAds()
-              if (adsResult) {
+                let adsResult = await InterStrialAds()
                 this.props.hideAds()
                 await this.props.putCouter(0)
                 this.props.navigation.navigate(Type)
-              }
             }, 3000)
 
         }
@@ -69,7 +67,7 @@ class Follower extends Component {
             this.props.putCouter(cnt)
             this.props.navigation.navigate(Type)
         }
-       
+
     }
 
 }

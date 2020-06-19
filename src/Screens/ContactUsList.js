@@ -7,6 +7,8 @@ import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import { custom_number_format, InterStrialAds } from '../Utils/functions'
+
 
 
 class ContactUsList extends Component {
@@ -79,17 +81,26 @@ class ContactUsList extends Component {
     );
   }
   commonNavigator = async (Type) => {
-    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-      await this.props.showAds()
-      await this.props.putCouter(0)
-      this.props.navigation.navigate('ContactUs')
-    }
-    else {
-      let cnt = this.props.Data.adsCounter
-      cnt++;
-      await this.props.putCouter(cnt)
-      this.props.navigation.navigate('ContactUs')
-    }
+     if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+
+            await this.props.showAds()
+      
+            setTimeout(async () => {
+              let adsResult = await InterStrialAds()
+              this.props.hideAds()
+              await this.props.putCouter(0)
+              this.props.navigation.navigate('ContactUs')
+            }, 3000)
+      
+          }
+          else {
+            let cnt = this.props.Data.adsCounter
+            cnt++;
+            await this.props.putCouter(cnt)
+            this.props.navigation.navigate('ContactUs')
+          }
+      
+   
   }
 
 }

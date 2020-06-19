@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import { Services } from '../Configurations/Api/Connections';
 import NotEnoughDiamondPop from '../Components/Popups/NotEnoughDiamondPop';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
-import { puMaxCount, putcount, shoeAds,hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import BannerAds from './BannerAds';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
@@ -79,12 +79,12 @@ class GetFollower extends Component {
                     await this.props.setCoins(res.tiktok_follower.coin)
                     setTimeout(() => this.setState({ Visi1: true }), 500)
                 }
-                else{
+                else {
                     this.setState({ visible: false })
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         alert('Sorry! You can Request Only One At Time')
-                    },100)
-                    
+                    }, 100)
+
                 }
             })
         }
@@ -115,7 +115,7 @@ class GetFollower extends Component {
                 <FlatList
                     data={this.state.DataFromServer}
                     renderItem={({ item, index, ss }) =>
-                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0,  marginBottom: index == this.state.DataFromServer.length - 1 ? Platform.OS === "ios" ? hp(9) : hp(8) : hp(2)  }]}>
+                        <View style={[styles.VIW12, { marginTop: index == 0 ? hp(2) : 0, marginBottom: index == this.state.DataFromServer.length - 1 ? Platform.OS === "ios" ? hp(9) : hp(8) : hp(2) }]}>
                             <View style={styles.VIW13}>
                                 <View>
                                     <Text style={styles.TXT6}>{index + 1 + ". "}</Text>
@@ -166,12 +166,10 @@ class GetFollower extends Component {
             await this.props.showAds()
 
             setTimeout(async () => {
-              let adsResult = await InterStrialAds()
-              if (adsResult) {
+                let adsResult = await InterStrialAds()
                 this.props.hideAds()
                 await this.props.putCouter(0)
                 this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
-              }
             }, 3000)
 
         }
