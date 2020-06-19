@@ -23,7 +23,7 @@ export default class BannerAds extends Component {
                 height: "6%",
                 alignSelf: "center",
                 elevation: 3,
-                bottom: Platform.OS === "ios" ? heightPercentageToDP(0.1) : 0
+                bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
             }}>
                 {
                     this.state.adsLoading ?
