@@ -5,6 +5,7 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { Fonts } from "../Utils/fonts";
 
 
+
 export default class BannerAds extends Component {
     constructor(props) {
         super(props);
@@ -17,10 +18,8 @@ export default class BannerAds extends Component {
         return (
             <View style={{
                 position: "absolute",
-                backgroundColor: "transparent",
-                flex: 1,
+                backgroundColor: "transparent",               
                 width: "100%",
-                height: "6%",
                 alignSelf: "center",
                 elevation: 3,
                 bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
@@ -33,8 +32,10 @@ export default class BannerAds extends Component {
                             backgroundColor: "white",
                             borderColor: "#3C64B3",
                             borderRadius: heightPercentageToDP(1),
-                            flex: 1,
-                            justifyContent: "center"
+                            height: heightPercentageToDP(6),
+                            justifyContent: "center",
+                            // position:"absolute",
+                            // zIndex:100
                         }}>
                             <ActivityIndicator color={"#3C64B3"} />
                             <View style={{ justifyContent: "center" }}>
