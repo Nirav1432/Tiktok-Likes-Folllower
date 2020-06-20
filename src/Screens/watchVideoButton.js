@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator, Platform } from 'react-native';
 import styles from './styles/watchTimerStyles';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
 import Header from '../Components/Header';
@@ -19,6 +19,8 @@ import { Fonts } from '../Utils/fonts'
 let months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 let Interval = null;
+
+var id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
 
 class watchVideoButton extends Component {
     constructor(props) {
@@ -52,12 +54,12 @@ class watchVideoButton extends Component {
     getTime = () => {
         Services.setting({ user_id: this.props.Data.CommonData.userId }).then((res) => {
             if (res.setting.success == "true") {
-                if (res.setting.user_video == "true") { 
-                    let Time=res.setting.current_time                   
-                    let Min=parseInt(Time.substr(0, Time.indexOf(':')))
-                    let sec=parseInt(Time.substr(Time.indexOf(':') + 1, 2))
-                    let finaltime=Min+(sec/60)
-                    let timer=finaltime*60
+                if (res.setting.user_video == "true") {
+                    let Time = res.setting.current_time
+                    let Min = parseInt(Time.substr(0, Time.indexOf(':')))
+                    let sec = parseInt(Time.substr(Time.indexOf(':') + 1, 2))
+                    let finaltime = Min + (sec / 60)
+                    let timer = finaltime * 60
                     this.startTime(timer)
                     this.setState({ displayButton: true })
                 }
@@ -69,48 +71,60 @@ class watchVideoButton extends Component {
     }
 
     showAdd() {
+
         this.setState({ showloader: true })
-        InterstitialAdManager.showAd("979168055864310_979168595864256")
-            .then((didClick) => {
 
-                this.setState({ Preloader: true, showloader: false })
+        setTimeout(() => {
 
-                var date = new Date()
+            InterstitialAdManager.showAd(id)
+                .then((didClick) => {
 
-                let Month = date.getMonth()
-                let day = date.getDate().toString().length == 1 ? '0' + date.getDate() : date.getDate()
-                let Hour = date.getHours.toString().length == 1 ? '0' + date.getHours() : date.getHours()
-                var Minutes = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes()
-                let sec = date.getSeconds().toString().length == 1 ? '0' + date.getSeconds() : date.getSeconds()
+                    this.setState({ Preloader: true, showloader: false })
 
-                let Fulldate = date.getFullYear() + "-" + months[Month] + "-" + day + " " + Hour + ":" + Minutes + ":" + sec
+                    var date = new Date()
 
-                let data = {
-                    user_id: this.props.Data.CommonData.userId,
-                    full_name: this.props.Data.CommonData.nickName,
-                    time: Fulldate
-                }
+                    let Month = date.getMonth()
+                    let day = date.getDate().toString().length == 1 ? '0' + date.getDate() : date.getDate()
+                    let Hour = date.getHours.toString().length == 1 ? '0' + date.getHours() : date.getHours()
+                    var Minutes = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes()
+                    let sec = date.getSeconds().toString().length == 1 ? '0' + date.getSeconds() : date.getSeconds()
 
-                Services.userVideo(data).then(res => {
-                    if (res.success == "true") {
-                        this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
-                        this.props.setCoins(res.coin)                     
-                        let Time = res.time                  
-                        let Min=parseInt(Time.substr(0, Time.indexOf(':')))
-                        let sec=parseInt(Time.substr(Time.indexOf(':') + 1, 2))
-                        let finaltime=Min+(sec/60)
-                        let timer=finaltime*60
-                        this.startTime(timer)
-                        setTimeout(() => this.setState({ congo: true }), 500)
+                    let Fulldate = date.getFullYear() + "-" + months[Month] + "-" + day + " " + Hour + ":" + Minutes + ":" + sec
+
+                    let data = {
+                        user_id: this.props.Data.CommonData.userId,
+                        full_name: this.props.Data.CommonData.nickName,
+                        time: Fulldate
                     }
-                    else
-                        alert('Something went wrong !!')
+
+                    Services.userVideo(data).then(res => {
+                        if (res.success == "true") {
+                            this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
+                            this.props.setCoins(res.coin)
+                            let Time = res.time
+                            let Min = parseInt(Time.substr(0, Time.indexOf(':')))
+                            let sec = parseInt(Time.substr(Time.indexOf(':') + 1, 2))
+                            let finaltime = Min + (sec / 60)
+                            let timer = finaltime * 60
+                            this.startTime(timer)
+                            //setTimeout(() => this.setState({ congo: true }), 500)
+                            this.props.navigation.goBack()
+                        }
+                        else {
+                            this.setState({ showloader: false })
+                            setTimeout(() => {
+                                alert('Something went wrong !!')
+                            }, 200)
+                        }
+                    })
+
                 })
+                .catch(error => {
+                    this.setState({ showloader: false })
+                });
 
-            })
-            .catch(error => {
+        }, 3000)
 
-            });
     }
 
 
@@ -154,7 +168,7 @@ class watchVideoButton extends Component {
                             :
                             <TouchableOpacity style={styles.Timer2}
                                 onPress={() => this.showAdd()}
-                                // onPress={() => this.startTime(1 * 60)}
+                            // onPress={() => this.startTime(1 * 60)}
                             >
                                 <View style={styles.watchView2}>
                                     <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
@@ -169,9 +183,9 @@ class watchVideoButton extends Component {
             </View>
         );
     }
-    startTime = (timer) => {     
+    startTime = (timer) => {
 
-        this.setState({displayButton:true})
+        this.setState({ displayButton: true })
         Interval = setInterval(() => {
             let minutes = parseInt(timer / 60, 10);
             let seconds = parseInt(timer % 60, 10);
@@ -179,7 +193,7 @@ class watchVideoButton extends Component {
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            this.setState({ time: minutes + " : " + seconds })   
+            this.setState({ time: minutes + " : " + seconds })
 
             if (--timer < 0) {
                 clearInterval(Interval)

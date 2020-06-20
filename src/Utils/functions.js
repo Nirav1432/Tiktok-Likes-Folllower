@@ -1,4 +1,5 @@
 
+import { Platform } from 'react-native'
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 
 export function custom_number_format(labelValue) {
@@ -21,8 +22,9 @@ export function custom_number_format(labelValue) {
 export const InterStrialAds = async () => {
 
     let Success = false
+    let id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
 
-    await InterstitialAdManager.showAd("979168055864310_979168595864256")
+    await InterstitialAdManager.showAd(id)
         .then((didClick) => {
             Success = true
         })

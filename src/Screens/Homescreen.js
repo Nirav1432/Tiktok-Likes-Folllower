@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, TouchableOpacity, BackHandler, Platform } from 'react-native';
+import { View, Text, StatusBar, Image, TouchableOpacity, BackHandler, Platform, Alert } from 'react-native';
 import styles from './styles/HomeScreenStyles'
 import { Icons } from '../Utils/IconManager';
 import SplashScreen from 'react-native-splash-screen'
@@ -9,6 +9,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { connect } from 'react-redux';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import {setPrivacyUrl} from '../ReduxConfig/Actions/Login/LoginActions'
 import VersionUpdate from '../Components/Popups/VersionUpdatePop'
 import AsyncStorage from '@react-native-community/async-storage';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
@@ -23,28 +24,45 @@ class Homescreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      update: false
+      update: false,
+      BackClickCounter: 0
     };
   }
 
-  async UNSAFE_componentWillMount() {
+  async UNSAFE_componentWillMount() {   
     SplashScreen.hide()
     this.setAllData()
+    // BackHandler.addEventListener('hardwareBackPress', this.handleClick)
   }
 
-
+  // handleClick = () => {
+  //   this.props.navigation.goBack()
+  //   return true
+  // }
 
   setAllData = () => {
     AllData = this.props.Data.CommonData
     Services.setting({ user_id: AllData.userId }).then(async (res) => {
       OtherData = res.setting
+      this.props.setPrivacy(OtherData.privacy_policy)
       this.setState({})
+
+
+      // let x = await AsyncStorage.getItem('app_version')
+      // if (x != null) {
+      //   if (parseInt(x) < parseInt(OtherData.app_version))
+      //     this.setState({ update: true })
+      // }
+      // else
+      //   await AsyncStorage.setItem('app_version', OtherData.app_version)
 
 
       let x = await AsyncStorage.getItem('app_version')
       if (x != null) {
         if (parseInt(x) < parseInt(OtherData.app_version))
           this.setState({ update: true })
+        else
+          await AsyncStorage.setItem('app_version', OtherData.app_version)
       }
       else
         await AsyncStorage.setItem('app_version', OtherData.app_version)
@@ -53,6 +71,7 @@ class Homescreen extends Component {
       await this.props.setCoins()
       await this.props.setMaxAdsCounter()
     })
+
   }
 
   commonNavigator = async (Type) => {
@@ -213,6 +232,7 @@ const mapDispatchToProps = (dispatch) => {
     putCouter: (cnt) => dispatch(putcount(cnt)),
     showAds: () => dispatch(shoeAds()),
     hideAds: () => dispatch(hideAds()),
+    setPrivacy:(url) => dispatch(setPrivacyUrl(url)),
   };
 };
 

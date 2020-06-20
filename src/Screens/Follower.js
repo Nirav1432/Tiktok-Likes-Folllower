@@ -11,7 +11,7 @@ import NativeAdsView from '../Screens/NativeAdsScreen'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
-let ads = new NativeAdsManager(Platform.OS === "android" ? "979168055864310_981496822298100" : "579084412746231_580335949287744")
+let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
 
 class Follower extends Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class Follower extends Component {
         };
     }
 
-    render() {
+    render() {      
         return (
             <View style={styles.MAINVIW}>
                 <Header title={"Follower"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />

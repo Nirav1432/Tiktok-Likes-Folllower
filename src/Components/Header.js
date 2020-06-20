@@ -17,18 +17,18 @@ class Header extends Component {
 
 
     render() {
- 
-        return (         
-                
-            <>      
-            {
-                Platform.OS==="ios"?
-                <SafeAreaConsumer>
-                {insets => <View style={{ paddingTop: 10, backgroundColor: '#FE2C55' }} />}
-            </SafeAreaConsumer>
-                :
-                <></>
-            }        
+
+        return (
+
+            <>
+                {
+                    Platform.OS === "ios" ?
+                        <SafeAreaConsumer>
+                            {insets => <View style={{ paddingTop: 10, backgroundColor: '#FE2C55' }} />}
+                        </SafeAreaConsumer>
+                        :
+                        <></>
+                }
                 <View style={styles.VIW1} >
                     <View style={styles.VIW7}>
                         <TouchableOpacity onPress={() => this.props.backPress()} style={styles.INGBTN}>
@@ -47,8 +47,8 @@ class Header extends Component {
                             <Text style={styles.TXT4}>{custom_number_format(this.props.Data.coins)}</Text>
                         </View>
                     </View>
-                </View> 
-                </>          
+                </View>
+            </>
         );
     }
 }

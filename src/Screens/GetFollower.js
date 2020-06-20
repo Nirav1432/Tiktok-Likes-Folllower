@@ -161,24 +161,26 @@ class GetFollower extends Component {
         //     this.props.putCouter(cnt)
         //     this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
         // }
-        if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
 
-            await this.props.showAds()
+        //     await this.props.showAds()
 
-            setTimeout(async () => {
-                let adsResult = await InterStrialAds()
-                this.props.hideAds()
-                await this.props.putCouter(0)
-                this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
-            }, 3000)
+        //     setTimeout(async () => {
+        //         let adsResult = await InterStrialAds()
+        //         this.props.hideAds()
+        //         await this.props.putCouter(0)
+        //         this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
+        //     }, 3000)
 
-        }
-        else {
-            let cnt = this.props.Data.adsCounter
-            cnt++;
-            this.props.putCouter(cnt)
-            this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
-        }
+        // }
+        // else {
+        //     let cnt = this.props.Data.adsCounter
+        //     cnt++;
+        //     this.props.putCouter(cnt)
+        //     this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
+        // }
+        this.setState({ Visi: true, ClickedDiamond: item.coin, RequestFollowers: item.request })
+
     }
 }
 

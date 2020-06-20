@@ -2,7 +2,7 @@ export const PUT_LOGIN = 'PUT_LOGIN';
 export const SET_DIAMONDS = 'SET_DIAMONDS';
 export const FIRST_TIME_CHECK = 'FIRST_TIME_CHECK';
 export const SET_FIRST_TIME = 'SET_FIRST_TIME';
-
+export const SET_PRIVACY="SET_PRIVACY"
 
 
 export const putLogin = (dataFromServer) => {
@@ -28,6 +28,13 @@ export const isFirstTime = () => {
 export const setFirstTime = () => {
     return {
         type: SET_FIRST_TIME,
+    }
+}
+
+export const setPrivacyUrl = (url) => {
+    return {
+        type: SET_PRIVACY,
+        data:url
     }
 }
 

@@ -11,7 +11,7 @@ import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 
 
-let ads = new NativeAdsManager("979168055864310_981496822298100")
+let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
 
 
 const AndroidRate = {

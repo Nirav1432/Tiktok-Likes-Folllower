@@ -19,7 +19,7 @@ import { custom_number_format, InterStrialAds } from '../Utils/functions'
 import { withNavigation } from 'react-navigation';
 
 
-let ads = new NativeAdsManager("979168055864310_981496822298100")
+let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
 
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 

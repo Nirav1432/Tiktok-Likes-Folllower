@@ -57,7 +57,7 @@ class PurchaseCoinsScreen extends Component {
       // description: 'For Test a Rezorpay',
       image: 'https://i.ibb.co/KrWLWqq/App.png',
       currency: Type,
-      key: "rzp_test_0gruu49Oyj2Fga",
+      key: "rzp_live_ylfeSem843VdYS",
       amount: FinalAmount.toString(),
       name: 'Sahajanand Infotech',
       theme: { color: '#FE2C55' }

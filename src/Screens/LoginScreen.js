@@ -141,7 +141,7 @@ class LoginScreen extends Component {
   }
 
 
-  GetOfficialDetails() {   
+  GetOfficialDetails() {
     let checkURl = /^(?!\s*$).+/
     let url = this.state.TiktokUrl
     if (checkURl.test(url.trim())) {
@@ -180,7 +180,7 @@ class LoginScreen extends Component {
       this.CheckLogin(FinalData)
     }
     else {
-      this.setState({ visible: false })
+      this.setState({ visible: false })    
       alert('Invalid Url ! Please Enter Tiktok Profile Url')
 
     }

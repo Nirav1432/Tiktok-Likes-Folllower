@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
 
-let ads = new NativeAdsManager("979168055864310_981496822298100")
+let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
 
 class Likes extends Component {
     constructor(props) {
@@ -54,10 +54,10 @@ class Likes extends Component {
             await this.props.showAds()
 
             setTimeout(async () => {
-              let adsResult = await InterStrialAds()    
+                let adsResult = await InterStrialAds()
                 this.props.hideAds()
                 await this.props.putCouter(0)
-                this.props.navigation.navigate(Type)              
+                this.props.navigation.navigate(Type)
             }, 3000)
 
         }

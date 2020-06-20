@@ -18,7 +18,7 @@ export default class BannerAds extends Component {
         return (
             <View style={{
                 position: "absolute",
-                backgroundColor: "transparent",               
+                backgroundColor: "transparent",
                 width: "100%",
                 alignSelf: "center",
                 elevation: 3,
@@ -47,7 +47,7 @@ export default class BannerAds extends Component {
                 }
                 <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
                     <BannerView
-                        placementId="579084412746231_584184372236235"
+                        placementId={Platform.OS === "android" ? "648220305731523_650444302175790" : "189826512317751_191671965466539"}
                         type="standard"
                         onPress={() => console.log('click')}
                         onLoad={() => this.setState({ adsLoading: false })}

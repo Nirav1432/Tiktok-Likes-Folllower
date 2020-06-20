@@ -146,9 +146,9 @@ class Index extends Component {
             crashlytics().setUserName("Nirav Bhesaniya"),
             crashlytics().setUserEmail("Art.nn@gmail.cim"),
         ]).then((res) => {
-            console.log(res)
+            
         }).catch(err => {
-            console.log(err)
+            
         })
 
         //  crashlytics().crash()
@@ -166,8 +166,7 @@ class Index extends Component {
             this.props.setFirstTimeTrue()
             this.setState({ showSlider: true })
         }
-        else {
-            await AsyncStorage.setItem('Fistime', "true")
+        else {           
             this.props.setFirstTimeFalse()
             this.setState({ showSlider: false, })
         }
@@ -176,9 +175,9 @@ class Index extends Component {
 
     }
 
-    render() {
+    render() {        
         return (
-            this.state.showSlider ?
+            this.props.Data.isFirstime ?
                 <View style={{ flex: 1, backgroundColor: "#FE2C55" }}>
                     <StatusBar backgroundColor="#FE2C55" />
                     <AppIntroSlider
@@ -189,32 +188,24 @@ class Index extends Component {
                 </View>
                 :
                 <View style={{ flex: 1 }}>
-                    <CommonLoader visible={this.props.Data.showAds}/>
-                    {/* {
-                        this.props.Data.showAds ?
-                            <AdsScreen
-                                closeAdd={() => this.props.hideAds()}
-                            />
-                            :
-                            <></>
-                    } */}
+                    <CommonLoader visible={this.props.Data.showAds}/>                  
                     <All />
                 </View>
 
         );
     }
+
+
     _renderItem = ({ item }) => {
         return (
             <Image source={item.image} style={{ height: "100%", width: "100%" }} resizeMode="contain" />
         );
     }
+
+
     _onDone = async () => {
         await AsyncStorage.setItem('Fistime', "false")
-        this.setState({ showSlider: false });
-    }
-
-    AddsManagement = (event) => {
-        console.log(event)
+        this.props.setFirstTimeFalse()
     }
 
 }
