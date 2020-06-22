@@ -100,7 +100,6 @@ class Homescreen extends Component {
   }
 
   render() {
-    console.log(this.props.Data.adsCounter)
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />

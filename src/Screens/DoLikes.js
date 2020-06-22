@@ -228,8 +228,8 @@ class DoLikes extends Component {
 
         this.setState({ checkNewLikes: false, goForDoLike: false })
 
-        console.log('Old Likes -->', oldlikes)
-        console.log('New Likes -->', newlikes)
+        // console.log('Old Likes -->', oldlikes)
+        // console.log('New Likes -->', newlikes)
 
 
         if (newlikes > oldlikes) {

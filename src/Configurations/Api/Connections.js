@@ -59,15 +59,15 @@ export const Services = {
 
 
 //Logs
-api.interceptors.request.use(
-  request => {
-    console.log(request.url, "----- request ----->", request.data)
-    return request
-  },
-)
-api.interceptors.response.use(
-  response => {
-    console.log(response.config.url, "+++++ response +++++>", response.data);
-    return response
-  },
-)
+// api.interceptors.request.use(
+//   request => {
+//     console.log(request.url, "----- request ----->", request.data)
+//     return request
+//   },
+// )
+// api.interceptors.response.use(
+//   response => {
+//     console.log(response.config.url, "+++++ response +++++>", response.data);
+//     return response
+//   },
+// )

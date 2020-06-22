@@ -151,9 +151,7 @@ class Index extends Component {
             
         })
 
-        //  crashlytics().crash()
-
-        
+        //  crashlytics().crash()       
 
         messaging().subscribeToTopic('weather').then((log) => {
         })

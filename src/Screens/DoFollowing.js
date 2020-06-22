@@ -233,8 +233,8 @@ class DoFollowing extends Component {
 
     this.setState({ checkNewLikes: false, goForDoLike: false })
 
-    console.log('Old Followers -->', oldlikes)
-    console.log('New Followers -->', newlikes)
+    // console.log('Old Followers -->', oldlikes)
+    // console.log('New Followers -->', newlikes)
 
 
     if (newlikes > oldlikes) {

@@ -221,8 +221,7 @@ class CommonScreen extends Component {
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: 1, comment_coin: 1, video_thumb: finalthumb }
 
-                Services.RequestComment(data).then(async (res) => {
-                    console.log(res.tiktok_comment.success)
+                Services.RequestComment(data).then(async (res) => {                  
                     if (res.tiktok_comment.success == "true") {
                         await this.props.setCoins(res.tiktok_comment.coin)
                         await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
@@ -243,8 +242,7 @@ class CommonScreen extends Component {
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: IncData.Request, share_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: 1, share_coin: 1, video_thumb: finalthumb }
 
-                Services.RequestShare(data).then(async (res) => {
-                    console.log(res)
+                Services.RequestShare(data).then(async (res) => {                  
                     if (res.tiktok_share.success == "true") {
                         await this.props.setCoins(res.tiktok_share.coin)
                         await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })

@@ -91,8 +91,8 @@ class DoShare extends Component {
         let thumbinfo = dt["/v/:id"]
         newlikes = await thumbinfo.videoData.itemInfos.shareCount
         await this.setState({ checkNewLikes: false })
-        console.log('Old Shares -->', oldlikes)
-        console.log('New Shares -->', newlikes)
+        // console.log('Old Shares -->', oldlikes)
+        // console.log('New Shares -->', newlikes)
         if (newlikes > oldlikes) {
             let data = { user_id: id, request_user: this.state.request_user_id, video_link: this.state.VideoUrl }
             Services.Doshare(data).then(async (res) => {

@@ -45,13 +45,13 @@ class ShareAndRate extends Component {
             url:Platform.OS==="ios"?"https://apps.apple.com/in/app/lego-duplo-world/id1458749093": "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
         }
         Share.open(options)
-            .then((res) => { console.log(res) })
-            .catch((err) => { err && console.log(err); });
+            .then((res) => { })
+            .catch((err) => {  });
     }
 
     rateMyapp = () => {
         Rate.rate(AndroidRate, success => {
-            console.log(success)
+          
         })
     }
 

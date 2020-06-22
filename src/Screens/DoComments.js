@@ -129,7 +129,7 @@ class DoComments extends Component {
                 seconds--;
             }
             else {
-                console.log("You Watched the Video");
+               
             }
         }
     }

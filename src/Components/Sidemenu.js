@@ -42,7 +42,6 @@ class Sidemenu extends Component {
 
     rateMyapp = () => {
         Rate.rate(AndroidRate, success => {
-            console.log(success)
         })
     }
 
