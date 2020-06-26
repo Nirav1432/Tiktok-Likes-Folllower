@@ -18,6 +18,7 @@ import { custom_number_format, InterStrialAds } from '../Utils/functions'
 const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
 
 const AndroidRate = {
+    AppleAppID:"1520155141",
     GooglePackageName: "com.harekrishna.tikbooster",
     preferredAndroidMarket: AndroidMarket.Google,
     preferInApp: false,

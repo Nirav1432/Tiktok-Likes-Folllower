@@ -42,7 +42,7 @@ class ShareAndRate extends Component {
 
     shareMyapp = () => {
         let options = {
-            url:Platform.OS==="ios"?"https://apps.apple.com/in/app/lego-duplo-world/id1458749093": "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
+            url:Platform.OS==="ios"?"https://apps.apple.com/us/app/id1520155141": "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
         }
         Share.open(options)
             .then((res) => { })

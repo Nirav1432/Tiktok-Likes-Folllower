@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import AppNavigator from './src/root/index'
 import { Provider } from 'react-redux';
 import { store } from './src/ReduxConfig/Store/Store'
-import ExitOnDoubleBack from 'exit-on-double-back';
+
 
 export default class App extends Component {
   constructor(props) {
