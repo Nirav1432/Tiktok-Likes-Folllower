@@ -8,6 +8,7 @@ import Preloader from '../Components/Preloader';
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
+import { cos } from 'react-native-reanimated';
 
 
 
@@ -23,17 +24,11 @@ class ContactUsList extends Component {
   UNSAFE_componentWillMount() {
     userid = this.props.Data.CommonData.userId
     this.getMessageList(userid)
-    // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-    //   setTimeout(async () => {
-    //     await this.props.showAds()
-    //     await this.props.putCouter(0)
-    //   }, 700)
-    // }
   }
 
   getMessageList(id) {
     let data = { user_id: id }
-    Services.Coversations(data).then((res) => {
+    Services.Coversations(data).then((res) => {     
       if (res.success)
         this.setState({ list: res.data.reverse(), visible: false })
       else {
@@ -64,7 +59,7 @@ class ContactUsList extends Component {
                     <View style={styles.adminView}>
                       <View style={styles.messageViewAdmin}>
                         <Text style={styles.TXTAdmin}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
-                        <Text style={styles.messageTXT}>{data.item.message}</Text>
+                        <Text style={styles.messageTXT}>{data.item.message_replied}</Text>
                       </View>
                     </View>
                 }

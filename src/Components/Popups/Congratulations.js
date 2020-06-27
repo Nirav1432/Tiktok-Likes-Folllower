@@ -14,12 +14,15 @@ class Congratulations extends Component {
 
     ClosePop(){
         this.props.ClosePop()
-        if(this.props.navigation.state.routeName!="DoFollowing")
+        if(this.props.navigation.state.routeName!="DoFollowing" &&
+        this.props.navigation.state.routeName!="DoComments"&&
+        this.props.navigation.state.routeName!="DoLikes"&&
+        this.props.navigation.state.routeName!="DoShare"
+        )
         this.props.navigation.navigate('ShareAndRate')
     }
 
     render() {
-        console.log(this.props)
         return (
             <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
 

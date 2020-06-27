@@ -6,7 +6,7 @@ import Preloader from '../Components/Preloader';
 import { Services } from '../Configurations/Api/Connections'
 import { connect } from 'react-redux'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
-import { puMaxCount, putcount, shoeAds,hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
@@ -19,14 +19,9 @@ class ContactUs extends Component {
             visible: false, Message: "", err: false
         };
     }
+
     UNSAFE_componentWillMount() {
         userid = this.props.Data.CommonData.userId
-        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-        //     setTimeout(async () => {
-        //         await this.props.showAds()
-        //         await this.props.putCouter(0)
-        //     }, 700)
-        // }
     }
 
     render() {
@@ -37,7 +32,7 @@ class ContactUs extends Component {
                 <View style={styles.VIW1}>
                     <Text style={styles.TXT1}>if you have any more questions or{"\n"}Concerns, please Contact to us</Text>
                 </View>
-                <TextInput style={[styles.TXTINPUT, { borderColor: "red", borderWidth: this.state.err ? 2 : 0 }]} multiline={true} placeholder="Your Message" onChangeText={(m) => this.CheckMessage(m)} />
+                <TextInput ref={x => this.tx = x} style={[styles.TXTINPUT, { borderColor: "red", borderWidth: this.state.err ? 2 : 0 }]} multiline={true} placeholder="Your Message" onChangeText={(m) => this.CheckMessage(m)} />
                 <View style={{ flexDirection: "row", alignSelf: "center", alignItems: "center", marginTop: heightPercentageToDP(2) }}>
                     <TouchableOpacity style={styles.SubmitBotton} onPress={() => this.sendContact()}>
                         <Text style={styles.TXT2}>Submit</Text>
@@ -71,7 +66,8 @@ class ContactUs extends Component {
             let Data = { user_id: userid, message: this.state.Message }
             Services.AddContactUS(Data).then((res) => {
                 if (res.success) {
-                    this.setState({ visible: false })
+                    this.setState({ visible: false, Message: "" })
+                    this.tx.clear()
                     this.props.navigation.navigate('ContactUsList')
                 }
             })
@@ -83,25 +79,27 @@ class ContactUs extends Component {
     }
 
     commonNavigator = async (Type) => {
+        this.tx.clear()
+        this.setState({Message:""})
         if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
 
             await this.props.showAds()
-      
+
             setTimeout(async () => {
-              let adsResult = await InterStrialAds()
-              this.props.hideAds()
-              await this.props.putCouter(0)
-              this.props.navigation.navigate('ContactUsList')
+                let adsResult = await InterStrialAds()
+                this.props.hideAds()
+                await this.props.putCouter(0)
+                this.props.navigation.navigate('ContactUsList')
             }, 3000)
-      
-          }
-          else {
+
+        }
+        else {
             let cnt = this.props.Data.adsCounter
             cnt++;
             await this.props.putCouter(cnt)
             this.props.navigation.navigate('ContactUsList')
-          }
-      
+        }
+
     }
 
 }

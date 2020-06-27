@@ -14,7 +14,7 @@ import VersionUpdate from '../Components/Popups/VersionUpdatePop'
 import AsyncStorage from '@react-native-community/async-storage';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 import Preloader from '../Components/Preloader';
-
+import DeviceInfo from 'react-native-device-info';
 
 
 let AllData = null
@@ -47,20 +47,12 @@ class Homescreen extends Component {
 
         this.setState({})
 
-        let x = await AsyncStorage.getItem('app_version')
+        // let x = await AsyncStorage.getItem('app_version')
 
-        if (x != null) {
+        let x = await DeviceInfo.getVersion()
 
-          if (parseInt(x) < parseInt(OtherData.app_version))
-
-            this.setState({ update: true })
-          else
-
-            await AsyncStorage.setItem('app_version', OtherData.app_version)
-        }
-
-        else
-          await AsyncStorage.setItem('app_version', OtherData.app_version)
+        if (parseInt(x) < parseInt(OtherData.app_version))
+        this.setState({ update: true })
 
         await this.props.setCoins()
         await this.props.setMaxAdsCounter()

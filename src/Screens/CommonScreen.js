@@ -194,9 +194,8 @@ class CommonScreen extends Component {
             let Cutted = TempthumbNail.substr(35)
             let Trail = Cutted.substr(0, Cutted.indexOf('?'))
             let TEmpMakeThumb = "https://p16-va-tiktok.ibyteimg.com/"
-            let XFinal = TEmpMakeThumb + Trail
+            let XFinal = TEmpMakeThumb + Trail.replace('img.com/',"")
             let finalthumb = XFinal == null ? "" : XFinal == undefined ? "" : XFinal
-
             if (this.props.navigation.getParam('type') == "Get Likes") {
 
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_like: IncData.Request, like_coin: IncData.Diamonds, video_thumb: finalthumb }
@@ -308,7 +307,7 @@ class CommonScreen extends Component {
                 this.props.hideAds()
                 await this.props.putCouter(0)
                 let url = await Clipboard.getString()
-                this.setState({ VideoUrl: url })
+                await this.setState({ VideoUrl: url })
             }, 3000)
 
         }
