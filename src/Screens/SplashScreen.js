@@ -3,16 +3,18 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { connect, useDispatch } from 'react-redux';
 import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
 import Preloader from '../Components/Preloader';
+import SP from 'react-native-splash-screen'
 var DT = null
 class SplashScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible:true
+            // visible: true
         };
     }
 
     async UNSAFE_componentWillMount() {
+
         DT = await AsyncStorage.getItem("UserNaData")
         if (DT == null) {
             this.props.navigation.navigate("Login")
@@ -23,9 +25,13 @@ class SplashScreen extends Component {
         }
     }
 
+    componentWillUnmount(){
+        SP.hide()
+    }
+
     render() {
         return (
-            <Preloader isLoader={this.state.visible}/>
+            <Preloader isLoader={this.state.visible} />
         );
     }
 }

@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
     VIW4: { justifyContent: "center", alignItems: "center", flexDirection: "row" },
     VIW5: { justifyContent: "center", alignItems: "center", marginVertical: hp(3) },
     VIW6: { justifyContent: "center", alignItems: "center" },
-    TXT1: { fontSize: hp(3.28), fontFamily: Fonts.LatoBold, color: "black" },
-    TXT2: { fontSize: hp(3.28), fontFamily:Fonts.LatoBold, color: "#FE2C55" },
+    TXT1: { fontSize: hp(3), fontFamily: Fonts.LatoBold, color: "black" },
+    TXT2: { fontSize: hp(3), fontFamily:Fonts.LatoBold, color: "#FE2C55" },
     TXTINPUT: { paddingVertical: 0, height: hp(8), width: wp(83), backgroundColor: "white", borderRadius: hp(100), elevation: 10, paddingHorizontal: hp(4), fontFamily: Fonts.LatoBold, fontSize: hp(2.3), color: "#7C7A7A", },
     SRCH: { height: hp(7), width: wp(56), borderRadius: hp(100), backgroundColor: "#FE2C55", justifyContent: "center", alignItems: "center", elevation: 5 },
-    TXT3: { fontSize: hp(2.5), fontFamily: Fonts.LatoBold, color: "#E9ECF2" },
+    TXT3: { fontSize: hp(2.3), fontFamily: Fonts.LatoBold, color: "#E9ECF2" },
 })
 export default styles

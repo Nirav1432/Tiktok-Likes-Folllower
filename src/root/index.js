@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StatusBar, TouchableHighlight } from 'react-native'
+import { View, Image, Text, StatusBar, TouchableHighlight, } from 'react-native'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -18,7 +18,6 @@ import GetComments from '../Screens/GetComments';
 import Share from '../Screens/Share';
 import GetShare from '../Screens/GetShare';
 import ContactUs from '../Screens/ContactUs';
-import OnetimeLogin from '../Screens/OnetimeLogin';
 import EarnScreen from '../Screens/EarnScreen';
 import ContactUsList from '../Screens/ContactUsList';
 import PurchaseCoinsScreen from '../Screens/PurchaseCoinsScreen';
@@ -37,7 +36,6 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import SP from 'react-native-splash-screen'
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux'
-import AdsScreen from '../Screens/AdsScreen';
 import { hideAds } from '../ReduxConfig/Actions/AddCount/AddCount'
 import PrivacyAndPolicy from '../Screens/PrivacyAndPolicy';
 import messaging from '@react-native-firebase/messaging';
@@ -105,6 +103,9 @@ const AllInDrawer = createStackNavigator(
         ShareList: { screen: ShareList, navigationOptions: { headerShown: false } },
         CommonScreen: { screen: CommonScreen, navigationOptions: { headerShown: false } },
         PrivacyAndPolicy: { screen: PrivacyAndPolicy, navigationOptions: { headerShown: false } }
+    },
+    {
+        initialRouteName: "Home"
     }
 )
 
@@ -120,9 +121,8 @@ const DrawerScreens = createDrawerNavigator({
 
 const SwitchedScreens = createSwitchNavigator({
     SplashScreen: { screen: SplashScreen },
-    OnetimeLogin: { screen: OnetimeLogin },
-    Login: LoginScreen,
-    Sidemenu: DrawerScreens
+    Login: { screen: LoginScreen },
+    Sidemenu: { screen: DrawerScreens }
 }, {
     initialRouteName: "SplashScreen"
 })
@@ -146,9 +146,9 @@ class Index extends Component {
             crashlytics().setUserName("Nirav Bhesaniya"),
             crashlytics().setUserEmail("Art.nn@gmail.cim"),
         ]).then((res) => {
-            
+
         }).catch(err => {
-            
+
         })
 
         //  crashlytics().crash()       
@@ -164,16 +164,14 @@ class Index extends Component {
             this.props.setFirstTimeTrue()
             this.setState({ showSlider: true })
         }
-        else {           
+        else {
             this.props.setFirstTimeFalse()
             this.setState({ showSlider: false, })
         }
-        
-        SP.hide()
 
     }
 
-    render() {        
+    render() {
         return (
             this.props.Data.isFirstime ?
                 <View style={{ flex: 1, backgroundColor: "#FE2C55" }}>
@@ -186,7 +184,7 @@ class Index extends Component {
                 </View>
                 :
                 <View style={{ flex: 1 }}>
-                    <CommonLoader visible={this.props.Data.showAds}/>                  
+                    <CommonLoader visible={this.props.Data.showAds} />
                     <All />
                 </View>
 

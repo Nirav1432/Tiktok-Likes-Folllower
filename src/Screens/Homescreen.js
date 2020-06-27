@@ -9,10 +9,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { connect } from 'react-redux';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
-import {setPrivacyUrl} from '../ReduxConfig/Actions/Login/LoginActions'
+import { setPrivacyUrl } from '../ReduxConfig/Actions/Login/LoginActions'
 import VersionUpdate from '../Components/Popups/VersionUpdatePop'
 import AsyncStorage from '@react-native-community/async-storage';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import Preloader from '../Components/Preloader';
 
 
 
@@ -25,52 +26,48 @@ class Homescreen extends Component {
     super(props);
     this.state = {
       update: false,
-      BackClickCounter: 0
+      BackClickCounter: 0, visible: true
     };
   }
 
-  async UNSAFE_componentWillMount() {   
-    SplashScreen.hide()
+  async UNSAFE_componentWillMount() {
     this.setAllData()
-    // BackHandler.addEventListener('hardwareBackPress', this.handleClick)
   }
 
-  // handleClick = () => {
-  //   this.props.navigation.goBack()
-  //   return true
-  // }
+  setAllData = async () => {
 
-  setAllData = () => {
     AllData = this.props.Data.CommonData
-    Services.setting({ user_id: AllData.userId }).then(async (res) => {
-      OtherData = res.setting
-      this.props.setPrivacy(OtherData.privacy_policy)
-      this.setState({})
 
+    await Services.setting({ user_id: AllData.userId })
+      .then(async (res) => {
 
-      // let x = await AsyncStorage.getItem('app_version')
-      // if (x != null) {
-      //   if (parseInt(x) < parseInt(OtherData.app_version))
-      //     this.setState({ update: true })
-      // }
-      // else
-      //   await AsyncStorage.setItem('app_version', OtherData.app_version)
+        OtherData = res.setting
 
+        this.props.setPrivacy(OtherData.privacy_policy)
 
-      let x = await AsyncStorage.getItem('app_version')
-      if (x != null) {
-        if (parseInt(x) < parseInt(OtherData.app_version))
-          this.setState({ update: true })
+        this.setState({})
+
+        let x = await AsyncStorage.getItem('app_version')
+
+        if (x != null) {
+
+          if (parseInt(x) < parseInt(OtherData.app_version))
+
+            this.setState({ update: true })
+          else
+
+            await AsyncStorage.setItem('app_version', OtherData.app_version)
+        }
+
         else
           await AsyncStorage.setItem('app_version', OtherData.app_version)
-      }
-      else
-        await AsyncStorage.setItem('app_version', OtherData.app_version)
 
+        await this.props.setCoins()
+        await this.props.setMaxAdsCounter()
 
-      await this.props.setCoins()
-      await this.props.setMaxAdsCounter()
-    })
+      })
+
+    this.setState({ visible: false })
 
   }
 
@@ -103,6 +100,8 @@ class Homescreen extends Component {
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />
+
+        <Preloader isLoader={this.state.visible} />
 
         <VersionUpdate
           visible={this.state.update}
@@ -231,7 +230,7 @@ const mapDispatchToProps = (dispatch) => {
     putCouter: (cnt) => dispatch(putcount(cnt)),
     showAds: () => dispatch(shoeAds()),
     hideAds: () => dispatch(hideAds()),
-    setPrivacy:(url) => dispatch(setPrivacyUrl(url)),
+    setPrivacy: (url) => dispatch(setPrivacyUrl(url)),
   };
 };
 

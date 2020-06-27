@@ -10,16 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
 import { putLogin } from '../ReduxConfig/Actions/Login/LoginActions'
-
-// const WWW_INJECTED_JAVASCRIPT =
-//   `setTimeout(() =>{window.ReactNativeWebView.postMessage(
-//     document.getElementById("__NEXT_DATA__").innerHTML  
-//    )},1000)`;
-
-// const VM_INJECTED_JAVASCRIPT =
-//   `setTimeout(() =>{window.ReactNativeWebView.postMessage(
-//     JSON.stringify(__INIT_PROPS__)  
-//  )},1000)`;
+import { cos } from 'react-native-reanimated';
 
 const WWW_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(document.getElementById("__NEXT_DATA__").innerHTML)'
 
@@ -43,7 +34,6 @@ class LoginScreen extends Component {
 
   async componentDidMount() {
 
-    SplashScreen.hide()
     Keyboard.addListener("keyboardDidHide", () => this.KeyboardDissmissed())
     Keyboard.addListener("keyboardDidShow", () => this.KeyboardShown())
 
@@ -130,6 +120,7 @@ class LoginScreen extends Component {
 
 
   fillBox(URL) {
+    clearInterval(myInterval)
     this.setState({ TiktokUrl: URL })
     let checkURl = /^(?!\s*$).+/
     if (checkURl.test(URL)) {
@@ -180,7 +171,7 @@ class LoginScreen extends Component {
       this.CheckLogin(FinalData)
     }
     else {
-      this.setState({ visible: false })    
+      this.setState({ visible: false })
       alert('Invalid Url ! Please Enter Tiktok Profile Url')
 
     }
@@ -201,12 +192,13 @@ class LoginScreen extends Component {
       device: Platform.OS === "android" ? "android" : "ios"
     }
 
-    Services.login(param).then(async (res) => {
+    Services.login(param).then(async (res) => {     
       if (res.user.success == "true") {
         FinalData["Tiktok"] = this.state.TiktokUrl
         FinalData["Type"] = this.state.type
         await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
         await this.props.setGlobalData()
+        await this.setState({ visible: false })
         this.props.navigation.navigate("Sidemenu")
       }
       else {
@@ -214,6 +206,9 @@ class LoginScreen extends Component {
         alert("Error!")
       }
     })
+
+   this.setState({ visible: false, fetchInfo:false })
+
   }
 
 

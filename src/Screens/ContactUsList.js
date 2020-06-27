@@ -15,7 +15,7 @@ class ContactUsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible: true,
       list: []
     };
   }
@@ -34,7 +34,11 @@ class ContactUsList extends Component {
   getMessageList(id) {
     let data = { user_id: id }
     Services.Coversations(data).then((res) => {
-      this.setState({ list: res.data.reverse() })
+      if (res.success)
+        this.setState({ list: res.data.reverse(), visible: false })
+      else {
+        this.setState({ visible: false, list: [] })
+      }
     })
   }
 
@@ -81,26 +85,26 @@ class ContactUsList extends Component {
     );
   }
   commonNavigator = async (Type) => {
-     if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
+    if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
 
-            await this.props.showAds()
-      
-            setTimeout(async () => {
-              let adsResult = await InterStrialAds()
-              this.props.hideAds()
-              await this.props.putCouter(0)
-              this.props.navigation.navigate('ContactUs')
-            }, 3000)
-      
-          }
-          else {
-            let cnt = this.props.Data.adsCounter
-            cnt++;
-            await this.props.putCouter(cnt)
-            this.props.navigation.navigate('ContactUs')
-          }
-      
-   
+      await this.props.showAds()
+
+      setTimeout(async () => {
+        let adsResult = await InterStrialAds()
+        this.props.hideAds()
+        await this.props.putCouter(0)
+        this.props.navigation.navigate('ContactUs')
+      }, 3000)
+
+    }
+    else {
+      let cnt = this.props.Data.adsCounter
+      cnt++;
+      await this.props.putCouter(cnt)
+      this.props.navigation.navigate('ContactUs')
+    }
+
+
   }
 
 }

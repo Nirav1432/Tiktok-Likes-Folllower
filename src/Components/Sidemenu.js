@@ -129,7 +129,7 @@ class Sidemenu extends Component {
 
     async onLogoutPress() {
         await AsyncStorage.removeItem("UserNaData")
-        await AsyncStorage.removeItem('Fistime')
+        // await AsyncStorage.removeItem('Fistime')
         await AsyncStorage.removeItem('app_version')
         this.props.navigation.navigate("Login")
     }
