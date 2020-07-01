@@ -1,4 +1,4 @@
-import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK,SET_FIRST_TIME, SET_PRIVACY } from '../Actions/Login/LoginActions'
+import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK,SET_FIRST_TIME, SET_PRIVACY ,SET_NATIVE_OBJ} from '../Actions/Login/LoginActions'
 import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS,HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
@@ -7,7 +7,8 @@ const initialState = {
   maxAdsCounter: 0,
   showAds: false,
   isFirstime:false,
-  privacy:""
+  privacy:"",
+  NativeADSObj:null
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -85,6 +86,12 @@ const LoginReducer = (state = initialState, action) => {
       })
     }
 
+    case SET_NATIVE_OBJ:{
+      return Object.assign({}, state, {
+        NativeADSObj: action.data
+      })
+    }
+    break;
 
     default: {
       return state;

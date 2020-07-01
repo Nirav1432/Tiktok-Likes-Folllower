@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, StatusBar, TouchableHighlight, } from 'react-native'
+import { View, Image, Text, StatusBar, TouchableHighlight, Platform } from 'react-native'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -39,9 +39,12 @@ import { connect } from 'react-redux'
 import { hideAds } from '../ReduxConfig/Actions/AddCount/AddCount'
 import PrivacyAndPolicy from '../Screens/PrivacyAndPolicy';
 import messaging from '@react-native-firebase/messaging';
-import { isFirstTime, setFirstTime } from '../ReduxConfig/Actions/Login/LoginActions'
+import { isFirstTime, setFirstTime, putNativeAdsObject } from '../ReduxConfig/Actions/Login/LoginActions'
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonLoader from '../Components/CommonLoader';
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+
+let ads = null
 
 const slides = [
     {
@@ -139,6 +142,11 @@ class Index extends Component {
 
     async componentDidMount() {
 
+        id="979168055864310_981496822298100"
+        // id = Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374"
+        ads = await new NativeAdsManager(id)
+        await this.props.setNativeAdsObject(ads)
+
         await crashlytics().log('XXX')
 
         await Promise.all([
@@ -217,7 +225,8 @@ const mapDispatchToProps = (dispatch) => {
         setCoins: (coins) => dispatch(setDiamonds(coins)),
         hideAds: () => dispatch(hideAds()),
         setFirstTimeFalse: () => dispatch(setFirstTime()),
-        setFirstTimeTrue: () => dispatch(isFirstTime())
+        setFirstTimeTrue: () => dispatch(isFirstTime()),
+        setNativeAdsObject: (obj) => dispatch(putNativeAdsObject(obj))
     };
 };
 

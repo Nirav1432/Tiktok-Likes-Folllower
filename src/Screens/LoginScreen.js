@@ -178,7 +178,7 @@ class LoginScreen extends Component {
   }
 
 
-  CheckLogin(data) {
+  async CheckLogin(data) {
 
     FinalData = data
 
@@ -192,13 +192,13 @@ class LoginScreen extends Component {
       device: Platform.OS === "android" ? "android" : "ios"
     }
 
-    Services.login(param).then(async (res) => {     
+    await Services.login(param).then(async (res) => {
       if (res.user.success == "true") {
         FinalData["Tiktok"] = this.state.TiktokUrl
         FinalData["Type"] = this.state.type
         await AsyncStorage.setItem("UserNaData", JSON.stringify(FinalData))
         await this.props.setGlobalData()
-        await this.setState({ visible: false })
+        await this.setState({ visible: false, fetchInfo: false })
         this.props.navigation.navigate("Sidemenu")
       }
       else {
@@ -207,7 +207,7 @@ class LoginScreen extends Component {
       }
     })
 
-   this.setState({ visible: false, fetchInfo:false })
+    this.setState({ visible: false, fetchInfo: false })
 
   }
 

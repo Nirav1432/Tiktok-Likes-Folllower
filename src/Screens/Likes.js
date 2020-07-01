@@ -12,8 +12,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
 
-let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
-
 class Likes extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +40,7 @@ class Likes extends Component {
                         </View>
                     </View>
                     <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
-                        <NativeAdsView adsManager={ads} />
+                        <NativeAdsView  adsManager={this.props.Data.NativeADSObj} />
                     </View>
                 </ScrollView>
             </View>

@@ -19,8 +19,6 @@ import { custom_number_format, InterStrialAds } from '../Utils/functions'
 import { withNavigation } from 'react-navigation';
 
 
-let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
-
 const VM_INJECTED_JAVASCRIPT = 'window.ReactNativeWebView.postMessage(JSON.stringify(__INIT_PROPS__))'
 
 var IncData = { Request: 0, Diamonds: 0 }
@@ -180,7 +178,7 @@ class CommonScreen extends Component {
               submit new video URL after 48 hours.</Text>
                 </View>
                 <View style={{ height: heightPercentageToDP(60), marginVertical: heightPercentageToDP(2) }}>
-                    <NativeAdsView adsManager={ads} />
+                    <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                 </View>
             </ScrollView>
         );

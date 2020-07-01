@@ -10,10 +10,6 @@ import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/A
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 
-
-let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
-
-
 const AndroidRate = {
     GooglePackageName: "com.harekrishna.tikbooster",
     AppleAppID:"2193813192",
@@ -78,7 +74,7 @@ class ShareAndRate extends Component {
                     <Text style={styles.LastTXT}>Do not remove this app to get more{"\n"}fans,heart,comments,and share</Text>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <NativeAdsView adsManager={ads} />
+                    <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                 </View>
             </View>
         );

@@ -28,7 +28,8 @@ class ContactUsList extends Component {
 
   getMessageList(id) {
     let data = { user_id: id }
-    Services.Coversations(data).then((res) => {     
+    Services.Coversations(data).then((res) => {
+      console.log(res)
       if (res.success)
         this.setState({ list: res.data.reverse(), visible: false })
       else {
@@ -56,10 +57,18 @@ class ContactUsList extends Component {
                       </View>
                     </View>
                     :
-                    <View style={styles.adminView}>
-                      <View style={styles.messageViewAdmin}>
-                        <Text style={styles.TXTAdmin}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
-                        <Text style={styles.messageTXT}>{data.item.message_replied}</Text>
+                    <View>
+                      <View style={styles.adminView}>
+                        <View style={styles.messageViewAdmin}>
+                          <Text style={styles.TXTAdmin}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                          <Text style={styles.messageTXT}>{data.item.message_replied}</Text>
+                        </View>
+                      </View>
+                      <View style={styles.userView}>
+                        <View style={styles.messageView}>
+                          <Text style={styles.TXTUSER}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                          <Text style={styles.messageTXT}>{data.item.message}</Text>
+                        </View>
                       </View>
                     </View>
                 }

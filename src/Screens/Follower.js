@@ -11,7 +11,6 @@ import NativeAdsView from '../Screens/NativeAdsScreen'
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 
-let ads = new NativeAdsManager(Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374")
 
 class Follower extends Component {
     constructor(props) {
@@ -41,7 +40,7 @@ class Follower extends Component {
                         </View>
                     </View>
                     <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
-                        <NativeAdsView adsManager={ads} />
+                        <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                     </View>
                 </ScrollView>
             </View>
