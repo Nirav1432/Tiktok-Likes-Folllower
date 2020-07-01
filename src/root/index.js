@@ -142,8 +142,8 @@ class Index extends Component {
 
     async componentDidMount() {
 
-        id="979168055864310_981496822298100"
-        // id = Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374"
+        // id="979168055864310_981496822298100"
+        id = Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374"
         ads = await new NativeAdsManager(id)
         await this.props.setNativeAdsObject(ads)
 

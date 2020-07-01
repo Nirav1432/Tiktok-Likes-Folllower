@@ -23,9 +23,9 @@ export const InterStrialAds = async () => {
 
     let Success = false
     
-    // let id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
+    let id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
 
-    let id="979168055864310_979168595864256"
+    // let id="979168055864310_979168595864256"
 
     await InterstitialAdManager.showAd(id)
         .then((didClick) => {
