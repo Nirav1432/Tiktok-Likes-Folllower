@@ -329,6 +329,8 @@ PODS:
     - React
   - RNCMaskedView (0.1.9):
     - React
+  - RNDeviceInfo (5.6.1):
+    - React
   - RNFBApp (7.2.0):
     - Firebase/CoreOnly (~> 6.25.0)
     - React
@@ -390,6 +392,7 @@ DEPENDENCIES:
   - ReactNativeAdsFacebook (from `../node_modules/react-native-fbads`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
@@ -490,6 +493,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBCrashlytics:
@@ -564,6 +569,7 @@ SPEC CHECKSUMS:
   ReactNativeAdsFacebook: f26673210344d50687d4c7b1b4242c3b6b48c33f
   RNCAsyncStorage: cd7234ff15c010723ed7c499ae4eedc605eac1fd
   RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
+  RNDeviceInfo: b6e650fbd234732c759544218657d549b4339038
   RNFBApp: 09caf098f066a44cf6f7ce9ea7dbc8b980ca10ec
   RNFBCrashlytics: ce4deb00692924b6c796e438a3c573baf07ed5c8
   RNFBMessaging: a914f734937d45855ea8b63d5fd198e2c5ee3972
@@ -574,6 +580,6 @@ SPEC CHECKSUMS:
   RNShare: f4ec422e27904e0dc9310038d1110460a59ad30d
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: 9f8526134805fd0630166b922aff1b1ff375f0b5
+PODFILE CHECKSUM: 73ef98c2c3f0a1b949da660a35fa0edf1c54e517
 
 COCOAPODS: 1.9.1

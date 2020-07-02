@@ -20,7 +20,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* LikeFollowerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LikeFollowerTests.m */; };
 		4ED5652AFBA53F380678FF90 /* libPods-LikeFollowerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37524F8A58C1F739028BBF37 /* libPods-LikeFollowerTests.a */; };
 		7F4874C42495073F00D14770 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F4874C32495073F00D14770 /* GoogleService-Info.plist */; };
-		7FDD1F11247654A9006AC4B0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
 		7FDD1F1C247659DC006AC4B0 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FDD1F1A247659DB006AC4B0 /* Lato-Bold.ttf */; };
 		7FDD1F1D247659DC006AC4B0 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FDD1F1B247659DC006AC4B0 /* Lato-Black.ttf */; };
 		BCA4F38D404491AE4335D473 /* libPods-LikeFollower.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E779F9ABD43F9360242D56 /* libPods-LikeFollower.a */; };
@@ -364,7 +363,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				7FDD1F11247654A9006AC4B0 /* Info.plist in Resources */,
 				7FDD1F1D247659DC006AC4B0 /* Lato-Black.ttf in Resources */,
 				7FDD1F1C247659DC006AC4B0 /* Lato-Bold.ttf in Resources */,
 				7F4874C42495073F00D14770 /* GoogleService-Info.plist in Resources */,
@@ -706,13 +704,14 @@
 			baseConfigurationReference = 0D3540C92D596C05B8CE2DE9 /* Pods-LikeFollower.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
 				INFOPLIST_FILE = LikeFollower/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -720,7 +719,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.like.follower;
 				PRODUCT_NAME = LikeFollower;
-				PROVISIONING_PROFILE_SPECIFIER = "Developement-Like-Follower-Provisional-Profile";
+				PROVISIONING_PROFILE_SPECIFIER = "Appstore-Like-Follower-Provisional-Profile";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -738,6 +737,7 @@
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
 				INFOPLIST_FILE = LikeFollower/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
