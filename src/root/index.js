@@ -42,9 +42,7 @@ import messaging from '@react-native-firebase/messaging';
 import { isFirstTime, setFirstTime, putNativeAdsObject } from '../ReduxConfig/Actions/Login/LoginActions'
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonLoader from '../Components/CommonLoader';
-import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 
-let ads = null
 
 const slides = [
     {
@@ -141,11 +139,7 @@ class Index extends Component {
     }
 
     async componentDidMount() {
-
-        // id="979168055864310_981496822298100"
-        id = Platform.OS === "android" ? "648220305731523_648221199064767" : "189826512317751_189826948984374"
-        ads = await new NativeAdsManager(id)
-        await this.props.setNativeAdsObject(ads)
+        
 
         await crashlytics().log('XXX')
 

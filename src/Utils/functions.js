@@ -19,13 +19,9 @@ export function custom_number_format(labelValue) {
                 : Math.abs(Number(labelValue));
 }
 
-export const InterStrialAds = async () => {
+export const InterStrialAds = async (id) => {
 
     let Success = false
-    
-    let id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
-
-    // let id="979168055864310_979168595864256"
 
     await InterstitialAdManager.showAd(id)
         .then((didClick) => {
@@ -36,9 +32,6 @@ export const InterStrialAds = async () => {
             console.log(error)
         });
 
-    // await setTimeout(() => {
-
-    // }, 3000)
 
     return Success;
 

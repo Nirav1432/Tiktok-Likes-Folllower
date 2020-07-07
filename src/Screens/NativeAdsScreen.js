@@ -16,7 +16,7 @@ class NativeAdView extends Component {
 
     constructor(props) {
         super(props)
-    }
+    } 
 
     render() {
         return (
@@ -59,41 +59,41 @@ class NativeAdView extends Component {
                     {this.props.nativeAd.bodyText}
                 </TriggerableView>
                 {
-                 Platform.OS==="android"?
-<TriggerableView
-                    style={{
-                        color: '#fff',
-                        backgroundColor: "#1E5DEA",
-                        // backgroundColor: "#fe95aa",
-                        textAlign: "center",
-                        height: hp(5),
-                        fontSize: hp(2.5),
-                        textAlignVertical: "center",
-                        justifyContent: "center",
-                        fontFamily: Fonts.LatoBold,
-                        borderRadius: hp(1.5)
-                    }}
-                >
-                    {this.props.nativeAd.callToActionText}
-                </TriggerableView>
-                 :
-                 <TriggerableView
-                    style={{
-                      width:"100%",
-                      backgroundColor: "#1E5DEA", 
-                      borderRadius:100,
-                      color:"#fff",
-                      fontFamily: Fonts.LatoBold,
-                      fontSize:hp(2),
-                      textAlign:"center",
-                      paddingVertical:hp(1)
-                    }}
-                >
-                    {this.props.nativeAd.callToActionText}
-                    
-                </TriggerableView>
+                    Platform.OS === "android" ?
+                        <TriggerableView
+                            style={{
+                                color: '#fff',
+                                backgroundColor: "#1E5DEA",
+                                // backgroundColor: "#fe95aa",
+                                textAlign: "center",
+                                height: hp(5),
+                                fontSize: hp(2.5),
+                                textAlignVertical: "center",
+                                justifyContent: "center",
+                                fontFamily: Fonts.LatoBold,
+                                borderRadius: hp(1.5)
+                            }}
+                        >
+                            {this.props.nativeAd.callToActionText}
+                        </TriggerableView>
+                        :
+                        <TriggerableView
+                            style={{
+                                width: "100%",
+                                backgroundColor: "#1E5DEA",
+                                borderRadius: 100,
+                                color: "#fff",
+                                fontFamily: Fonts.LatoBold,
+                                fontSize: hp(2),
+                                textAlign: "center",
+                                paddingVertical: hp(1)
+                            }}
+                        >
+                            {this.props.nativeAd.callToActionText}
+
+                        </TriggerableView>
                 }
-                
+
             </View>
         );
     }

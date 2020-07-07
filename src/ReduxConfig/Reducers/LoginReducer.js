@@ -1,14 +1,16 @@
-import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK,SET_FIRST_TIME, SET_PRIVACY ,SET_NATIVE_OBJ} from '../Actions/Login/LoginActions'
-import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS,HIDE_ADS } from '../Actions/AddCount/AddCount'
+import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK, SET_FIRST_TIME, SET_PRIVACY, SET_NATIVE_OBJ, SET_INTERSRIAL_ID, SET_BANNER_ID } from '../Actions/Login/LoginActions'
+import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS, HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
   coins: 0,
   adsCounter: 0,
   maxAdsCounter: 0,
   showAds: false,
-  isFirstime:false,
-  privacy:"",
-  NativeADSObj:null
+  isFirstime: false,
+  privacy: "",
+  NativeADSObj: null,
+  InterStrialId: null,
+  BannerId: null,
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -57,41 +59,55 @@ const LoginReducer = (state = initialState, action) => {
         showAds: true
       })
     }
-    break;
+      break;
 
     case HIDE_ADS: {
       return Object.assign({}, state, {
         showAds: false
       })
     }
-    break;
+      break;
 
-    case FIRST_TIME_CHECK:{
+    case FIRST_TIME_CHECK: {
       return Object.assign({}, state, {
         isFirstime: true
       })
     }
-    break;
+      break;
 
-    case SET_FIRST_TIME:{
+    case SET_FIRST_TIME: {
       return Object.assign({}, state, {
         isFirstime: false
       })
     }
-    break;
+      break;
 
-    case SET_PRIVACY:{
+    case SET_PRIVACY: {
       return Object.assign({}, state, {
         privacy: action.data
       })
     }
 
-    case SET_NATIVE_OBJ:{
+    case SET_NATIVE_OBJ: {
       return Object.assign({}, state, {
         NativeADSObj: action.data
       })
     }
-    break;
+      break;
+
+    case SET_BANNER_ID: {
+      return Object.assign({}, state, {
+        BannerId: action.data
+      })
+    }
+      break;
+
+    case SET_INTERSRIAL_ID: {
+      return Object.assign({}, state, {
+        InterStrialId: action.data
+      })
+    }
+      break;
 
     default: {
       return state;

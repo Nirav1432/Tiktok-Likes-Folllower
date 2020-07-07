@@ -7,18 +7,18 @@ import { Services } from '../Configurations/Api/Connections';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
-import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions'
+import { setDiamonds, putNativeAdsObject, setInterStrialId, setBannerId } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { setPrivacyUrl } from '../ReduxConfig/Actions/Login/LoginActions'
 import VersionUpdate from '../Components/Popups/VersionUpdatePop'
-import AsyncStorage from '@react-native-community/async-storage';
-import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
+import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import Preloader from '../Components/Preloader';
 import DeviceInfo from 'react-native-device-info';
 
 
 let AllData = null
 let OtherData = null
+
 
 
 class Homescreen extends Component {
@@ -47,17 +47,34 @@ class Homescreen extends Component {
 
         this.setState({})
 
-        // let x = await AsyncStorage.getItem('app_version')
-
         let x = await DeviceInfo.getVersion()
 
         if (parseInt(x) < parseInt(OtherData.app_version))
-        this.setState({ update: true })
+          this.setState({ update: true })
 
         await this.props.setCoins()
         await this.props.setMaxAdsCounter()
 
       })
+
+
+    //Test Id
+    let iid = "979168055864310_979168595864256"
+    let Ntid="979168055864310_981496822298100"
+    let BannerId = "579084412746231_579084742746198"
+
+    let ads = await new NativeAdsManager(Ntid)
+    await this.props.setNativeAdsObject(ads)
+    await this.props.SbanId(BannerId)
+    await this.props.SInterId(iid)
+
+
+    //Live Ads
+
+    // let ads = await new NativeAdsManager(OtherData.facebook_native)
+    // await this.props.setNativeAdsObject(ads)
+    // await this.props.SbanId(OtherData.facebook_native_banner_id)
+    // await this.props.SInterId(OtherData.facebook_interstitial_id)
 
     this.setState({ visible: false })
 
@@ -70,7 +87,7 @@ class Homescreen extends Component {
       await this.props.showAds()
 
       setTimeout(async () => {
-        let adsResult = await InterStrialAds()
+        let adsResult = await InterStrialAds(this.props.Data.InterStrialId)
         this.props.hideAds()
         await this.props.putCouter(0)
         this.props.navigation.navigate(Type)
@@ -89,6 +106,7 @@ class Homescreen extends Component {
   }
 
   render() {
+
     return (
       <>
         <StatusBar hidden={Platform.OS == "ios" ? true : false} />
@@ -223,6 +241,9 @@ const mapDispatchToProps = (dispatch) => {
     showAds: () => dispatch(shoeAds()),
     hideAds: () => dispatch(hideAds()),
     setPrivacy: (url) => dispatch(setPrivacyUrl(url)),
+    setNativeAdsObject: (obj) => dispatch(putNativeAdsObject(obj)),
+    SbanId: (obj) => dispatch(setBannerId(obj)),
+    SInterId: (obj) => dispatch(setInterStrialId(obj)),
   };
 };
 

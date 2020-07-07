@@ -3,10 +3,12 @@ import { View, Text, ActivityIndicator, Platform } from 'react-native';
 import { BannerView } from 'react-native-fbads';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { Fonts } from "../Utils/fonts";
+import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation';
 
 
 
-export default class BannerAds extends Component {
+class BannerAds extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,15 +49,29 @@ export default class BannerAds extends Component {
                 }
                 <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
                     <BannerView
-                        placementId={Platform.OS === "android" ? "648220305731523_650444302175790" : "189826512317751_191671965466539"}
-                        // placementId={"579084412746231_579084742746198"}
+                        placementId={this.props.Data.BannerId}
                         type="standard"
                         onPress={() => console.log('click')}
                         onLoad={() => this.setState({ adsLoading: false })}
-                        onError={err => this.setState({ adsLoading: false })}
+                        onError={() => this.setState({ adsLoading: false })}
                     />
                 </View>
             </View>
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        Data: state.LoginData
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        putCouter: (cnt) => dispatch(putcount(cnt)),
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(BannerAds));

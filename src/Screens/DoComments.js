@@ -192,7 +192,7 @@ class DoComments extends Component {
                                 <FlatList
                                     data={this.state.DatafromServer}
                                     renderItem={({ item, index }) => (
-                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item)}>
+                                        <TouchableOpacity style={[styles.VIW1, { marginBottom: index == this.state.DatafromServer.length - 1 ? hp(9) : 0 }]} onPress={() => this.GotoTikTok(item)}>
                                             {
                                                 item.video_thumb == null ?
                                                     <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />

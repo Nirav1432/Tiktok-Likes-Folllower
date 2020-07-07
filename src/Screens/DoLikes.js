@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, Linking, ScrollView } from 'react-native';
 import styles from './styles/DoLikesStyles';
 import { Icons } from "../Utils/IconManager";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
@@ -113,6 +113,7 @@ class DoLikes extends Component {
                     visible={this.state.sorry}
                     ClosePop={() => this.setState({ sorry: false })}
                 />
+
                 {
                     this.state.DatafromServer.length == 0 ?
                         <View style={{ justifyContent: "flex-end", flex: 1 }}>
@@ -168,7 +169,7 @@ class DoLikes extends Component {
                                 <FlatList
                                     data={this.state.DatafromServer}
                                     renderItem={({ item, index }) => (
-                                        <TouchableOpacity style={styles.VIW1} onPress={() => this.GotoTikTok(item, index)}>
+                                        <TouchableOpacity style={[styles.VIW1, { marginBottom: index == this.state.DatafromServer.length - 1 ? hp(9) : 0 }]} onPress={() => this.GotoTikTok(item, index)}>
                                             {
                                                 item.video_thumb == null ?
                                                     <Image source={Icons.thumbnail} style={styles.IMG} resizeMode="cover" />
