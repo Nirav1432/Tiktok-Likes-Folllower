@@ -12,14 +12,20 @@ class Congratulations extends Component {
         };
     }
 
-    ClosePop(){
+    ClosePop() {
         this.props.ClosePop()
-        if(this.props.navigation.state.routeName!="DoFollowing" &&
-        this.props.navigation.state.routeName!="DoComments"&&
-        this.props.navigation.state.routeName!="DoLikes"&&
-        this.props.navigation.state.routeName!="DoShare"
-        )
-        this.props.navigation.navigate('ShareAndRate')
+        if (this.props.navigation.state.routeName != "DoFollowing" &&
+            this.props.navigation.state.routeName != "DoComments" &&
+            this.props.navigation.state.routeName != "DoLikes" &&
+            this.props.navigation.state.routeName != "DoShare"
+        ) {
+            if (this.props.navigation.state.routeName == "watchVideoButton") {
+                this.props.navigation.goBack()
+            }
+            else
+                this.props.navigation.navigate('ShareAndRate')
+        }
+
     }
 
     render() {

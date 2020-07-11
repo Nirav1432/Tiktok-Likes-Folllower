@@ -177,7 +177,7 @@ class CommonScreen extends Component {
                     } on your old video then
               submit new video URL after 48 hours.</Text>
                 </View>
-                <View style={{ height: heightPercentageToDP(60), marginVertical: heightPercentageToDP(2) }}>
+                <View style={{ flex: 1, marginVertical: heightPercentageToDP(2) }}>
                     <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                 </View>
             </ScrollView>
@@ -192,7 +192,7 @@ class CommonScreen extends Component {
             let Cutted = TempthumbNail.substr(35)
             let Trail = Cutted.substr(0, Cutted.indexOf('?'))
             let TEmpMakeThumb = "https://p16-va-tiktok.ibyteimg.com/"
-            let XFinal = TEmpMakeThumb + Trail.replace('img.com/',"")
+            let XFinal = TEmpMakeThumb + Trail.replace('img.com/', "")
             let finalthumb = XFinal == null ? "" : XFinal == undefined ? "" : XFinal
             if (this.props.navigation.getParam('type') == "Get Likes") {
 
@@ -218,7 +218,7 @@ class CommonScreen extends Component {
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: IncData.Request, comment_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_comment: 1, comment_coin: 1, video_thumb: finalthumb }
 
-                Services.RequestComment(data).then(async (res) => {                  
+                Services.RequestComment(data).then(async (res) => {
                     if (res.tiktok_comment.success == "true") {
                         await this.props.setCoins(res.tiktok_comment.coin)
                         await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })
@@ -239,7 +239,7 @@ class CommonScreen extends Component {
                 let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: IncData.Request, share_coin: IncData.Diamonds, video_thumb: finalthumb }
                 // let data = { user_id: this.state.userId, video_link: this.state.VideoUrl, request_share: 1, share_coin: 1, video_thumb: finalthumb }
 
-                Services.RequestShare(data).then(async (res) => {                  
+                Services.RequestShare(data).then(async (res) => {
                     if (res.tiktok_share.success == "true") {
                         await this.props.setCoins(res.tiktok_share.coin)
                         await this.setState({ visible: false, getThumbnail: false, VideoUrl: "" })

@@ -80,7 +80,7 @@ class EarnScreen extends Component {
 
                         </View>
                     </View>
-                    <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
+                    <View style={{ flex: 1, marginBottom: heightPercentageToDP(2)  }}>
                         <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                     </View>
                 </ScrollView>

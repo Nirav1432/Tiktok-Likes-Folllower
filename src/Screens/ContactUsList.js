@@ -52,7 +52,7 @@ class ContactUsList extends Component {
                   data.item.is_replied == 0 ?
                     <View style={styles.userView}>
                       <View style={styles.messageView}>
-                        <Text style={styles.TXTUSER}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                        <Text style={styles.TXTUSER}>{"You"}</Text>
                         <Text style={styles.messageTXT}>{data.item.message}</Text>
                       </View>
                     </View>
@@ -60,13 +60,13 @@ class ContactUsList extends Component {
                     <View>
                       <View style={styles.adminView}>
                         <View style={styles.messageViewAdmin}>
-                          <Text style={styles.TXTAdmin}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                          <Text style={styles.TXTAdmin}>{"Admin"}</Text>
                           <Text style={styles.messageTXT}>{data.item.message_replied}</Text>
                         </View>
                       </View>
                       <View style={styles.userView}>
                         <View style={styles.messageView}>
-                          <Text style={styles.TXTUSER}>{data.item.is_replied == 0 ? "You" : "Admin"}</Text>
+                          <Text style={styles.TXTUSER}>{"You"}</Text>
                           <Text style={styles.messageTXT}>{data.item.message}</Text>
                         </View>
                       </View>

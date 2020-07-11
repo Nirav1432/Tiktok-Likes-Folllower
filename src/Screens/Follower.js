@@ -20,7 +20,7 @@ class Follower extends Component {
         };
     }
 
-    render() {      
+    render() {
         return (
             <View style={styles.MAINVIW}>
                 <Header title={"Follower"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
@@ -39,7 +39,7 @@ class Follower extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
+                    <View style={{ flex: 1, marginBottom: heightPercentageToDP(2)  }}>
                         <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                     </View>
                 </ScrollView>

@@ -139,8 +139,8 @@ android {
         applicationId "com.harekrishna.tikbooster"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "4.0"
+        versionCode 6
+        versionName "6.0"
         multiDexEnabled true
     }
     splits {
@@ -167,7 +167,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            useProguard true 
+            // useProguard true 
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

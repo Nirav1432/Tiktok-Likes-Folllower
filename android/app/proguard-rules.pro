@@ -8,21 +8,10 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
--keep class com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl {
-  public AnimatedFactoryImpl(com.facebook.imagepipeline.bitmaps.PlatformBitmapFactory, com.facebook.imagepipeline.core.ExecutorSupplier);
-}
--keepclassmembers class * {
-    @android.webkit.JavascriptInterface <methods>;
-}
-
--keepattributes JavascriptInterface
 -keepattributes *Annotation*
-
 -dontwarn com.razorpay.**
 -keep class com.razorpay.** {*;}
-
--optimizations !method/inlining/*
-
+-optimizations !method/inlining/
 -keepclasseswithmembers class * {
   public void onPayment*(...);
 }

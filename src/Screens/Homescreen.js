@@ -7,7 +7,7 @@ import { Services } from '../Configurations/Api/Connections';
 import { custom_number_format, InterStrialAds } from '../Utils/functions'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
-import { setDiamonds, putNativeAdsObject, setInterStrialId, setBannerId } from '../ReduxConfig/Actions/Login/LoginActions'
+import { setDiamonds, putNativeAdsObject, setInterStrialId, setBannerId, PutShowVideo } from '../ReduxConfig/Actions/Login/LoginActions'
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { setPrivacyUrl } from '../ReduxConfig/Actions/Login/LoginActions'
 import VersionUpdate from '../Components/Popups/VersionUpdatePop'
@@ -57,24 +57,32 @@ class Homescreen extends Component {
 
       })
 
+    if (OtherData.show_reward_video == "1" || OtherData.show_reward_video == 1) {
+      this.props.putSD(true)
+    }
+    else {
+      this.props.putSD(false)
+    }
 
-    //Test Id
-    let iid = "979168055864310_979168595864256"
-    let Ntid="979168055864310_981496822298100"
-    let BannerId = "579084412746231_579084742746198"
+    // Test Id
+    // let iid = "979168055864310_979168595864256"
+    // let Ntid = "979168055864310_981496822298100"
+    // let BannerId = "579084412746231_579084742746198"
 
+    // let ads = await new NativeAdsManager(Ntid)
+    // await this.props.setNativeAdsObject(ads)
+    // await this.props.SbanId(BannerId)
+    // await this.props.SInterId(iid)
+
+
+    // Live Ads
+    let iid = OtherData.facebook_interstitial_id.toString()
+    let Ntid=OtherData.facebook_native.toString()
+    let BannerId = OtherData.facebook_native_banner_id.toString()
     let ads = await new NativeAdsManager(Ntid)
     await this.props.setNativeAdsObject(ads)
     await this.props.SbanId(BannerId)
     await this.props.SInterId(iid)
-
-
-    //Live Ads
-
-    // let ads = await new NativeAdsManager(OtherData.facebook_native)
-    // await this.props.setNativeAdsObject(ads)
-    // await this.props.SbanId(OtherData.facebook_native_banner_id)
-    // await this.props.SInterId(OtherData.facebook_interstitial_id)
 
     this.setState({ visible: false })
 
@@ -244,6 +252,8 @@ const mapDispatchToProps = (dispatch) => {
     setNativeAdsObject: (obj) => dispatch(putNativeAdsObject(obj)),
     SbanId: (obj) => dispatch(setBannerId(obj)),
     SInterId: (obj) => dispatch(setInterStrialId(obj)),
+    putSD: (obj) => dispatch(PutShowVideo(obj)),
+
   };
 };
 

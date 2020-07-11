@@ -6,6 +6,8 @@ export const SET_PRIVACY = "SET_PRIVACY"
 export const SET_NATIVE_OBJ = "SET_NATIVE_OBJ"
 export const SET_BANNER_ID = "SET_BANNER_ID"
 export const SET_INTERSRIAL_ID = "SET_INTERSRIAL_ID"
+export const PUT_SHOW_VIDEO = "PUT_SHOW_VIDEO"
+
 
 export const putLogin = (dataFromServer) => {
     return {
@@ -60,6 +62,14 @@ export const setInterStrialId = (object) => {
         data: object
     }
 }
+
+export const PutShowVideo = (isShow) => {
+    return {
+        type: PUT_SHOW_VIDEO,
+        data: isShow
+    }
+}
+
 
 
 

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image, Platform} from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import styles from './styles/ShareAndRateStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
 import { connect } from 'react-redux'
 import Share from 'react-native-share';
 import Rate, { AndroidMarket } from 'react-native-rate'
-import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const AndroidRate = {
     GooglePackageName: "com.harekrishna.tikbooster",
-    AppleAppID:"2193813192",
+    AppleAppID: "1520155141",
     preferredAndroidMarket: AndroidMarket.Google,
     preferInApp: true,
     openAppStoreIfInAppFails: true,
@@ -38,22 +39,22 @@ class ShareAndRate extends Component {
 
     shareMyapp = () => {
         let options = {
-            url:Platform.OS==="ios"?"https://apps.apple.com/us/app/id1520155141": "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
+            url: Platform.OS === "ios" ? "https://apps.apple.com/us/app/id1520155141" : "https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster"
         }
         Share.open(options)
             .then((res) => { })
-            .catch((err) => {  });
+            .catch((err) => { });
     }
 
     rateMyapp = () => {
         Rate.rate(AndroidRate, success => {
-          
+
         })
     }
 
     render() {
         return (
-            <View style={styles.MAINVIW}>
+            <ScrollView style={styles.MAINVIW}>
                 <Header title={"Share & Rate App"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
                 <View style={styles.VIW1}>
                     <Image source={Icons.mobile} style={styles.IMG} resizeMode="contain" />
@@ -73,10 +74,10 @@ class ShareAndRate extends Component {
                     <Text style={styles.Thankyou}>Thank you!</Text>
                     <Text style={styles.LastTXT}>Do not remove this app to get more{"\n"}fans,heart,comments,and share</Text>
                 </View>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, marginBottom: heightPercentageToDP(2) }}>
                     <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -94,4 +95,4 @@ const mapDispatchToProps = (dispatch) => {
         hideAds: () => dispatch(hideAds()),
     };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(ShareAndRate);
+export default connect(mapStateToProps, mapDispatchToProps)(ShareAndRate);

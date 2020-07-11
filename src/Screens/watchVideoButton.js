@@ -14,13 +14,12 @@ import Preloader from '../Components/Preloader';
 import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import Modal from 'react-native-modal';
 import { Fonts } from '../Utils/fonts'
+import { cos } from 'react-native-reanimated';
 
 
 let months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
 let Interval = null;
-
-var id = Platform.OS === "android" ? "648220305731523_648221115731442" : "189826512317751_189827872317615"
 
 class watchVideoButton extends Component {
     constructor(props) {
@@ -38,13 +37,7 @@ class watchVideoButton extends Component {
     componentDidMount() {
 
         this.getTime()
-
-        // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
-        //     setTimeout(async () => {
-        //         await this.props.showAds()
-        //         await this.props.putCouter(0)
-        //     }, 300)
-        // }
+        console.log(this.props)
     }
 
     componentWillUnmount() {
@@ -76,7 +69,7 @@ class watchVideoButton extends Component {
 
         setTimeout(() => {
 
-            InterstitialAdManager.showAd(id)
+            InterstitialAdManager.showAd(this.props.Data.InterStrialId)
                 .then((didClick) => {
 
                     this.setState({ Preloader: true, showloader: false })
@@ -99,7 +92,7 @@ class watchVideoButton extends Component {
 
                     Services.userVideo(data).then(res => {
                         if (res.success == "true") {
-                            this.setState({ Preloader: false, Coins: res.coin, displayButton: true })
+                            this.setState({ Coins: res.coin, displayButton: true })
                             this.props.setCoins(res.coin)
                             let Time = res.time
                             let Min = parseInt(Time.substr(0, Time.indexOf(':')))
@@ -107,8 +100,7 @@ class watchVideoButton extends Component {
                             let finaltime = Min + (sec / 60)
                             let timer = finaltime * 60
                             this.startTime(timer)
-                            //setTimeout(() => this.setState({ congo: true }), 500)
-                            this.props.navigation.goBack()
+                            setTimeout(() => this.setState({ congo: true,  Preloader: false, }), 500)
                         }
                         else {
                             this.setState({ showloader: false })
@@ -153,32 +145,38 @@ class watchVideoButton extends Component {
                     ClosePop={() => this.setState({ congo: false })}
                 />
                 <View>
-                    <Text style={styles.TXT1}>Get More Diamonds</Text>
-                    <Text style={styles.TXT2}>Get an extra diamonds every time{"\n"}when you click on below butoon.</Text>
                     {
-                        this.state.displayButton ?
-                            <TouchableOpacity style={styles.Timer} >
-                                <View style={styles.watchView}>
-                                    <Image source={Icons.watch} style={styles.watch} resizeMode="contain" />
-                                </View>
-                                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                                    <Text style={styles.timerTExt}>{this.state.time}</Text>
-                                </View>
-                            </TouchableOpacity>
+                        this.props.Data.show_reward_video ?
+                            <View>
+                                <Text style={styles.TXT1}>Get More Diamonds</Text>
+                                <Text style={styles.TXT2}>Get an extra diamonds every time{"\n"}when you click on below butoon.</Text>
+                                {
+                                    this.state.displayButton ?
+                                        <TouchableOpacity style={styles.Timer} >
+                                            <View style={styles.watchView}>
+                                                <Image source={Icons.watch} style={styles.watch} resizeMode="contain" />
+                                            </View>
+                                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                                <Text style={styles.timerTExt}>{this.state.time}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        :
+                                        <TouchableOpacity style={styles.Timer2}
+                                            onPress={() => this.showAdd()}
+                                        // onPress={() => this.startTime(1 * 60)}
+                                        >
+                                            <View style={styles.watchView2}>
+                                                <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
+                                            </View>
+                                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", left: hp(2) }}>
+                                                <Text style={styles.timerTExt}>Watch Video</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                }
+                            </View>
                             :
-                            <TouchableOpacity style={styles.Timer2}
-                                onPress={() => this.showAdd()}
-                            // onPress={() => this.startTime(1 * 60)}
-                            >
-                                <View style={styles.watchView2}>
-                                    <Image source={Icons.whiteVideo} style={styles.IMG1} resizeMode="contain" />
-                                </View>
-                                <View style={{ flex: 1, justifyContent: "center", alignItems: "center", left: hp(2) }}>
-                                    <Text style={styles.timerTExt}>Watch Video</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <Text style={[styles.TXT2, { marginTop: heightPercentageToDP(30) }]}>Sorry! Currently Reward Video{"\n"}Service is unavailable</Text>
                     }
-
                 </View>
             </View>
         );

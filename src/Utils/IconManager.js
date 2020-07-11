@@ -45,7 +45,9 @@ module.exports = {
         inr_selected:require('../Icons/inr_selected.png'),
         inr_unselected:require('../Icons/inr_unselected.png'),
         doView:require('../Icons/doView.png'),
-        ViewList:require('../Icons/ViewList.png')
+        ViewList:require('../Icons/ViewList.png'),
+        googlepayunselected:require('../Icons/googlepayunselected.png'),
+        googlepayselected:require('../Icons/googlepayselected.png')
     }
 
 

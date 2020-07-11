@@ -1,4 +1,4 @@
-import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK, SET_FIRST_TIME, SET_PRIVACY, SET_NATIVE_OBJ, SET_INTERSRIAL_ID, SET_BANNER_ID } from '../Actions/Login/LoginActions'
+import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK, SET_FIRST_TIME, SET_PRIVACY, SET_NATIVE_OBJ, SET_INTERSRIAL_ID, SET_BANNER_ID, PUT_SHOW_VIDEO } from '../Actions/Login/LoginActions'
 import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS, HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
@@ -11,6 +11,7 @@ const initialState = {
   NativeADSObj: null,
   InterStrialId: null,
   BannerId: null,
+  show_reward_video: false
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -109,9 +110,17 @@ const LoginReducer = (state = initialState, action) => {
     }
       break;
 
+    case PUT_SHOW_VIDEO: {
+      return Object.assign({}, state, {
+        show_reward_video: action.data
+      })
+    }
+      break;
+
     default: {
       return state;
     }
+
   }
 };
 

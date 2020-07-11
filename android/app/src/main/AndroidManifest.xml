@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.harekrishna.tikbooster" android:versionCode="4" android:versionName="4.0" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.harekrishna.tikbooster" android:versionCode="6" android:versionName="6.0" >
 
 <uses-permission android:name="android.permission.INTERNET" />
 

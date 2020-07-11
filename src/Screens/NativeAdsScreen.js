@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Dimensions, TouchableOpacity, Platform } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageToDP } from 'react-native-responsive-screen';
 import {
     withNativeAd,
     AdIconView,
@@ -16,7 +16,7 @@ class NativeAdView extends Component {
 
     constructor(props) {
         super(props)
-    } 
+    }
 
     render() {
         return (
@@ -30,32 +30,36 @@ class NativeAdView extends Component {
                 padding: hp(1.5)
             }}>
                 <View>
-                    <View style={{ flexDirection: "row", marginBottom: wp(1.5) }}>
-                        <View style={{ flex: 1, justifyContent: "center", bottom: wp(0.3) }}>
-                            <AdChoicesView style={{ height: hp(3), width: hp(3) }} />
+                    <View style={{ justifyContent: "center", height: hp(4) }}>
+                        <View style={{ flexDirection: "row" }}>
+                            <TriggerableView style={{ textAlignVertical: "center" }}>
+                                <AdChoicesView style={{ height: hp(3), width: hp(3) }} />
+                            </TriggerableView>
+                            <TriggerableView style={{ left: Platform.OS === "android" ? wp(1) : wp(15), paddingBottom: hp(0.5), fontSize: hp(1.9), justifyContent: "center", textAlignVertical: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
+                                {this.props.nativeAd.sponsoredTranslation}
+                            </TriggerableView>
                         </View>
-                        <TriggerableView style={{ flex: 9, left: Platform.OS === "android" ? wp(-1) : wp(15), fontSize: hp(2), justifyContent: "center", fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
-                            {this.props.nativeAd.sponsoredTranslation}
-                        </TriggerableView>
                     </View>
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row", marginTop: hp(1) }}>
                         <View style={{ justifyContent: "center", alignItems: "center" }}>
-                            <AdIconView style={{ width: hp(6), height: hp(6), alignSelf: "center" }} />
+                            <AdIconView style={{ width: hp(6), height: hp(6) }} />
                         </View>
                         <View style={{ justifyContent: "center", flex: 1, paddingLeft: wp(2) }}>
-                            <TriggerableView style={{ fontSize: hp(2.5), fontFamily: Fonts.LatoBold }}>
+                            <TriggerableView style={{ fontSize: hp(2.2), fontFamily: Fonts.LatoBold }}>
                                 {this.props.nativeAd.advertiserName}
                             </TriggerableView>
-                            <TriggerableView style={{ fontSize: hp(2), marginTop: wp(1), fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
+                            <TriggerableView style={{ fontSize: hp(2), marginTop: wp(1.5), fontFamily: Fonts.LatoBold, color: "#C1C1C1" }}>
                                 {this.props.nativeAd.socialContext}
                             </TriggerableView>
                         </View>
                     </View>
                 </View>
-                <View style={{ overflow: "hidden", flex: 1 }}>
-                    <MediaView style={{ height: "100%", width: "100%" }} />
+                <View style={{ overflow: "hidden", marginVertical: hp(2), height: hp(35) }}>
+                    <MediaView
+                        style={{ width: "100%", height: "100%" }}
+                    />
                 </View>
-                <TriggerableView style={{ fontSize: hp(2.2), marginLeft: wp(2), bottom: hp(1), fontFamily: Fonts.LatoBold, textAlign: "left", color: "#333333" }}>
+                <TriggerableView style={{ fontSize: hp(2), marginLeft: wp(2), marginVertical: hp(2), fontFamily: Fonts.LatoBold, textAlign: "left", color: "#333333" }}>
                     {this.props.nativeAd.bodyText}
                 </TriggerableView>
                 {
@@ -93,7 +97,6 @@ class NativeAdView extends Component {
 
                         </TriggerableView>
                 }
-
             </View>
         );
     }

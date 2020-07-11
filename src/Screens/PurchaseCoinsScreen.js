@@ -23,7 +23,7 @@ class PurchaseCoinsScreen extends Component {
     this.state = {
       offers: [],
       visible: true,
-      Type: "INR",
+      Type: "USD",
       congo: false,
       selectedCoins: 0
     };
@@ -90,8 +90,8 @@ class PurchaseCoinsScreen extends Component {
   }
 
   changeCurrencyList = async () => {
-    await this.setState({ Type: this.state.Type == "INR" ? "USD" : "INR", visible: true })
-    await this.getPaymentCoins()
+    // await this.setState({ Type: this.state.Type == "INR" ? "USD" : "INR", visible: true })
+    // await this.getPaymentCoins()
   }
 
   render() {
@@ -114,14 +114,18 @@ class PurchaseCoinsScreen extends Component {
                   {
                     index == 0 ?
                       <View style={styles.VIW14}>
-                        <TouchableOpacity style={styles.VIW15} onPress={() => this.changeCurrencyList()}>
+                        {/* <TouchableOpacity style={styles.VIW15} onPress={() => this.changeCurrencyList()}>
                           <Image style={styles.IMG4} source={this.state.Type == "INR" ? Icons.inr_selected : Icons.inr_unselected} />
                           <Text style={styles.TXT33}>{this.state.Type == "INR" ? "INR" : null}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         <TouchableOpacity style={[styles.VIW15, { marginLeft: hp(4) }]} onPress={() => this.changeCurrencyList()}>
                           <Image style={styles.IMG4} source={this.state.Type == "USD" ? Icons.usd_selected : Icons.usd_unselected} />
                           <Text style={styles.TXT33}>{this.state.Type == "USD" ? "USD" : null}</Text>
                         </TouchableOpacity>
+                        {/* <TouchableOpacity style={[styles.VIW15, { marginLeft: hp(4) }]} onPress={() => this.changeCurrencyList()}>
+                          <Image style={styles.IMG4} source={this.state.Type == "USD" ? Icons.usd_selected : Icons.usd_unselected} />
+                          <Text style={styles.TXT33}>{this.state.Type == "USD" ? "USD" : null}</Text>
+                        </TouchableOpacity> */}
                       </View>
                       : <></>
                   }

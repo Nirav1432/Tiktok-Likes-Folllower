@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, } from 'react-native';
 import styles from './styles/FollowerStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
-import { puMaxCount, putcount, shoeAds , hideAds} from '../ReduxConfig/Actions/AddCount/AddCount';
+import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { connect } from 'react-redux'
@@ -46,7 +46,7 @@ class Share extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ height: heightPercentageToDP(60), marginBottom: heightPercentageToDP(2) }}>
+                    <View style={{ flex: 1 , marginBottom: heightPercentageToDP(2) }}>
                         <NativeAdsView adsManager={this.props.Data.NativeADSObj} />
                     </View>
                 </ScrollView>
@@ -59,10 +59,10 @@ class Share extends Component {
             await this.props.showAds()
 
             setTimeout(async () => {
-              let adsResult = await InterStrialAds(this.props.Data.InterStrialId)            
+                let adsResult = await InterStrialAds(this.props.Data.InterStrialId)
                 this.props.hideAds()
                 await this.props.putCouter(0)
-                this.props.navigation.navigate(Type)              
+                this.props.navigation.navigate(Type)
             }, 3000)
 
         }
