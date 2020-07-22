@@ -15,3 +15,7 @@
 -keepclasseswithmembers class * {
   public void onPayment*(...);
 }
+-keepclassmembers class ** {
+  @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }

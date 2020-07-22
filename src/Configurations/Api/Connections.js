@@ -1,23 +1,18 @@
 import URI from '../Constants/Uri';
 import axios from 'react-native-axios';
 import { } from 'react-native'
+import { cos } from 'react-native-reanimated';
 
 const api = axios.create();
 api.defaults.baseURL = URI.MAIN_URL;
 api.defaults.headers.post['Content-Type'] = 'application/json';
 api.defaults.headers.post['Accept'] = 'application/json';
 
-function onError(response) {
-  return response.data;
-}
-
-function onSuccess(response) {
-  return response.data;
-}
- 
 async function POSTtypeData(location, data) {
 
-  let ReturnDATA=null
+  let ReturnDATA = null
+
+  // console.log('request =========>' + URI.MAIN_URL + location, data)
 
   await fetch(URI.MAIN_URL + location, {
     method: "POST",
@@ -25,28 +20,29 @@ async function POSTtypeData(location, data) {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }),
-    body:JSON.stringify(data)
+    body: JSON.stringify(data)
   })
-  .then(res=>res.json())
-  .then((res)=>{
-      ReturnDATA=res
-  })
+    .then(res => res.json())
+    .then((res) => {
+      // console.log('response =========>' + URI.MAIN_URL + location, res)
+      ReturnDATA = res
+    })
 
   return ReturnDATA;
 }
 
- 
+
 async function GETtypeData(location) {
 
-  let ReturnDATA=null
+  let ReturnDATA = null
 
   await fetch(URI.MAIN_URL + location, {
     method: "GET",
   })
-  .then(res=>res.json())
-  .then((res)=>{
-      ReturnDATA=res
-  })
+    .then(res => res.json())
+    .then((res) => {
+      ReturnDATA = res
+    })
 
   return ReturnDATA;
 }

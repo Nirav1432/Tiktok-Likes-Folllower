@@ -139,8 +139,8 @@ android {
         applicationId "com.harekrishna.tikbooster"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "6.0"
+        versionCode 8
+        versionName "8.0"
         multiDexEnabled true
     }
     splits {
