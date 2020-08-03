@@ -5,7 +5,16 @@ const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
     TXT1: { fontFamily: Fonts.LatoBlack, fontSize: hp(3), alignSelf: "center", textAlign: "center", marginVertical: hp(3) },
-    ScratchView: { flex: 1, }
+    ScratchView: { flex: 1, justifyContent: "center", alignItems: "center" },
+    View1: {
+        width: wp(45),
+        backgroundColor: "white",
+        height: wp(45),
+        marginBottom: wp(2),
+        borderRadius: hp(2),
+        overflow: "hidden",
+        elevation: 5
+    }
 
 })
 

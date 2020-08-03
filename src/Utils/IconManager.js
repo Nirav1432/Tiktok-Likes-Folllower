@@ -47,7 +47,11 @@ module.exports = {
         doView:require('../Icons/doView.png'),
         ViewList:require('../Icons/ViewList.png'),
         googlepayunselected:require('../Icons/googlepayunselected.png'),
-        googlepayselected:require('../Icons/googlepayselected.png')
+        googlepayselected:require('../Icons/googlepayselected.png'),
+        ScratchImage:require('../Icons/ScratchImage.jpg'),
+        gift:require('../Icons/gift.jpg'),
+        Newdmd:require('../Icons/Newdmd.jpg'),
+        close:require('../Icons/close.png')
     }
 
 

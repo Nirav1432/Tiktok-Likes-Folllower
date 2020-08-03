@@ -12,7 +12,7 @@ async function POSTtypeData(location, data) {
 
   let ReturnDATA = null
 
-  // console.log('request =========>' + URI.MAIN_URL + location, data)
+  console.log('request =========>' + URI.MAIN_URL + location, data)
 
   await fetch(URI.MAIN_URL + location, {
     method: "POST",
@@ -24,7 +24,7 @@ async function POSTtypeData(location, data) {
   })
     .then(res => res.json())
     .then((res) => {
-      // console.log('response =========>' + URI.MAIN_URL + location, res)
+      console.log('response =========>' + URI.MAIN_URL + location, res)
       ReturnDATA = res
     })
 
@@ -34,6 +34,8 @@ async function POSTtypeData(location, data) {
 
 async function GETtypeData(location) {
 
+  console.log('request =========>' + URI.MAIN_URL + location)
+
   let ReturnDATA = null
 
   await fetch(URI.MAIN_URL + location, {
@@ -41,6 +43,7 @@ async function GETtypeData(location) {
   })
     .then(res => res.json())
     .then((res) => {
+      console.log('response =========>' + URI.MAIN_URL, res)
       ReturnDATA = res
     })
 
@@ -85,8 +88,9 @@ export const Services = {
   PaymentCoins: type => GETtypeData('/payment-coin'),
 
   updateWallet: data => POSTtypeData('/update-wallet', data),
-  userVideo: data => POSTtypeData('/userVideo', data)
+  userVideo: data => POSTtypeData('/userVideo', data),
 
+  scratcheList: data => POSTtypeData('/user-scratche', data)
 }
 
 

@@ -65,24 +65,24 @@ class Homescreen extends Component {
     }
 
     // Test Id
-    // let iid = "979168055864310_979168595864256"
-    // let Ntid = "979168055864310_981496822298100"
-    // let BannerId = "579084412746231_579084742746198"
+    let iid = "979168055864310_979168595864256"
+    let Ntid = "979168055864310_981496822298100"
+    let BannerId = "579084412746231_579084742746198"
 
-    // let ads = await new NativeAdsManager(Ntid)
-    // await this.props.setNativeAdsObject(ads)
-    // await this.props.SbanId(BannerId)
-    // await this.props.SInterId(iid)
-
-
-    // Live Ads
-    let iid = OtherData.facebook_interstitial_id.toString()
-    let Ntid=OtherData.facebook_native.toString()
-    let BannerId = OtherData.facebook_native_banner_id.toString()
     let ads = await new NativeAdsManager(Ntid)
     await this.props.setNativeAdsObject(ads)
     await this.props.SbanId(BannerId)
     await this.props.SInterId(iid)
+
+
+    // Live Ads
+    // let iid = OtherData.facebook_interstitial_id.toString()
+    // let Ntid=OtherData.facebook_native.toString()
+    // let BannerId = OtherData.facebook_native_banner_id.toString()
+    // let ads = await new NativeAdsManager(Ntid)
+    // await this.props.setNativeAdsObject(ads)
+    // await this.props.SbanId(BannerId)
+    // await this.props.SInterId(iid)
 
     this.setState({ visible: false })
 
