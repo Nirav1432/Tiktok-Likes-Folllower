@@ -276,9 +276,9 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-background-timer (2.2.0):
+  - react-native-background-timer (2.3.1):
     - React
-  - react-native-razorpay (2.1.33):
+  - react-native-razorpay (2.1.36):
     - razorpay-pod
     - React
   - react-native-safe-area-context (0.7.3):
@@ -325,34 +325,36 @@ PODS:
   - ReactNativeAdsFacebook (6.3.1):
     - FBAudienceNetwork
     - React
-  - RNCAsyncStorage (1.10.3):
+  - RNCAsyncStorage (1.11.0):
     - React
   - RNCMaskedView (0.1.9):
     - React
-  - RNDeviceInfo (5.6.1):
+  - RNDeviceInfo (5.6.3):
     - React
-  - RNFBApp (7.2.0):
+  - RNFBApp (7.3.1):
     - Firebase/CoreOnly (~> 6.25.0)
     - React
-  - RNFBCrashlytics (7.1.5):
+  - RNFBCrashlytics (7.1.7):
     - Crashlytics (~> 3.14.0)
     - Fabric (~> 1.10.2)
     - React
     - RNFBApp
-  - RNFBMessaging (7.1.4):
+  - RNFBMessaging (7.6.1):
     - Firebase/Analytics (~> 6.25.0)
     - Firebase/Messaging (~> 6.25.0)
     - React
     - RNFBApp
   - RNGestureHandler (1.6.1):
     - React
+  - RNIap (4.5.0):
+    - React
   - RNRate (1.2.1):
     - React
-  - RNReanimated (1.9.0):
+  - RNReanimated (1.10.1):
     - React
   - RNScreens (2.5.0):
     - React
-  - RNShare (3.3.3):
+  - RNShare (3.7.0):
     - React
   - Yoga (1.14.0)
 
@@ -397,6 +399,7 @@ DEPENDENCIES:
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNRate (from `../node_modules/react-native-rate`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -503,6 +506,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNRate:
     :path: "../node_modules/react-native-rate"
   RNReanimated:
@@ -551,8 +556,8 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
-  react-native-background-timer: 1f7d560647b40e6a60b01c452ba29c54bf581fc4
-  react-native-razorpay: fb2411102f375adb0818da2f65759a16438dcdb4
+  react-native-background-timer: 1275225bd2c74eeba9f3898480cb6a635c7d2cb0
+  react-native-razorpay: 8988c3bd28c9ca68be69d8bd718db0af11ff83f8
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: cf5527893252b3b036eea024a1da6996f7344c74
@@ -567,17 +572,18 @@ SPEC CHECKSUMS:
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   ReactNativeAdsFacebook: f26673210344d50687d4c7b1b4242c3b6b48c33f
-  RNCAsyncStorage: cd7234ff15c010723ed7c499ae4eedc605eac1fd
+  RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
   RNCMaskedView: 71fc32d971f03b7f03d6ab6b86b730c4ee64f5b6
-  RNDeviceInfo: b6e650fbd234732c759544218657d549b4339038
-  RNFBApp: 09caf098f066a44cf6f7ce9ea7dbc8b980ca10ec
-  RNFBCrashlytics: ce4deb00692924b6c796e438a3c573baf07ed5c8
-  RNFBMessaging: a914f734937d45855ea8b63d5fd198e2c5ee3972
+  RNDeviceInfo: 5be12a5bfbb8da3528c43ee4373abd9c30d04616
+  RNFBApp: cd70a6c061bc485994e28c7d58ab760538850f0e
+  RNFBCrashlytics: a4aceced113c1d81c6aed885774b7e648fa2f25b
+  RNFBMessaging: e907df513dc729aa8f47f94c6614263bc97d833e
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNIap: e5ddd3f0621c714e48dace1e89a644c86a5e23fe
   RNRate: a39ac26dc9daf3f9b639ce274b7f80672ae36db1
-  RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
+  RNReanimated: c2bb7438b57a3d987bb2e4e6e4bca94787e30b02
   RNScreens: ac02d0e4529f08ced69f5580d416f968a6ec3a1d
-  RNShare: f4ec422e27904e0dc9310038d1110460a59ad30d
+  RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
 PODFILE CHECKSUM: 73ef98c2c3f0a1b949da660a35fa0edf1c54e517

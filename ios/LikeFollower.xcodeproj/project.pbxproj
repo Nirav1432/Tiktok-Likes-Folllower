@@ -22,8 +22,8 @@
 		7F4874C42495073F00D14770 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F4874C32495073F00D14770 /* GoogleService-Info.plist */; };
 		7FDD1F1C247659DC006AC4B0 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FDD1F1A247659DB006AC4B0 /* Lato-Bold.ttf */; };
 		7FDD1F1D247659DC006AC4B0 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FDD1F1B247659DC006AC4B0 /* Lato-Black.ttf */; };
-		BCA4F38D404491AE4335D473 /* libPods-LikeFollower.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E779F9ABD43F9360242D56 /* libPods-LikeFollower.a */; };
 		AA0F162B934E402CB2F012E5 /* libRNScratch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 766D07168EE840EF9DFA8563 /* libRNScratch.a */; };
+		BCA4F38D404491AE4335D473 /* libPods-LikeFollower.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E779F9ABD43F9360242D56 /* libPods-LikeFollower.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +40,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "LikeFollower-tvOS";
+		};
+		7F0152E724DB11150016C34F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8B1E30FD87C4B999C2929DC /* RNScratch.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNScratch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -63,6 +70,7 @@
 		37524F8A58C1F739028BBF37 /* libPods-LikeFollowerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LikeFollowerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48E9BCF1E9F5B0BF4A7F5425 /* Pods-LikeFollower-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollower-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-LikeFollower-tvOSTests/Pods-LikeFollower-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		673945F7B79B4FBBCE9C85FD /* Pods-LikeFollower-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollower-tvOS.release.xcconfig"; path = "Target Support Files/Pods-LikeFollower-tvOS/Pods-LikeFollower-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		766D07168EE840EF9DFA8563 /* libRNScratch.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNScratch.a; sourceTree = "<group>"; };
 		7B0163948E2BEB13DA17F197 /* libPods-LikeFollower-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LikeFollower-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F4874C32495073F00D14770 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FDD1F1A247659DB006AC4B0 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
@@ -70,12 +78,11 @@
 		84C2B2433E1EFF21CB59E2AB /* Pods-LikeFollower-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollower-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-LikeFollower-tvOSTests/Pods-LikeFollower-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0E779F9ABD43F9360242D56 /* libPods-LikeFollower.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LikeFollower.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1AB9AB2A68B1E68C38A0893 /* Pods-LikeFollower-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollower-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-LikeFollower-tvOS/Pods-LikeFollower-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C8B1E30FD87C4B999C2929DC /* RNScratch.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNScratch.xcodeproj; path = "../node_modules/react-native-scratch/ios/RNScratch.xcodeproj"; sourceTree = "<group>"; };
 		C9FDE9A0356F66F22C40C4CE /* Pods-LikeFollowerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollowerTests.release.xcconfig"; path = "Target Support Files/Pods-LikeFollowerTests/Pods-LikeFollowerTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FEAEFC87468D0512FA8CBC9A /* Pods-LikeFollowerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LikeFollowerTests.debug.xcconfig"; path = "Target Support Files/Pods-LikeFollowerTests/Pods-LikeFollowerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C8B1E30FD87C4B999C2929DC /* RNScratch.xcodeproj */ = {isa = PBXFileReference; name = "RNScratch.xcodeproj"; path = "../node_modules/react-native-scratch/ios/RNScratch.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		766D07168EE840EF9DFA8563 /* libRNScratch.a */ = {isa = PBXFileReference; name = "libRNScratch.a"; path = "libRNScratch.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +182,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7F0152E324DB10F90016C34F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				766D07168EE840EF9DFA8563 /* libRNScratch.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		7F0152E424DB11150016C34F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7F0152E824DB11150016C34F /* libRNScratch.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		7FDD1F0B2476529B006AC4B0 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +225,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				30048CC1AA0E04DF3CA3CE8B /* Pods */,
+				7F0152E324DB10F90016C34F /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -344,6 +368,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7F0152E424DB11150016C34F /* Products */;
+					ProjectRef = C8B1E30FD87C4B999C2929DC /* RNScratch.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* LikeFollower */,
@@ -353,6 +383,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7F0152E824DB11150016C34F /* libRNScratch.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = sourcecode.make;
+			path = libRNScratch.a;
+			remoteRef = 7F0152E724DB11150016C34F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -662,9 +702,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = LikeFollowerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -675,14 +723,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LikeFollower.app/LikeFollower";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Debug;
 		};
@@ -696,9 +736,17 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = LikeFollowerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -709,14 +757,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LikeFollower.app/LikeFollower";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Release;
 		};
@@ -730,6 +770,10 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = LikeFollower/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -743,10 +787,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Appstore-Like-Follower-Provisional-Profile";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Debug;
 		};
@@ -760,6 +800,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LGZ99YYQQ3;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = LikeFollower/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
@@ -773,10 +817,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "Appstore-Like-Follower-Provisional-Profile";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Release;
 		};
@@ -793,8 +833,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = "LikeFollower-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -805,14 +853,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Debug;
 		};
@@ -829,8 +869,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = "LikeFollower-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -841,14 +889,6 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Release;
 		};
@@ -864,8 +904,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = "LikeFollower-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -876,14 +924,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LikeFollower-tvOS.app/LikeFollower-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Debug;
 		};
@@ -899,8 +939,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 				INFOPLIST_FILE = "LikeFollower-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -911,14 +959,6 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LikeFollower-tvOS.app/LikeFollower-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/..",
-				);
 			};
 			name = Release;
 		};

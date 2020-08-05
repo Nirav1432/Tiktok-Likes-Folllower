@@ -72,7 +72,7 @@ class ScratchAndWin extends Component {
                         this.state.Scratches.length > 0 ?
                             <ScrollView>
                                 <Text style={styles.TXT1}>Try Your Luck by scratching coupons{"\n"}and win 10000 Diamonds</Text>
-                                <View style={{ flex: 1, flexDirection: "row", paddingHorizontal: widthPercentageToDP(4), flexWrap: "wrap", alignSelf: "center", alignItems: "center" }}>
+                                <View style={{ flex: 1,left:widthPercentageToDP(5), flexDirection: "row", paddingHorizontal: widthPercentageToDP(4), flexWrap: "wrap", alignSelf: "center", alignItems: "center" }}>
                                     {
                                         this.state.Scratches.map((data, index) => {
                                             return (

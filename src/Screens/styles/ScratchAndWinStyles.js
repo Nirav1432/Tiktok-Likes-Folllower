@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
     TXT1: { fontFamily: Fonts.LatoBlack, fontSize: hp(3), alignSelf: "center", textAlign: "center", marginVertical: hp(3) },
     ScratchView: { flex: 1, justifyContent: "center", alignItems: "center" },
     View1: {
-        width: wp(45),
+        width: wp(40),
         backgroundColor: "white",
-        height: wp(45),
+        height: wp(40),
         marginBottom: wp(2),
         borderRadius: hp(2),
         overflow: "hidden",
