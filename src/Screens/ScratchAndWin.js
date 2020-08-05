@@ -18,6 +18,9 @@ import RNAndroidInstalledApps from 'react-native-android-installed-apps';
 import WaitingAppInstall from '../Components/Popups/WaitingAppInstall';
 import Congratulations from '../Components/Popups/Congratulations'
 import Preloader from '../Components/Preloader'
+import ScratchBanner from '../Components/Popups/ScratchBanner';
+import { NavigationEvents } from 'react-navigation';
+
 
 class ScratchAndWin extends Component {
     constructor(props) {
@@ -26,7 +29,9 @@ class ScratchAndWin extends Component {
             data: { follower_coin: 0 },
             Scratches: [],
             SelectedScratchData: { coin: 0 },
+            SelectedScratchDataEx: { coin: 0 },
             showPop: false,
+            showPopX: false,
             AdsPop: false,
             AppCounter: 0,
             isWaitingforDownloadComplete: false,
@@ -36,6 +41,11 @@ class ScratchAndWin extends Component {
     }
 
     async componentDidMount() {
+        this.getDt()
+    }
+
+    getDt = () => {
+        this.setState({ Scratches: [] })
         Services.scratcheList(this.props.Data.CommonData.userId).then((res) => {
             let x = []
             for (let obj of res.scratche) {
@@ -52,8 +62,12 @@ class ScratchAndWin extends Component {
     render() {
         return (
             <View style={styles.MAINVIW}>
+                <NavigationEvents
+                    onDidFocus={() => this.getDt()}
+                />
                 <Preloader isLoader={this.state.isLoaging} />
                 <Header title={"Scratch & Win"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
+                <ScratchBanner data={this.state.SelectedScratchDataEx} visible={this.state.showPopX} ClosePop={() => this.ClosePop()} onScratchDone={() => this.onXscrDone()} />
                 <ScratchCardPopup data={this.state.SelectedScratchData} visible={this.state.showPop} ClosePop={() => this.ClosePop()} onScratchDone={() => this.setState({ AdsPop: true })} />
                 <AdsPopup data={this.state.SelectedScratchData} visible={this.state.AdsPop} simpleClose={() => this.simpleClose()} ClosePop={() => this.AdsPop()} />
                 {
@@ -72,7 +86,7 @@ class ScratchAndWin extends Component {
                         this.state.Scratches.length > 0 ?
                             <ScrollView>
                                 <Text style={styles.TXT1}>Try Your Luck by scratching coupons{"\n"}and win 10000 Diamonds</Text>
-                                <View style={{ flex: 1,left:widthPercentageToDP(5), flexDirection: "row", paddingHorizontal: widthPercentageToDP(4), flexWrap: "wrap", alignSelf: "center", alignItems: "center" }}>
+                                <View style={{ flex: 1, left: widthPercentageToDP(5), flexDirection: "row", paddingHorizontal: widthPercentageToDP(4), flexWrap: "wrap", alignSelf: "center", alignItems: "center" }}>
                                     {
                                         this.state.Scratches.map((data, index) => {
                                             return (
@@ -93,9 +107,20 @@ class ScratchAndWin extends Component {
         );
     }
 
+    onXscrDone = () => {
+        this.setState({ showPopX: false })
+        this.props.navigation.navigate('NativeAdAppInstallCheck', { cardData: this.state.SelectedScratchDataEx })
+    }
+
     onCardPress = async (data) => {
-        await this.setState({ SelectedScratchData: data })
-        await this.setState({ showPop: true })
+        if (data.advertise == "native") {
+            await this.setState({ SelectedScratchDataEx: data })
+            this.setState({ showPopX: true })
+        }
+        else {
+            await this.setState({ SelectedScratchData: data })
+            await this.setState({ showPop: true })
+        }
     }
     ClosePop = async () => {
         await this.setState({ showPop: false })

@@ -42,6 +42,7 @@ import messaging from '@react-native-firebase/messaging';
 import { isFirstTime, setFirstTime, putNativeAdsObject } from '../ReduxConfig/Actions/Login/LoginActions'
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonLoader from '../Components/CommonLoader';
+import NativeAdAppInstallCheck from '../Screens/NativeAdAppInstallCheck';
 
 
 const slides = [
@@ -103,7 +104,8 @@ const AllInDrawer = createStackNavigator(
         CommentList: { screen: CommentList, navigationOptions: { headerShown: false } },
         ShareList: { screen: ShareList, navigationOptions: { headerShown: false } },
         CommonScreen: { screen: CommonScreen, navigationOptions: { headerShown: false } },
-        PrivacyAndPolicy: { screen: PrivacyAndPolicy, navigationOptions: { headerShown: false } }
+        PrivacyAndPolicy: { screen: PrivacyAndPolicy, navigationOptions: { headerShown: false } },
+        NativeAdAppInstallCheck: { screen: NativeAdAppInstallCheck, navigationOptions: { headerShown: false } }
     },
     {
         initialRouteName: "Home"
@@ -139,7 +141,7 @@ class Index extends Component {
     }
 
     async componentDidMount() {
-        
+
 
         await crashlytics().log('XXX')
 
