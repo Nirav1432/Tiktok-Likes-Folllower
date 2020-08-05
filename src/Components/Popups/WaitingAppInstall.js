@@ -10,64 +10,65 @@ import RNAndroidInstalledApps from 'react-native-android-installed-apps';
 import BackgroundTimer from 'react-native-background-timer';
 import AppStateListener from "react-native-appstate-listener";
 
+let before = 5000
 
-let seconds = 0;
-
-
-class AdsPopup extends Component {
+class WaitingAppInstall extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            note: "",
-            cardId: 0
+
         }
     }
 
-    componentWillReceiveProps() {
-        if (this.props.data != null)
-            this.setState({ cardId: this.props.data.scratche_id, note: this.props.data.note })
+    async componentDidMount() {
+        this.onBackground()
     }
-   
+
+    getAppsCount = async () => {
+        await RNAndroidInstalledApps.getNonSystemApps()
+            .then(apps => {
+                let after = apps.length
+                console.log('before--->', before)
+                console.log('after--->', after)
+                if (after > before) {
+                    this.props.appisInstalled()
+                }
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+    onActive = async () => {
+        this.getAppsCount()
+    }
+
+    onBackground = async () => {
+        console.log('in')
+        await RNAndroidInstalledApps.getNonSystemApps()
+            .then(apps => {
+                before = apps.length
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+
     render() {
         return (
-            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >               
-                <View style={styles.View1}>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.btn} onPress={() => this.props.simpleClose()}>
-                        <Image source={Icons.close} style={styles.img} />
-                    </TouchableOpacity>
-                    <View style={styles.View2}>
-                        <View style={{ flex: 1, marginLeft: hp(2), justifyContent: "center" }}>
-                            <Text style={styles.Text2}>
-                                {
-                                    this.state.note
-                                }
-                            </Text>
-                        </View>
-                        <TouchableOpacity onPress={() => this.InterStrialAds(this.props.Data.InterStrialId)} activeOpacity={1} style={styles.btn2} >
-                            <Text style={styles.Text1}>Install</Text>
-                        </TouchableOpacity>
-                    </View>
+            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
+                <AppStateListener
+                    onActive={() => this.onActive()}
+                    // onBackground={() => this.onBackground()}
+                />
+                <View style={[styles.View1, { height: hp(10), backgroundColor: "white", elevation: 5, borderRadius: hp(1.5), justifyContent: "center", alignItems: "center" }]}>
+                    <Text style={{ fontSize: hp(2.3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Waiting for app getting installed ...</Text>
                 </View>
             </Modal>
         )
     }
-    InterStrialAds = async (id) => {
 
-        await InterstitialAdManager.showAd(id)
-            .then((didClick) => {
-                if (didClick == true) {
-                    this.props.ClosePop()
-                }
-                else{
-                    alert('Please click on install button and and install the app, for getting the diamonds')
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
-
-
-    }
 }
 
 const mapStateToProps = (state) => {
@@ -82,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdsPopup);
+export default connect(mapStateToProps, mapDispatchToProps)(WaitingAppInstall);
 
 const styles = StyleSheet.create({
     View1: {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
         width: "90%",
         alignSelf: "center",
         fontFamily: Fonts.LatoBlack,
-        lineHeight:hp(3.6)
+        lineHeight: hp(3.6)
     },
     img: {
         height: hp(3.3), width: hp(3.3)

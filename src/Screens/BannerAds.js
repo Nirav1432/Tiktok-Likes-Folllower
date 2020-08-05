@@ -51,13 +51,16 @@ class BannerAds extends Component {
                     <BannerView
                         placementId={this.props.Data.BannerId}
                         type="standard"
-                        onPress={() => console.log('click')}
-                        onLoad={() => this.setState({ adsLoading: false })}
+                        onPress={(data) => console.log(data)}
+                        onLoad={(data) => this.onBannerLoad(data)}
                         onError={() => this.setState({ adsLoading: false })}
                     />
                 </View>
             </View>
         );
+    }
+    onBannerLoad=(dt)=>{
+        this.setState({ adsLoading: false })
     }
 }
 const mapStateToProps = (state) => {

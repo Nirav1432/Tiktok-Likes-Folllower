@@ -189,6 +189,9 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-android-installed-apps')
+    implementation project(':react-native-android-app-list')
+    implementation project(':react-native-scratch')
     implementation project(':react-native-device-info')
     implementation project(':react-native-splash-screen')
     implementation fileTree(dir: "libs", include: ["*.jar"])

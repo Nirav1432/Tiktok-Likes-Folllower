@@ -4,6 +4,7 @@ import styles from './styles/ScratchAndWinStyles';
 import { Icons } from "../Utils/IconManager";
 import Header from '../Components/Header';
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
+import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
 import { InterstitialAdManager, AdSettings, BannerView, NativeAdsManager } from 'react-native-fbads';
 import NativeAdsView from '../Screens/NativeAdsScreen'
 import { connect } from 'react-redux'
@@ -12,8 +13,11 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { ScrollView } from 'react-native-gesture-handler';
 import ScratchCardPopup from '../Components/Popups/ScratchCardPopup';
 import AdsPopup from '../Components/Popups/AdsPopup';
+import AppStateListener from "react-native-appstate-listener";
 import RNAndroidInstalledApps from 'react-native-android-installed-apps';
-import AppList from 'react-native-installed-apps';
+import WaitingAppInstall from '../Components/Popups/WaitingAppInstall';
+import Congratulations from '../Components/Popups/Congratulations'
+import Preloader from '../Components/Preloader'
 
 class ScratchAndWin extends Component {
     constructor(props) {
@@ -21,13 +25,17 @@ class ScratchAndWin extends Component {
         this.state = {
             data: { follower_coin: 0 },
             Scratches: [],
-            SelectedScratchData: null,
+            SelectedScratchData: { coin: 0 },
             showPop: false,
-            AdsPop: false
+            AdsPop: false,
+            AppCounter: 0,
+            isWaitingforDownloadComplete: false,
+            congo: false,
+            isLoaging: false
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         Services.scratcheList(this.props.Data.CommonData.userId).then((res) => {
             let x = []
             for (let obj of res.scratche) {
@@ -44,9 +52,21 @@ class ScratchAndWin extends Component {
     render() {
         return (
             <View style={styles.MAINVIW}>
+                <Preloader isLoader={this.state.isLoaging} />
                 <Header title={"Scratch & Win"} backPress={() => this.props.navigation.goBack()} coin={this.state.data.follower_coin} />
                 <ScratchCardPopup data={this.state.SelectedScratchData} visible={this.state.showPop} ClosePop={() => this.ClosePop()} onScratchDone={() => this.setState({ AdsPop: true })} />
-                <AdsPopup data={this.state.SelectedScratchData} visible={this.state.AdsPop} ClosePop={() => this.AdsPop()} />
+                <AdsPopup data={this.state.SelectedScratchData} visible={this.state.AdsPop} simpleClose={() => this.simpleClose()} ClosePop={() => this.AdsPop()} />
+                {
+                    this.state.isWaitingforDownloadComplete ?
+                        <WaitingAppInstall visible={this.state.isWaitingforDownloadComplete} appisInstalled={() => this.appisInstalled()} />
+                        :
+                        <></>
+                }
+                <Congratulations
+                    visible={this.state.congo}
+                    coins={this.state.SelectedScratchData.coin}
+                    ClosePop={() => this.setState({ congo: false })}
+                />
                 <View style={styles.ScratchView}>
                     {
                         this.state.Scratches.length > 0 ?
@@ -72,15 +92,37 @@ class ScratchAndWin extends Component {
             </View>
         );
     }
+
     onCardPress = async (data) => {
         await this.setState({ SelectedScratchData: data })
-        this.setState({ showPop: true })
+        await this.setState({ showPop: true })
     }
-    ClosePop = () => {
-        this.setState({ showPop: false })
+    ClosePop = async () => {
+        await this.setState({ showPop: false })
     }
-    AdsPop = () => {
-        this.setState({ AdsPop: false, showPop: false })
+    simpleClose = async () => {
+        await this.setState({ AdsPop: false, showPop: false })
+    }
+    AdsPop = async () => {
+        await this.setState({ AdsPop: false })
+        await this.setState({ showPop: false })
+        await this.setState({ isWaitingforDownloadComplete: true, })
+    }
+    appisInstalled = async () => {
+        this.setState({ isWaitingforDownloadComplete: false, isLoaging: true })
+        let data = {
+            user_id: this.props.Data.CommonData.userId,
+            coin: this.state.SelectedScratchData.coin,
+            scratche_id: this.state.SelectedScratchData.scratche_id
+        }
+        await Services.ScratchLog(data).then(async (res) => {
+            await this.props.setCoins(res.coin)
+            this.setState({ isLoaging: false })
+            this.setState({ congo: true })
+        }).catch((err) => {
+            this.setState({ isLoaging: false })
+            alert('Something Wrong ! You will get your diamonds soon')
+        })
     }
 }
 const mapStateToProps = (state) => {
@@ -92,6 +134,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         putCouter: (cnt) => dispatch(putcount(cnt)),
+        setCoins: (coin) => dispatch(setDiamonds(coin)),
         showAds: () => dispatch(shoeAds()),
         hideAds: () => dispatch(hideAds()),
     };
