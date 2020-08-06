@@ -28,6 +28,7 @@ class ShareAndRate extends Component {
 
 
     componentDidMount() {
+        console.log(this.props)
         // if (this.props.Data.adsCounter == this.props.Data.maxAdsCounter) {
         //     setTimeout(async () => {
         //         await this.props.showAds()

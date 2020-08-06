@@ -51,10 +51,7 @@ export default class ScratchCardPopup extends Component {
                         placeholderColor="#FE2C55" // Scratch color while image is loading (or while image not present)
                         imageUrl="http://134.209.103.120/TiktokFollower/public/images/Scratch.jpg"
                         resourceName="your_image" // A url to your image (Optional)
-                        resizeMode="cover" // Resize the image to fit or fill the scratch view. Default is stretch
-                        onImageLoadFinished={this.onImageLoadFinished} // Event to indicate that the image has done loading
-                        onTouchStateChanged={this.onTouchStateChangedMethod} // Touch event (to stop a containing FlatList for example)
-                        onScratchProgressChanged={this.onScratchProgressChanged} // Scratch progress event while scratching
+                        resizeMode="cover" // Resize the image to fit or fill the scratch view. Default is stretch                     
                         onScratchDone={() => this.props.onScratchDone()} // Scratch is done event
                     />
                 </View>

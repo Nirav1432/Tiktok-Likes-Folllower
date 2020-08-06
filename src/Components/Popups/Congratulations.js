@@ -19,7 +19,7 @@ class Congratulations extends Component {
             this.props.navigation.state.routeName != "DoLikes" &&
             this.props.navigation.state.routeName != "DoShare"
         ) {
-            if (this.props.navigation.state.routeName == "watchVideoButton") {
+            if (this.props.navigation.state.routeName == "watchVideoButton" || this.props.navigation.state.routeName=='NativeAdAppInstallCheck') {
                 this.props.navigation.goBack()
             }
             else

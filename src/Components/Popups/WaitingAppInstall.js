@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import Modal from 'react-native-modal';
 import { Icons } from '../../Utils/IconManager';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
@@ -15,8 +15,7 @@ let before = 5000
 class WaitingAppInstall extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-
+        this.state = {       
         }
     }
 
@@ -26,11 +25,12 @@ class WaitingAppInstall extends Component {
 
     getAppsCount = async () => {
         await RNAndroidInstalledApps.getNonSystemApps()
-            .then(apps => {
+            .then(apps => {            
                 let after = apps.length
                 console.log('before--->', before)
                 console.log('after--->', after)
                 if (after > before) {
+                    before=after
                     this.props.appisInstalled()
                 }
             })
@@ -44,9 +44,8 @@ class WaitingAppInstall extends Component {
     }
 
     onBackground = async () => {
-        console.log('in')
         await RNAndroidInstalledApps.getNonSystemApps()
-            .then(apps => {
+            .then(apps => {        
                 before = apps.length
             })
             .catch(error => {
@@ -57,15 +56,9 @@ class WaitingAppInstall extends Component {
 
     render() {
         return (
-            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
-                <AppStateListener
-                    onActive={() => this.onActive()}
-                    // onBackground={() => this.onBackground()}
-                />
-                <View style={[styles.View1, { height: hp(10), backgroundColor: "white", elevation: 5, borderRadius: hp(1.5), justifyContent: "center", alignItems: "center" }]}>
-                    <Text style={{ fontSize: hp(2.3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Waiting for app getting installed ...</Text>
-                </View>
-            </Modal>
+            <AppStateListener
+                onActive={() => this.onActive()}
+            />
         )
     }
 
