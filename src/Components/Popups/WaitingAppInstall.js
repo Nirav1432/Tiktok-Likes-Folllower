@@ -19,7 +19,7 @@ class WaitingAppInstall extends Component {
         }
     }
 
-    async componentDidMount() {
+    async UNSAFE_componentWillMount() {
         this.onBackground()
     }
 

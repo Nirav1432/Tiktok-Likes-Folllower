@@ -48,7 +48,10 @@ class ScratchAndWin extends Component {
 
     getDt = () => {
         this.setState({ Scratches: [] })
-        Services.scratcheList(this.props.Data.CommonData.userId).then((res) => {
+        let dt = {
+            user_id: this.props.Data.CommonData.userId
+        }
+        Services.scratcheList(dt).then((res) => {
             let x = []
             for (let obj of res.scratche) {
                 x.push(obj)
@@ -89,7 +92,7 @@ class ScratchAndWin extends Component {
                         this.state.Scratches.length > 0 ?
                             <ScrollView>
                                 <Text style={styles.TXT1}>Try Your Luck by scratching coupons{"\n"}and win 10000 Diamonds</Text>
-                                <View style={{ flex: 1, left: widthPercentageToDP(5), flexDirection: "row", paddingHorizontal: widthPercentageToDP(4), flexWrap: "wrap", alignSelf: "center", alignItems: "center" }}>
+                                <View style={{ alignItems: "center", flexDirection: "row", flexWrap: "wrap", left: widthPercentageToDP(8.5) }}>
                                     {
                                         this.state.Scratches.map((data, index) => {
                                             return (

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
 
     MAINVIW: { flex: 1, backgroundColor: "#E9ECF2" },
     TXT1: { fontFamily: Fonts.LatoBlack, fontSize: hp(3), alignSelf: "center", textAlign: "center", marginVertical: hp(3) },
-    ScratchView: { flex: 1, justifyContent: "center", alignItems: "center" },
+    ScratchView: { flex: 1, justifyContent: "center" },
     View1: {
         width: wp(40),
         backgroundColor: "white",

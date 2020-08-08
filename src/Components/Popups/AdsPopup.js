@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import RNAndroidInstalledApps from 'react-native-android-installed-apps';
 import BackgroundTimer from 'react-native-background-timer';
 import AppStateListener from "react-native-appstate-listener";
+import { puMaxCount, putcount, shoeAds, hideAds } from '../../ReduxConfig/Actions/AddCount/AddCount';
 
 
 let seconds = 0;
@@ -27,23 +28,23 @@ class AdsPopup extends Component {
         if (this.props.data != null)
             this.setState({ cardId: this.props.data.scratche_id, note: this.props.data.note })
     }
-   
+
     render() {
         return (
-            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >               
+            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
                 <View style={styles.View1}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.btn} onPress={() => this.props.simpleClose()}>
                         <Image source={Icons.close} style={styles.img} />
                     </TouchableOpacity>
                     <View style={styles.View2}>
-                        <View style={{ flex: 1, marginLeft: hp(2), justifyContent: "center" }}>
+                        <View style={{ flex: 1, justifyContent: "center" }}>
                             <Text style={styles.Text2}>
                                 {
                                     this.state.note
                                 }
                             </Text>
                         </View>
-                        <TouchableOpacity onPress={() => this.InterStrialAds(this.props.Data.InterStrialId)} activeOpacity={1} style={styles.btn2} >
+                        <TouchableOpacity onPress={() => this.InterStrialAds(this.props.Data.InterStrialId)} activeOpacity={0.7} style={styles.btn2} >
                             <Text style={styles.Text1}>Install</Text>
                         </TouchableOpacity>
                     </View>
@@ -51,20 +52,29 @@ class AdsPopup extends Component {
             </Modal>
         )
     }
+
     InterStrialAds = async (id) => {
 
-        await InterstitialAdManager.showAd(id)
-            .then((didClick) => {
-                if (didClick == true) {
-                    this.props.ClosePop()
-                }
-                else{
-                    alert('Please click on install button and and install the app, for getting the diamonds')
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        await this.props.showAds()
+
+        setTimeout(async () => {
+            await InterstitialAdManager.showAd(id)
+                .then(async (didClick) => {
+                    await this.props.hideAds()
+                    if (didClick == true) {
+                        this.props.ClosePop()
+                    }
+                    else {
+                        alert('Please click on install button and and install the app, for getting the diamonds')
+                    }
+                })
+                .catch(error => {
+                    this.props.hideAds()
+                    console.log(error)
+                });
+        }, 3000)
+
+
 
 
     }
@@ -79,6 +89,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setCoins: () => dispatch(setDiamonds(OtherData.coin)),
+        showAds: () => dispatch(shoeAds()),
+        hideAds: () => dispatch(hideAds()),
     };
 };
 
@@ -86,7 +98,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(AdsPopup);
 
 const styles = StyleSheet.create({
     View1: {
-        height: hp(50), width: "80%", backgroundColor: "white", alignSelf: "center"
+        minHeight: hp(60), width: "95%", backgroundColor: "white", alignSelf: "center"
     },
     View2: {
         flex: 1
@@ -97,12 +109,13 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.LatoBlack
     },
     Text2: {
-        fontSize: hp(2.5),
+        fontSize: hp(2.4),
         color: '#333333',
-        width: "90%",
+        textAlign: "center",
+        width: "92%",
         alignSelf: "center",
-        fontFamily: Fonts.LatoBlack,
-        lineHeight:hp(3.6)
+        top: hp(3),
+        fontFamily: Fonts.LatoBold,
     },
     img: {
         height: hp(3.3), width: hp(3.3)

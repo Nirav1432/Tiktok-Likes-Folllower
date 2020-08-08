@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import Modal from 'react-native-modal';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { Fonts } from '../../Utils/fonts';
@@ -12,12 +12,17 @@ class GetAppsPop extends Component {
         this.state = {
             getttingApps: true
         }
-    }   
+    }
     render() {
         return (
-            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >              
+            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
                 <View style={[styles.View1, { height: hp(10), backgroundColor: "white", elevation: 5, borderRadius: hp(1.5), justifyContent: "center", alignItems: "center" }]}>
-                    <Text style={{ fontSize: hp(2.3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Waiting for app getting installed ...</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <ActivityIndicator size="large" />
+                        <View style={{ justifyContent: "center" }}>
+                            <Text style={{ fontSize: hp(2), marginLeft: wp(3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Please wait until app get installed ...</Text>
+                        </View>
+                    </View>
                 </View>
             </Modal>
         )
@@ -41,7 +46,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(GetAppsPop);
 
 const styles = StyleSheet.create({
     View1: {
-        height: hp(50), width: "80%", backgroundColor: "white", alignSelf: "center"
+        height: hp(50), width: "86%", backgroundColor: "white", alignSelf: "center"
     },
     View2: {
         flex: 1

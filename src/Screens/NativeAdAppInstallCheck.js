@@ -67,46 +67,7 @@ class NativeAdAppInstallCheck extends Component {
                     <View style={{ flex: 1, marginBottom:hp(2) }}>
                         <NativeAdViewTwo onAddpress={() => this.onAddpress()} adsManager={this.props.Data.NativeADSObj} />
                     </View>
-                </ScrollView>
-                {/* <View style={{
-                    position: "absolute",
-                    backgroundColor: "transparent",
-                    width: "100%",
-                    alignSelf: "center",
-                    elevation: 3,
-                    bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
-                }}>
-                    {
-                        this.state.adsLoading ?
-                            <View style={{
-                                flexDirection: "row",
-                                borderWidth: heightPercentageToDP(0.2),
-                                backgroundColor: "white",
-                                borderColor: "#3C64B3",
-                                borderRadius: heightPercentageToDP(1),
-                                height: heightPercentageToDP(6),
-                                justifyContent: "center",
-                                // position:"absolute",
-                                // zIndex:100
-                            }}>
-                                <ActivityIndicator color={"#3C64B3"} />
-                                <View style={{ justifyContent: "center" }}>
-                                    <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
-                                </View>
-                            </View>
-                            :
-                            <></>
-                    }
-                    <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
-                        <BannerView
-                            placementId={this.props.Data.BannerId}
-                            type="standard"
-                            onPress={() => this.onAddpress()}
-                            onLoad={(data) => this.onBannerLoad(data)}
-                            onError={() => this.setState({ adsLoading: false })}
-                        />
-                    </View>
-                </View> */}
+                </ScrollView>         
             </View>
         )
     }
@@ -166,9 +127,8 @@ const styles = StyleSheet.create({
         fontSize: hp(3),
         color: '#333333',
         alignSelf: "center",
-        textAlign: "justify",
-        width: "70%",
+        textAlign: "center",
+        width: "80%",
         fontFamily: Fonts.LatoBlack,
-        lineHeight: hp(5)
     },
 })
