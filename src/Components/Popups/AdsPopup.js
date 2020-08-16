@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-native';
 import Modal from 'react-native-modal';
 import { Icons } from '../../Utils/IconManager';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { Fonts } from '../../Utils/fonts';
 import { InterstitialAdManager, AdSettings } from 'react-native-fbads';
 import { connect } from 'react-redux'
-import RNAndroidInstalledApps from 'react-native-android-installed-apps';
-import BackgroundTimer from 'react-native-background-timer';
-import AppStateListener from "react-native-appstate-listener";
 import { puMaxCount, putcount, shoeAds, hideAds } from '../../ReduxConfig/Actions/AddCount/AddCount';
 
 
@@ -55,24 +52,26 @@ class AdsPopup extends Component {
 
     InterStrialAds = async (id) => {
 
-        await this.props.showAds()
+        Linking.openURL('https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster')
 
-        setTimeout(async () => {
-            await InterstitialAdManager.showAd(id)
-                .then(async (didClick) => {
-                    await this.props.hideAds()
-                    if (didClick == true) {
-                        this.props.ClosePop()
-                    }
-                    else {
-                        alert('Please click on install button and and install the app, for getting the diamonds')
-                    }
-                })
-                .catch(error => {
-                    this.props.hideAds()
-                    console.log(error)
-                });
-        }, 3000)
+        // await this.props.showAds()
+
+        // setTimeout(async () => {
+        //     await InterstitialAdManager.showAd(id)
+        //         .then(async (didClick) => {
+        //             await this.props.hideAds()
+        //             if (didClick == true) {
+        //                 this.props.ClosePop()
+        //             }
+        //             else {
+        //                 alert('Please click on install button and and install the app, for getting the diamonds')
+        //             }
+        //         })
+        //         .catch(error => {
+        //             this.props.hideAds()
+        //             console.log(error)
+        //         });
+        // }, 3000)
 
 
 
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "92%",
         alignSelf: "center",
-        top: hp(3),
+        marginTop: hp(1),
         fontFamily: Fonts.LatoBold,
     },
     img: {

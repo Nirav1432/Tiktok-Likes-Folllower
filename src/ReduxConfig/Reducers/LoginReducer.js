@@ -1,4 +1,4 @@
-import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK, SET_FIRST_TIME, SET_PRIVACY, SET_NATIVE_OBJ, SET_INTERSRIAL_ID, SET_BANNER_ID, PUT_SHOW_VIDEO } from '../Actions/Login/LoginActions'
+import { PUT_LOGIN, SET_DIAMONDS, FIRST_TIME_CHECK, SET_FIRST_TIME, SET_PRIVACY, SET_NATIVE_OBJ, SET_INTERSRIAL_ID, SET_BANNER_ID, PUT_SHOW_VIDEO, SHOW_APP_INSTALL_POP } from '../Actions/Login/LoginActions'
 import { PUT_COUNT, GET_COUNT, PUT_MAX_COUNT, SHOW_ADS, HIDE_ADS } from '../Actions/AddCount/AddCount'
 const initialState = {
   CommonData: null,
@@ -11,6 +11,7 @@ const initialState = {
   NativeADSObj: null,
   InterStrialId: null,
   BannerId: null,
+  isWaitingforDownloadCompletePop: false,
   show_reward_video: false
 };
 
@@ -113,6 +114,13 @@ const LoginReducer = (state = initialState, action) => {
     case PUT_SHOW_VIDEO: {
       return Object.assign({}, state, {
         show_reward_video: action.data
+      })
+    }
+      break;
+
+    case SHOW_APP_INSTALL_POP: {
+      return Object.assign({}, state, {
+        isWaitingforDownloadCompletePop: action.data
       })
     }
       break;

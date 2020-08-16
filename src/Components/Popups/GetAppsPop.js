@@ -6,21 +6,17 @@ import { Fonts } from '../../Utils/fonts';
 import { connect } from 'react-redux'
 
 
-class GetAppsPop extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            getttingApps: true
-        }
-    }
+export default class GetAppsPop extends Component {
     render() {
         return (
-            <Modal isVisible={this.props.visible} animationIn="slideInRight" animationOut="slideOutRight" >
+            <Modal isVisible={this.props.visible}>
                 <View style={[styles.View1, { height: hp(10), backgroundColor: "white", elevation: 5, borderRadius: hp(1.5), justifyContent: "center", alignItems: "center" }]}>
                     <View style={{ flexDirection: "row" }}>
-                        <ActivityIndicator size="large" />
-                        <View style={{ justifyContent: "center" }}>
-                            <Text style={{ fontSize: hp(2), marginLeft: wp(3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Please wait until app get installed ...</Text>
+                        <View style={{ flex: 1.8, alignItems: "flex-end" }}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                        <View style={{ justifyContent: "center", flex: 8.2 }}>
+                            <Text style={{ fontSize: hp(2), marginLeft: wp(3), color: "#333333", fontFamily: Fonts.LatoBlack }}>Cheking for app is installed or not ...</Text>
                         </View>
                     </View>
                 </View>
@@ -30,23 +26,11 @@ class GetAppsPop extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-        Data: state.LoginData
-    };
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setCoins: () => dispatch(setDiamonds(OtherData.coin)),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GetAppsPop);
 
 const styles = StyleSheet.create({
     View1: {
-        height: hp(50), width: "86%", backgroundColor: "white", alignSelf: "center"
+        height: hp(50), width: "95%", backgroundColor: "white", alignSelf: "center"
     },
     View2: {
         flex: 1

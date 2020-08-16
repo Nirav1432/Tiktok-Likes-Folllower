@@ -57,7 +57,8 @@ class WaitingAppInstall extends Component {
     render() {
         return (
             <AppStateListener
-                onActive={() => this.onActive()}
+                // onActive={() => this.onActive()}
+                onBackground={()=>this.getAppsCount()}
             />
         )
     }

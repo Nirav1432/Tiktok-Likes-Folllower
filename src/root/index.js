@@ -43,6 +43,7 @@ import { isFirstTime, setFirstTime, putNativeAdsObject } from '../ReduxConfig/Ac
 import crashlytics from '@react-native-firebase/crashlytics';
 import CommonLoader from '../Components/CommonLoader';
 import NativeAdAppInstallCheck from '../Screens/NativeAdAppInstallCheck';
+import GetAppsPop from '../Components/Popups/GetAppsPop';
 
 
 const slides = [
@@ -142,7 +143,6 @@ class Index extends Component {
 
     async componentDidMount() {
 
-
         await crashlytics().log('XXX')
 
         await Promise.all([
@@ -189,6 +189,7 @@ class Index extends Component {
                 :
                 <View style={{ flex: 1 }}>
                     <CommonLoader visible={this.props.Data.showAds} />
+                    <GetAppsPop visible={this.props.isWaitingforDownloadCompletePop} />
                     <All />
                 </View>
 
@@ -212,7 +213,8 @@ class Index extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        Data: state.LoginData
+        Data: state.LoginData,
+        isWaitingforDownloadCompletePop: state.LoginData.isWaitingforDownloadCompletePop
     };
 };
 

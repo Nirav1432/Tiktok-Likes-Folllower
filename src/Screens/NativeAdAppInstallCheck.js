@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, ActivityIndicator, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ActivityIndicator, ScrollView, Platform, Button, Linking } from 'react-native'
 import AdsPopup from '../Components/Popups/AdsPopup'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
@@ -11,10 +11,15 @@ import WaitingAppInstall from '../Components/Popups/WaitingAppInstallTwo';
 import { Services } from '../Configurations/Api/Connections';
 import Preloader from '../Components/Preloader';
 import { puMaxCount, putcount, shoeAds, hideAds } from '../ReduxConfig/Actions/AddCount/AddCount';
-import { setDiamonds } from '../ReduxConfig/Actions/Login/LoginActions';
+import { setDiamonds, ShowAppInstallPop } from '../ReduxConfig/Actions/Login/LoginActions';
 import Congratulations from '../Components/Popups/Congratulations';
 import GetAppsPop from '../Components/Popups/GetAppsPop';
 import NativeAdViewTwo from '../Screens/NativeAdsScreenTwo'
+import RNAndroidInstalledApps from 'react-native-android-installed-apps';
+import AppStateListener from "react-native-appstate-listener";
+import BannerAds from './BannerAds';
+
+let before = 5000
 
 class NativeAdAppInstallCheck extends Component {
     constructor(props) {
@@ -27,18 +32,68 @@ class NativeAdAppInstallCheck extends Component {
             isWaitingforDownloadComplete: false,
             isWaiting: false,
             isLoaging: false,
-            congo: false
+            congo: false,
+            isAddPessed: false,
+            adsType: ""
         }
     }
+
     componentDidMount() {
         let dt = this.props.navigation.getParam('cardData')
-        this.setState({ note: dt.note, coin: dt.coin, scratche_id: dt.scratche_id })
+        console.log(dt)
+        this.setState({ note: dt.note, coin: dt.coin, scratche_id: dt.scratche_id, adsType: dt.advertise })
+        setTimeout(() => this.onBackground(), 3000)
     }
+
+    getAppsCount = async () => {
+        await RNAndroidInstalledApps.getNonSystemApps()
+            .then(apps => {
+                let after = apps.length
+                console.log('before--->', before)
+                console.log('after--->', after)
+                if (after > before) {
+                    before = after
+                    this.appisInstalled()
+                }
+                else {
+                    this.props.showInstallPop(false)
+                    alert("Sorry ! without installing app you can't get Diamonds")
+                }
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+    onBackground = async () => {
+        await RNAndroidInstalledApps.getNonSystemApps()
+            .then(apps => {
+                before = apps.length
+                console.log('before--->', before)
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+    onActive = async () => {
+        if (this.state.isAddPessed) {
+            await this.props.showInstallPop(true)
+            setTimeout(() => {
+                this.getAppsCount()
+            }, 6000)
+        }
+    }
+
     render() {
         return (
             <View style={{ flex: 1 }}>
 
                 <Header title={"Scratch & Win"} backPress={() => this.props.navigation.goBack()} coin={0} />
+
+                <AppStateListener
+                    onActive={() => this.onActive()}
+                />
 
                 <Congratulations
                     visible={this.state.congo}
@@ -48,15 +103,13 @@ class NativeAdAppInstallCheck extends Component {
 
                 <Preloader isLoader={this.state.isLoaging} />
 
-                <GetAppsPop visible={this.state.isWaiting} />
-
                 <ScrollView style={{ flex: 1 }}>
-                    {
+                    {/* {
                         this.state.isWaitingforDownloadComplete ?
                             <WaitingAppInstall appisInstalled={() => this.appisInstalled()} />
                             :
                             <></>
-                    }
+                    } */}
                     <View style={{ minHeight: hp(30), alignItems: "center", justifyContent: "center" }}>
                         <Text style={styles.Text2}>
                             {
@@ -64,24 +117,65 @@ class NativeAdAppInstallCheck extends Component {
                             }
                         </Text>
                     </View>
-                    <View style={{ flex: 1, marginBottom:hp(2) }}>
-                        <NativeAdViewTwo onAddpress={() => this.onAddpress()} adsManager={this.props.Data.NativeADSObj} />
-                    </View>
-                </ScrollView>         
+                    {
+                        this.state.adsType == "native" ?
+                            //Make Flex 1
+                            <View style={{ flex: 1, marginBottom: hp(2), justifyContent: "flex-end" }}>
+                                <NativeAdViewTwo onAddpress={() => this.onAddpress()} adsManager={this.props.Data.NativeADSObj} />
+                                {/* <Button title="Native ad" onPress={() => this.onAddpress()} /> */}
+                            </View>
+                            :
+                            <View style={{ height: hp(58), justifyContent: "flex-end" }}>
+                                {/* <Button title="Banner ad" onPress={() => this.onAddpress()} /> */}
+                                <View style={{
+                                    position: "absolute",
+                                    backgroundColor: "transparent",
+                                    width: "100%",
+                                    alignSelf: "center",
+                                    elevation: 3,
+                                    bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
+                                }}>
+                                    {
+                                        this.state.adsLoading ?
+                                            <View style={{
+                                                flexDirection: "row",
+                                                borderWidth: heightPercentageToDP(0.2),
+                                                backgroundColor: "white",
+                                                borderColor: "#3C64B3",
+                                                borderRadius: heightPercentageToDP(1),
+                                                height: heightPercentageToDP(6),
+                                                justifyContent: "center",
+                                                // position:"absolute",
+                                                // zIndex:100
+                                            }}>
+                                                <ActivityIndicator color={"#3C64B3"} />
+                                                <View style={{ justifyContent: "center" }}>
+                                                    <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
+                                                </View>
+                                            </View>
+                                            :
+                                            <></>
+                                    }
+                                    <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
+                                        <BannerView
+                                            placementId={this.props.Data.BannerId}
+                                            type="standard"
+                                            onPress={() => this.onAddpress()}
+                                            onLoad={(data) => this.onBannerLoad(data)}
+                                            onError={() => this.setState({ adsLoading: false })}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                    }
+                </ScrollView>
             </View>
         )
     }
 
     onAddpress = async () => {
-        this.setState({ isWaiting: true }, () => {
-        })
-        setTimeout(()=>{
-            this.EnableOther()
-        },5000)
-    }
-
-    EnableOther = async () => {
-        this.setState({ isWaitingforDownloadComplete: true, })
+        this.setState({ isAddPessed: true })
+        // Linking.openURL('https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster')
     }
 
     onBannerLoad = (dt) => {
@@ -89,6 +183,7 @@ class NativeAdAppInstallCheck extends Component {
     }
 
     appisInstalled = async () => {
+        this.props.showInstallPop(false)
         this.setState({ isWaiting: false, isWaitingforDownloadComplete: false, isLoaging: true })
         let data = {
             user_id: this.props.Data.CommonData.userId,
@@ -117,6 +212,7 @@ const mapDispatchToProps = (dispatch) => {
         putCouter: (cnt) => dispatch(putcount(cnt)),
         showAds: () => dispatch(shoeAds()),
         hideAds: () => dispatch(hideAds()),
+        showInstallPop: (bool) => dispatch(ShowAppInstallPop(bool)),
     };
 };
 

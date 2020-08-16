@@ -7,6 +7,8 @@ export const SET_NATIVE_OBJ = "SET_NATIVE_OBJ"
 export const SET_BANNER_ID = "SET_BANNER_ID"
 export const SET_INTERSRIAL_ID = "SET_INTERSRIAL_ID"
 export const PUT_SHOW_VIDEO = "PUT_SHOW_VIDEO"
+export const SHOW_APP_INSTALL_POP = "SHOW_APP_INSTALL_POP"
+
 
 
 export const putLogin = (dataFromServer) => {
@@ -66,6 +68,13 @@ export const setInterStrialId = (object) => {
 export const PutShowVideo = (isShow) => {
     return {
         type: PUT_SHOW_VIDEO,
+        data: isShow
+    }
+}
+
+export const ShowAppInstallPop = (isShow) => {
+    return {
+        type: SHOW_APP_INSTALL_POP,
         data: isShow
     }
 }
