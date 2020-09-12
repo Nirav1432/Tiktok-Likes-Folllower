@@ -52,26 +52,26 @@ class AdsPopup extends Component {
 
     InterStrialAds = async (id) => {
 
-        Linking.openURL('https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster')
+        // Linking.openURL('https://play.google.com/store/apps/details?id=com.harekrishna.tikbooster')
 
-        // await this.props.showAds()
+        await this.props.showAds()
 
-        // setTimeout(async () => {
-        //     await InterstitialAdManager.showAd(id)
-        //         .then(async (didClick) => {
-        //             await this.props.hideAds()
-        //             if (didClick == true) {
-        //                 this.props.ClosePop()
-        //             }
-        //             else {
-        //                 alert('Please click on install button and and install the app, for getting the diamonds')
-        //             }
-        //         })
-        //         .catch(error => {
-        //             this.props.hideAds()
-        //             console.log(error)
-        //         });
-        // }, 3000)
+        setTimeout(async () => {
+            await InterstitialAdManager.showAd(id)
+                .then(async (didClick) => {
+                    await this.props.hideAds()
+                    if (didClick == true) {
+                        // this.props.ClosePop()
+                    }
+                    else {
+                        alert('Please click on install button and and install the app, for getting the diamonds')
+                    }
+                })
+                .catch(error => {
+                    this.props.hideAds()
+                    console.log(error)
+                });
+        }, 3000)
 
 
 

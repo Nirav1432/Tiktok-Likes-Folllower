@@ -52,11 +52,16 @@ class ScratchAndWin extends Component {
             user_id: this.props.Data.CommonData.userId
         }
         Services.scratcheList(dt).then((res) => {
-            let x = []
-            for (let obj of res.scratche) {
-                x.push(obj)
+            if (res.flag == true) {
+                let x = []
+                for (let obj of res.scratche) {
+                    x.push(obj)
+                }
+                this.setState({ Scratches: x, isLoaging: false })
             }
-            this.setState({ Scratches: x, isLoaging: false })
+            else{
+                this.setState({ isLoaging: false })
+            }
         })
         setTimeout(() => this.onBackground(), 3000)
     }
@@ -161,11 +166,18 @@ class ScratchAndWin extends Component {
 
     onXscrDone = () => {
         this.setState({ showPopX: false })
-        this.props.navigation.navigate('NativeAdAppInstallCheck', { cardData: this.state.SelectedScratchDataEx })
+        if (this.state.SelectedScratchDataEx.advertise == "native")
+            this.props.navigation.navigate('NativeAdAppInstallCheck', { cardData: this.state.SelectedScratchDataEx })
+        else
+            this.props.navigation.navigate('BannerInstallApp', { cardData: this.state.SelectedScratchDataEx })
     }
 
     onCardPress = async (data) => {
-        if (data.advertise == "native" || data.advertise == "banner") {
+        if (data.advertise == "native") {
+            await this.setState({ SelectedScratchDataEx: data })
+            this.setState({ showPopX: true })
+        }
+        else if (data.advertise == "banner") {
             await this.setState({ SelectedScratchDataEx: data })
             this.setState({ showPopX: true })
         }
@@ -186,11 +198,7 @@ class ScratchAndWin extends Component {
     }
 
     AdsPop = async () => {
-        // await this.setState({ AdsPop: false })
-        // await this.setState({ showPop: false })
-        // this.props.showInstallPop(true) 
         this.setState({ isWaitingforDownloadComplete: true, })
-
     }
 
     appisInstalled = async () => {

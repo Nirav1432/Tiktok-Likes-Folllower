@@ -44,6 +44,7 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import CommonLoader from '../Components/CommonLoader';
 import NativeAdAppInstallCheck from '../Screens/NativeAdAppInstallCheck';
 import GetAppsPop from '../Components/Popups/GetAppsPop';
+import BannerInstallApp from '../Screens/BannerInstallApp';
 
 
 const slides = [
@@ -106,7 +107,8 @@ const AllInDrawer = createStackNavigator(
         ShareList: { screen: ShareList, navigationOptions: { headerShown: false } },
         CommonScreen: { screen: CommonScreen, navigationOptions: { headerShown: false } },
         PrivacyAndPolicy: { screen: PrivacyAndPolicy, navigationOptions: { headerShown: false } },
-        NativeAdAppInstallCheck: { screen: NativeAdAppInstallCheck, navigationOptions: { headerShown: false } }
+        NativeAdAppInstallCheck: { screen: NativeAdAppInstallCheck, navigationOptions: { headerShown: false } },
+        BannerInstallApp: { screen: BannerInstallApp, navigationOptions: { headerShown: false } }
     },
     {
         initialRouteName: "Home"

@@ -21,7 +21,7 @@ import BannerAds from './BannerAds';
 
 let before = 5000
 
-class NativeAdAppInstallCheck extends Component {
+class BannerInstallApp extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -103,13 +103,8 @@ class NativeAdAppInstallCheck extends Component {
 
                 <Preloader isLoader={this.state.isLoaging} />
 
-                <ScrollView style={{ flex: 1 }}>
-                    {/* {
-                        this.state.isWaitingforDownloadComplete ?
-                            <WaitingAppInstall appisInstalled={() => this.appisInstalled()} />
-                            :
-                            <></>
-                    } */}
+                <View style={{ flex: 1 }}>
+
                     <View style={{ minHeight: hp(30), alignItems: "center", justifyContent: "center" }}>
                         <Text style={styles.Text2}>
                             {
@@ -117,58 +112,46 @@ class NativeAdAppInstallCheck extends Component {
                             }
                         </Text>
                     </View>
-                    {
-                        this.state.adsType == "native" ?
-                            //Make Flex 1
-                            <View style={{ flex: 1, marginBottom: hp(2), justifyContent: "flex-end" }}>
-                                <NativeAdViewTwo onAddpress={() => this.onAddpress()} adsManager={this.props.Data.NativeADSObj} />
-                                {/* <Button title="Native ad" onPress={() => this.onAddpress()} /> */}
-                            </View>
-                            :
-                            <View style={{ height: hp(58), justifyContent: "flex-end" }}>
-                                {/* <Button title="Banner ad" onPress={() => this.onAddpress()} /> */}
-                                <View style={{
-                                    position: "absolute",
-                                    backgroundColor: "transparent",
-                                    width: "100%",
-                                    alignSelf: "center",
-                                    elevation: 3,
-                                    bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
-                                }}>
-                                    {
-                                        this.state.adsLoading ?
-                                            <View style={{
-                                                flexDirection: "row",
-                                                borderWidth: heightPercentageToDP(0.2),
-                                                backgroundColor: "white",
-                                                borderColor: "#3C64B3",
-                                                borderRadius: heightPercentageToDP(1),
-                                                height: heightPercentageToDP(6),
-                                                justifyContent: "center",
-                                                // position:"absolute",
-                                                // zIndex:100
-                                            }}>
-                                                <ActivityIndicator color={"#3C64B3"} />
-                                                <View style={{ justifyContent: "center" }}>
-                                                    <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
-                                                </View>
-                                            </View>
-                                            :
-                                            <></>
-                                    }
-                                    <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
-                                        <BannerView
-                                            placementId={this.props.Data.BannerId}
-                                            type="standard"
-                                            onPress={() => this.onAddpress()}
-                                            onLoad={(data) => this.onBannerLoad(data)}
-                                            onError={() => this.setState({ adsLoading: false })}
-                                        />
+                    <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                        <View style={{
+                            position: "absolute",
+                            backgroundColor: "transparent",
+                            width: "100%",
+                            alignSelf: "center",
+                            elevation: 3,
+                            bottom: Platform.OS === "ios" ? heightPercentageToDP(0) : 0
+                        }}>
+                            {
+                                this.state.adsLoading ?
+                                    <View style={{
+                                        flexDirection: "row",
+                                        borderWidth: heightPercentageToDP(0.2),
+                                        backgroundColor: "white",
+                                        borderColor: "#3C64B3",
+                                        borderRadius: heightPercentageToDP(1),
+                                        height: heightPercentageToDP(6),
+                                        justifyContent: "center",                                        
+                                    }}>
+                                        <ActivityIndicator color={"#3C64B3"} />
+                                        <View style={{ justifyContent: "center" }}>
+                                            <Text style={{ fontFamily: Fonts.LatoBold, left: 10 }}>Ads Loading</Text>
+                                        </View>
                                     </View>
-                                </View>
+                                    :
+                                    <></>
+                            }
+                            <View style={{ height: this.state.adsLoading ? 0 : "6%" }}>
+                                <BannerView
+                                    placementId={this.props.Data.BannerId}
+                                    type="standard"
+                                    onPress={() => this.onAddpress()}
+                                    onLoad={(data) => this.onBannerLoad(data)}
+                                    onError={() => this.setState({ adsLoading: false })}
+                                />
                             </View>
-                    }
-                </ScrollView>
+                        </View>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -183,7 +166,7 @@ class NativeAdAppInstallCheck extends Component {
     }
 
     appisInstalled = async () => {
-        this.props.showInstallPop(false)
+        this.props.showInstallPop(false)   
         this.setState({ isWaiting: false, isWaitingforDownloadComplete: false, isLoaging: true })
         let data = {
             user_id: this.props.Data.CommonData.userId,
@@ -216,7 +199,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NativeAdAppInstallCheck);
+export default connect(mapStateToProps, mapDispatchToProps)(BannerInstallApp);
 
 const styles = StyleSheet.create({
     Text2: {

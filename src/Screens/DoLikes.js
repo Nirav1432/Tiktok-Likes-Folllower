@@ -215,6 +215,7 @@ class DoLikes extends Component {
 
     WWW_getOldLikes = async (data) => {
         let DATA = JSON.parse(data)
+        console.log(DATA)
         let FinalData = await DATA.props.pageProps.userData
         oldlikes = FinalData.digg
         this.setState({ visible: false })
@@ -229,8 +230,8 @@ class DoLikes extends Component {
 
         this.setState({ checkNewLikes: false, goForDoLike: false })
 
-        // console.log('Old Likes -->', oldlikes)
-        // console.log('New Likes -->', newlikes)
+        console.log('Old Likes -->', oldlikes)
+        console.log('New Likes -->', newlikes)
 
 
         if (newlikes > oldlikes) {
